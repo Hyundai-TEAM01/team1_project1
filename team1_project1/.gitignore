@@ -33,7 +33,10 @@ local.properties
 .buildpath
 
 # sbteclipse plugin
-.target
+/target
+/.classpath
+/.project
+/src/main/resources/properties/jdbc.properties
 
 # Tern plugin
 .tern-project
