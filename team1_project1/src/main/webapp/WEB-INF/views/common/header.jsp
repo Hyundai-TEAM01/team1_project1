@@ -14,7 +14,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-
         
         <!-- semantic UI -->
         <link
@@ -27,9 +26,10 @@
         ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-        <!-- custom CSS -->
+       <!-- custom CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css" />
         
     </head>
     <body>
