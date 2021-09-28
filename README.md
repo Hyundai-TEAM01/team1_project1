@@ -2,7 +2,7 @@
 
 git commit message 규칙
 
-feat : 새로운 기능에 대한 커밋
+add : 새로운 기능에 대한 커밋
 
 fix : 버그 수정에 대한 커밋
 
