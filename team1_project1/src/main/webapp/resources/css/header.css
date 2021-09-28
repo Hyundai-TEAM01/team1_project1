@@ -1,0 +1,57 @@
+header {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  height: 84px;
+  position: relative;
+}
+
+.header-left {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+}
+.header-logo {
+  display: inline-block;
+  width: 190px;
+  height: 24px;
+  color: transparent;
+  -webkit-text-fill-color: transparent; 
+  background: url(/resources/images/top-header-handsome-logo.png) no-repeat;
+}
+
+.header-menu {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 250px;
+}
+
+.header-category {
+  font-size: 13px;
+  font-weight: 600;
+}
+.header-category li {
+  display: inline-block;
+  padding: 0 4px;
+}
+
+.header-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.header-option {
+  font-size: 13px;
+  font-weight: 600;
+}
+.header-option li {
+  display: inline-block;
+  padding: 0 4px;
+}
