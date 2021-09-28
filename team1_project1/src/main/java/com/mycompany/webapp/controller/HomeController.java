@@ -15,7 +15,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String content() {
 		logger.info("실행");
-		return "home";
+		return "home2";
 	}
 	
 	@RequestMapping("/error/403")
