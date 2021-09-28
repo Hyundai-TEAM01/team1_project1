@@ -6,68 +6,72 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>SpringFramework</title>
 
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-	
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css"/>
-	</head>
-	<body>
-		<div class="d-flex flex-column vh-100">
-			<nav class="navbar navbar-expand-sm bg-dark navbar-dark text-white font-weight-bold justify-content-between">
-				<a class="navbar-brand" href="/"> 
-					<img src="${pageContext.request.contextPath}/resources/images/logo-spring.png" width="30" height="30" class="d-inline-block align-top">
-					Spring
-				</a>
-				<div>
-					<div>
-						<%-- 
-						<c:if test="${sessionMid == null}">
-							<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/ch08/login">로그인</a>
-							<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/ch15/login">로그인</a>
-						</c:if>
-						<c:if test="${sessionMid != null}">
-							<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/ch08/logout">로그아웃</a>
-						</c:if> 
-						--%>
-						<sec:authorize access="isAnonymous()">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        
+        <!-- semantic UI -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+        />
+        <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+       <!-- custom CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css" />
+        
+    </head>
+    <body>
+        <header>
+            <div class="header-container">
+                <div class="header-left">
+                    <a
+                        class="header-logo"
+                        >thehandsome.com</a>
+                </div>
+
+                <div class="header-menu">
+                    <ul class="header-category">
+                        <li><a>남성</a></li>
+                        <li><a>여성</a></li>
+                    </ul>
+                </div>
+
+                <div class="header-right">
+                    <ul class="header-option">
+                        <li>
+							<sec:authorize access="isAnonymous()">
 							<a href="${pageContext.request.contextPath}/ch17/loginForm" class="btn btn-success btn-sm">로그인</a>
-						</sec:authorize>
+							</sec:authorize>
 					
-						<sec:authorize access="isAuthenticated()">
-							<%-- 사이트간 요청 위조 방지가 비활성화되어 있을 경우 --%>  
-							<%-- 
-							<a href="${pageContext.request.contextPath}/logout" 
-							   class="btn btn-success btn-sm">로그아웃</a> 
-							--%>
-							   
-							<%-- 사이트간 요청 위조 방지가 활성화되어 있을 경우 --%>   
-							<form method="post" action="${pageContext.request.contextPath}/logout">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button class="btn btn-success btn-sm">로그아웃</button>
-							</form>
-						</sec:authorize>
-					</div>
-				</div>
-			</nav>
-	
-			<div class="flex-grow-1 container-fluid">
-				<div class="row h-100">
-					<div class="col-md-4 p-3 bg-dark">
-						<div class="h-100 d-flex flex-column">
-							<div class="flex-grow-1" style="height: 0px; overflow-y: auto; overflow-x: hidden;">
-								<%@ include file="/WEB-INF/views/common/menu.jsp" %>
-							</div>
-						</div>
-					</div>
-	
-					<div class="col-md-8 p-3">
-						<div class=" h-100 d-flex flex-column">
-							<div class="flex-grow-1 overflow-auto pr-3" style="height: 0px">
+							<sec:authorize access="isAuthenticated()">
+								<%-- 사이트간 요청 위조 방지가 비활성화되어 있을 경우 --%>  
+								<%-- 
+								<a href="${pageContext.request.contextPath}/logout" 
+								   class="btn btn-success btn-sm">로그아웃</a> 
+								--%>
+								   
+								<%-- 사이트간 요청 위조 방지가 활성화되어 있을 경우 --%>   
+								<form method="post" action="${pageContext.request.contextPath}/logout">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<button class="btn btn-success btn-sm">로그아웃</button>
+								</form>
+							</sec:authorize>
+						</li>
+                        <li><a>마이페이지</a></li>
+                        <li><i class="icon-shop"></i>(0)</li>
+                    </ul>
+                </div>
+            </div>
+        </header>
