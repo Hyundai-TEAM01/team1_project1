@@ -1,39 +1,87 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 
-<%@ include file="/WEB-INF/views/common/header2.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 
- 
+<style>
+	.home-container {
+		max-width: 1205px;
+		margin: 0 auto;
+	}
+	
+	a span {
+		display: block;
+	}
+	
+	.itemlist {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		row-gap: 10px;
+		column-gap: 10px;
+		/* grid-template-columns: repeat(auto-fill, minmax(25%, auto)); */
+	}
+	.filterWrap {
+	    font-size: 15px;
+	    margin: 10px 0px 10px 0px;
+	    font-weight: bolder;
+	}
+</style>
 
-<div class="card m-2">
-	<div class="card-header">
-		Spring Security
-	</div>
-	<div class="card-body">
-		<div class="card">
-			<div class="card-header">
-				로그인/로그아웃
-			</div>
-			<div class="card-body">
-				<sec:authorize access="isAnonymous()">
-					<a href="${pageContext.request.contextPath}/member/loginForm" class="btn btn-info btn-sm">로그인</a>
-				</sec:authorize>
-			
-				<sec:authorize access="isAuthenticated()">
-					<%-- 사이트간 요청 위조 방지가 비활성화되어 있을 경우 --%>  
-					<%-- 
-					<a href="${pageContext.request.contextPath}/logout" 
-					   class="btn btn-info btn-sm">로그아웃</a> 
-					--%>
-					   
-					<%-- 사이트간 요청 위조 방지가 활성화되어 있을 경우 --%>   
-					<form method="post" action="${pageContext.request.contextPath}/logout" class="d-inline-block">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						<button class="btn btn-info btn-sm">로그아웃</button>
-					</form>
-				</sec:authorize>
-			</div>
-		</div>
-	</div>
+<div class="home-container">
+	<div class="filterWrap">필터</div>
+	<ul class="itemlist">
+		<li class="column">
+			<a href="product/content">
+				<span><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01.jpg"></span>
+			</a> <a>
+				<span class="brand">CLUB MONACO</span> <span class="title">하운드투스 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>168,000</span> <span class="flag"><span class="product">NEW</span></span>
+			</a>
+			<div class="color_more_wrap">
+				<a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
+                <a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
+			</div></li>
+
+		<li class="column"><a>
+				<span><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01.jpg"></span>
+			</a> <a>
+				<span class="brand">CLUB MONACO</span> <span class="title">하운드투스 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>168,000</span> <span class="flag"><span class="product">NEW</span></span>
+			</a>
+			<div class="color_more_wrap">
+				<a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
+                <a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
+			</div></li>
+
+		<li class="column"><a>
+				<span><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01.jpg"></span>
+			</a> <a>
+				<span class="brand">CLUB MONACO</span> <span class="title">하운드투스 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>168,000</span> <span class="flag"><span class="product">NEW</span></span>
+			</a>
+			<div class="color_more_wrap">
+				<a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
+                <a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
+			</div></li>
+
+		<li class="column"><a>
+				<span><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01.jpg"></span>
+			</a> <a>
+				<span class="brand">CLUB MONACO</span> <span class="title">하운드투스 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>168,000</span> <span class="flag"><span class="product">NEW</span></span>
+			</a>
+			<div class="color_more_wrap">
+				<a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
+                <a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
+			</div></li>
+
+		<li class="column"><a>
+				<span><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01.jpg"></span>
+			</a> <a>
+				<span class="brand">CLUB MONACO</span> <span class="title">하운드투스 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>168,000</span> <span class="flag"><span class="product">NEW</span></span>
+			</a>
+			<div class="color_more_wrap">
+				<a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
+                <a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
+			</div></li>
+
+	</ul>
 </div>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
