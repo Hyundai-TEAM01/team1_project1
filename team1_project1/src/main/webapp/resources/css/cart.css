@@ -21,7 +21,7 @@ input.amount {
 	width: 100px;
 }
 
-.item-value {
+.span-wrap {
 	display: inline-block;
 	margin-left: 20px;
 	width: 120px;
@@ -31,4 +31,8 @@ input.amount {
 .amount-icon i{
 	margin: 0px;
 	color: #727272;
+}
+
+.init-price{
+	display: none;
 }
