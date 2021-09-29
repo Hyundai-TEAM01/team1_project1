@@ -30,7 +30,8 @@
         <header>
             <div class="header-container">
                 <div class="header-left">
-                    <a
+                    <a 
+                    	href="/"
                         class="header-logo"
                         >thehandsome.com</a>
                 </div>
@@ -64,7 +65,7 @@
 							</sec:authorize>
 						</li>
                         <li><a>마이페이지</a></li>
-                        <li><i class="shopping bag icon"></i>(0)</li>
+                        <li><a href="${pageContext.request.contextPath}/orderlist"><i class="shopping bag icon"></i>(0)</a></li>
                     </ul>
                 </div>
             </div>
