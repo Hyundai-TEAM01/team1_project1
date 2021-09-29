@@ -49,7 +49,6 @@
 			.white-text {
 				color : white;
 			}
-			
 		</style>
 	</head>
 	<body>
