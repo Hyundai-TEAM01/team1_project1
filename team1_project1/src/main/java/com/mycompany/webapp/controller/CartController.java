@@ -11,4 +11,9 @@ public class CartController {
 	public String cart() {
 		return "cart";
 	}
+	
+	@RequestMapping("/order")
+	public String order() {
+		return "order";
+	}
 }
