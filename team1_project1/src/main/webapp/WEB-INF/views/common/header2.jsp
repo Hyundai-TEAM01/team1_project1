@@ -31,8 +31,8 @@
 	            <div class="header-container">
 	                <div class="header-center">
 	                    <a
+	                    	href="/"
 	                        class="header-logo"
-	                        src="/images/top-header-handsome-logo.png"
 	                        >thehandsome.com
 	                    </a>
 	                </div>
@@ -41,7 +41,7 @@
 	                    <ul class="header-option">
 	                        <li>
 								<sec:authorize access="isAnonymous()">
-								<a href="${pageContext.request.contextPath}/member/loginForm" class="btn btn-success btn-sm">로그인</a>
+								<a href="${pageContext.request.contextPath}/member/loginForm">로그인</a>
 								</sec:authorize>
 						
 								<sec:authorize access="isAuthenticated()">
@@ -54,12 +54,12 @@
 									<%-- 사이트간 요청 위조 방지가 활성화되어 있을 경우 --%>   
 									<form method="post" action="${pageContext.request.contextPath}/logout">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-										<button class="btn btn-success btn-sm">로그아웃</button>
+										<button class="header-logout">로그아웃</button>
 									</form>
 								</sec:authorize>
 							</li>
-	                        <li><a>마이페이지</a></li>
-	                        <li><i class="shopping bag icon"></i>(0)</li>
+	                        <li><a href="${pageContext.request.contextPath}/orderlist">마이페이지</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/cart/content"><i class="shopping bag icon"></i>(0)</a></li>
 	                    </ul>
 	                </div>
 	            </div>

@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+<%@ include file="/WEB-INF/views/common/header2.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cart.css">
 
    <div class="ui container"> 
 
-        <div class="ui one column padded grid">
+        <div class="ui one column padded grid center aligned">
             <h1 class="column">쇼핑백</h1>
         </div>
         <table class="ui padded celled table">
@@ -37,14 +37,14 @@
                         </div>
                     </div>
                 </td>
-                <td class="center aligned">
+                <td class="center aligned amount-icon">
                     <i class="minus square outline icon"><a></a></i>
                     <div class="ui mini input">
-                        <input type="text" class="center aligned amount" placeholder="1">
+                        <input type="text" class="center aligned amount" placeholder="1" maxlength="3">
                     </div>
                     <i class="plus square outline icon"></i>
                 </td>
-                <td class="center aligned"><span class="price"><i class="won sign icon"></i>180,600</span></td>
+                <td class="center aligned"><span class="price"><i class="won sign small icon"></i>180,600</span></td>
                 <td class="center aligned"><button class="ui basic button">삭제</button></td>
               </tr>
             </tbody>
@@ -66,13 +66,13 @@
                   <div class="column right aligned">
                     <div class="ui vertical">
                       <div class="item ">
-                        <span class="item-key">상품합계</span><span class="item-value"><i class="won sign icon"></i>180,600</span>
+                        <span class="item-key">상품합계</span><span class="item-value"><i class="won sign icon small"></i>180,600</span>
                       </div>
                       <div class="item ">
-                        <span class="item-key">배송비</span><span class="item-value"><i class="won sign icon"></i>0</span>
+                        <span class="item-key">배송비</span><span class="item-value"><i class="won sign icon small"></i>0</span>
                       </div>
                       <div class="item">
-                        <span class="item-key">합계</span><span class="item-value"><i class="won sign icon"></i>180,600</span>
+                        <span class="item-key">합계</span><span class="item-value"><i class="won sign icon small"></i>180,600</span>
                       </div>
                     </div>
                   </div>
@@ -88,9 +88,9 @@
             </div>
     
             <div class="column">
-                <button class="ui secondary button">
+                <a class="ui secondary button" href="order">
                     선택 상품 주문
-                </button>
+                </a>
             </div>
     
           </div>
