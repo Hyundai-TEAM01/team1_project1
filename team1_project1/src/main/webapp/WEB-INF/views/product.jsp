@@ -43,26 +43,28 @@
 </style>
 
 <div class="product-container">
-        <div class="ui two column vertically padded grid">
-            <div class="column">
-                <div>
-                    <ul>
-                        <li>
-                            <img class="product-img" src="/resources/images/product/MM2B7WSH021H9A_BK_T01_684_1032.jpg">
-                        </li>
-                    </ul>
-                </div>
+    <div class="ui two column vertically padded grid">
+        <div class="column">
+            <div>
+                <ul>
+                    <li>
+                        <img class="product-img" src="/resources/images/product/MM2B7WSH021H9A_BK_T01_684_1032.jpg">
+                    </li>
+                </ul>
             </div>
-            <form method="post" action="cart/content">
-                <div class="column">
-                    <div class="info-sect">
-                        <div><a>CLUB MONACO</a></div>
-                        <span>하운드투스 체크 셔츠</span>
-                        <p><i class="won sign icon">168,000</i></p>
-                        <div class="ui divider"></div>
-                    </div>
+        </div>
         
-                    <div class="info-sect">
+        <div class="column">
+            <div class="info-sect">
+                <div><a>CLUB MONACO</a></div>
+                <span>하운드투스 체크 셔츠</span>
+                <p><i class="won sign icon">168,000</i></p>
+                <div class="ui divider"></div>
+            </div>
+
+            <form method="POST" action="">
+                <div class="info-sect">
+                    <ul>
                         <li>
                             <span class="title">색상</span>
                             <ul class="color">
@@ -88,24 +90,27 @@
                                 <i class="plus square outline icon"></i>
                             </div>
                         </li>
-                        <div class="ui divider"></div>
-                    </div>
-        
-                    <div class="info-sect">
-                        <div class="ui grid">
-                            <div class="two column row">
-                                <div class="left floated column">
-                                    총 합계
-                                </div>
-                                <div class="right floated column center aligned">
-                                    <div><i class="won sign icon"></i>168,000</div>
-                                    <button type="submit" class="ui button">카트 담기</button>
-                                </div>
+                    </ul>
+                    
+                    <div class="ui divider"></div>
+                </div>
+    
+                <div class="info-sect">
+                    <div class="ui grid">
+                        <div class="two column row">
+                            <div class="left floated column">
+                                총 합계
+                            </div>
+                            <div class="right floated column center aligned">
+                                <div><i class="won sign icon"></i>168,000</div>
+                                <button type="submit" class="ui button">카트 담기</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
+            
         </div>
     </div>
+</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
