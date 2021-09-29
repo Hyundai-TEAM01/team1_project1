@@ -17,43 +17,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 	
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css"/>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/loginForm.css"/>
 		
-		<style type="text/css">
-			body>.grid {
-				height: 100%;
-			}
-			.image {
-				margin-top: -100px;
-				margin-bottom: 10px;
-			}
-			.column {
-				max-width: 450px;
-			}
-			.ui.segment {
-				box-shadow : none;
-				border : 0px;
-			}
-			.ui.button {
-				border-radius : 0px;
-				background : #4a4a4a;
-				color : white;
-				margin-top : 12px; 
-			}
-			.gray-background {
-				background : #c4c4c4;
-				padding : 10px;
-			}
-			.red-text {
-				color : red;
-			}
-			.white-text {
-				color : white;
-			}
-		</style>
 	</head>
 	<body>
 		
-	
 		<div class="ui middle aligned center aligned grid">
 			<div class="column">
 				<a href="/"><img src="/resources/images/top-header-handsome-logo.png" class="image"></a>
@@ -63,12 +31,12 @@
 					<div class="ui segment transparent">
 						<div class="field">
 							<div class="ui left input transparent gray-background">
-								<input class="white-text" type="text" name="mid" placeholder="아이디">
+								<input class="text" type="text" name="mid" placeholder="아이디" autocomplete="off">
 							</div>
 						</div>
 						<div class="field">
 							<div class="ui left input transparent gray-background">
-								<input class="white-text" type="password" name="mpassword" placeholder="비밀번호">
+								<input class="text" type="password" name="mpassword" placeholder="비밀번호">
 							</div>
 						</div>
 						
