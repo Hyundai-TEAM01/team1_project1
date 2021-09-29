@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/order.css">
 
 <div class="ui container">
+	        <div class="ui one column padded grid center aligned">
+	            <h1 class="column">쇼핑백</h1>
+	        </div>
             <div class="ui grid">
                 <div class="ten wide column">
                     <table class="ui celled table pinfo-table">
