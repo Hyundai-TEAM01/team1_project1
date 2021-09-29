@@ -70,7 +70,7 @@
 							</sec:authorize>
 						</li>
                         <li><a>마이페이지</a></li>
-                        <li><i class="icon-shop"></i>(0)</li>
+                        <li><i class="shopping bag icon"></i>(0)</li>
                     </ul>
                 </div>
             </div>
