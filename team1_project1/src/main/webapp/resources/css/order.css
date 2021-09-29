@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+.user-table tr td:nth-child(1) {
+	width: 150px;
+}
+
+.t-p {
+	background-color: #e5e5e5;
+	margin-top: 40px;
+	padding: 25px 20px 20px 20px;
+}
+
+.t-p-color {
+	color: #bb9d73;
+}
+
+.price-table {
+	border: black 1px solid;
+}
+
+.pt-top {
+	margin: 20px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.m-box {
+	border: 1px solid lightgray;
+	margin-top: 30px;
+	padding: 20px;
+}
+
+.m-box .save-m {
+	display: inline-block;
+	color: #bb9d73;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.save-m-point {
+	padding-left: 20px;
+	display: inline-block;
+}
+
+.color-555 {
+	color: #555;
+	font-weight: bold;
+}
+
+.color-555-small {
+	color: #555;
+	font-size: 13px;
+}
+
+.pay-btn {
+	background-color: #4a4a4a;
+	text-align: center;
+	padding: 13px 0 15px;
+	margin-top: 20px;
+}
+
+.pay-btn a {
+	color: white;
+	font-size: 14px;
+}
+
+.pinfo-table th:nth-child(1) {
+	width: auto;
+}
+
+.pinfo-table th:nth-child(2) {
+	width: 15%;
+}
+
+.pinfo-table th:nth-child(3) {
+	width: 15%;
+}
+
+.input-wrap {
+	max-width: 80px;
+}
