@@ -15,16 +15,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         
-        <!-- semantic UI -->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-        />
-        <script
-            src="https://code.jquery.com/jquery-3.1.1.min.js"
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <!-- fomantic UI -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
 
        <!-- custom CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
@@ -70,7 +64,7 @@
 							</sec:authorize>
 						</li>
                         <li><a>마이페이지</a></li>
-                        <li><i class="icon-shop"></i>(0)</li>
+                        <li><i class="shopping bag icon"></i>(0)</li>
                     </ul>
                 </div>
             </div>
