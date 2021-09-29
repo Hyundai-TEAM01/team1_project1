@@ -88,9 +88,9 @@
             </div>
     
             <div class="column">
-                <button class="ui secondary button">
+                <a class="ui secondary button" href="order">
                     선택 상품 주문
-                </button>
+                </a>
             </div>
     
           </div>
