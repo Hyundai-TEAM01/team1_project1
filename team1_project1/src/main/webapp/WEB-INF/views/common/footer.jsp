@@ -1,10 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<footer></footer>
 	</body>
+	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/footer.css" />
 </html>

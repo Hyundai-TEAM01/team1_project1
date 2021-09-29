@@ -47,7 +47,7 @@
                     <ul class="header-option">
                         <li>
 							<sec:authorize access="isAnonymous()">
-							<a href="${pageContext.request.contextPath}/ch17/loginForm" class="btn btn-success btn-sm">로그인</a>
+							<a href="${pageContext.request.contextPath}/member/loginForm" class="btn btn-success btn-sm">로그인</a>
 							</sec:authorize>
 					
 							<sec:authorize access="isAuthenticated()">
@@ -64,8 +64,8 @@
 								</form>
 							</sec:authorize>
 						</li>
-                        <li><a>마이페이지</a></li>
-                        <li><a href="${pageContext.request.contextPath}/orderlist"><i class="shopping bag icon"></i>(0)</a></li>
+                        <li><a href="${pageContext.request.contextPath}/orderlist">마이페이지</a></li>
+                        <li><a href="${pageContext.request.contextPath}/cart/content"><i class="shopping bag icon"></i>(0)</a></li>
                     </ul>
                 </div>
             </div>
