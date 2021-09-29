@@ -64,8 +64,8 @@
 								</form>
 							</sec:authorize>
 						</li>
-                        <li><a>마이페이지</a></li>
-                        <li><a href="${pageContext.request.contextPath}/orderlist"><i class="shopping bag icon"></i>(0)</a></li>
+                        <li><a href="${pageContext.request.contextPath}/orderlist">마이페이지</a></li>
+                        <li><a href="${pageContext.request.contextPath}/cart/content"><i class="shopping bag icon"></i>(0)</a></li>
                     </ul>
                 </div>
             </div>

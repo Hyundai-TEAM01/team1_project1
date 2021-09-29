@@ -83,7 +83,7 @@
 	                                            >스트레치 드레스 셔츠</span
 	                                        >
 	                                    </a>
-	                                    <p class="color">
+	                                    <p class="pt-color">
 	                                        color : BLUE
 	                                        <span class="and-line">/</span>
 	                                        size : 95
