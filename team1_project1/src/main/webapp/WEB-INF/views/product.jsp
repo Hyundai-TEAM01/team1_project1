@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css"/>
 
 <div class="product-container">
     <div class="ui two column vertically padded grid">
@@ -24,7 +25,7 @@
                 <div class="ui divider"></div>
             </div>
 
-            <form method="POST" action="">
+            <form>
                 <div class="info-sect">
                     <ul>
                         <li>
@@ -68,7 +69,7 @@
                             </div>
                             <div class="right floated column center aligned">
                                 <div><i class="won sign icon"></i>168,000</div>
-                                <button type="submit" class="ui button">카트 담기</button>
+                                <a href="javascript:cartAdd()" class="ui button">카트 담기</a>
                             </div>
                         </div>
                     </div>
@@ -78,4 +79,34 @@
         </div>
     </div>
 </div>
+
+<div class="fullscreen">
+    <div class="modal">
+        <div class="close-row">
+            <a href="javascript:modalOff()"><i class="close icon"></i></a>
+        </div>
+        <div class="modal-content">
+            <p>쇼핑백에 담겼습니다.</p>
+            <p>확인하시겠습니까?</p>
+        </div>
+        <div class="modal-btns"><a href="javascript:modalOff()" class="btn-continue">계속쇼핑하기</a><a href="/cart/content" class="btn-tocart">쇼핑백 바로가기</a></div>
+    </div>
+</div>
+<script>
+	function cartAdd() {
+		/* $.ajax({
+			url: '/cartadd',
+			method: 'POST'
+		})
+		.done((data) => {
+			if(data.msg)
+				modalOn();
+			else {
+				location.href = '/login';
+			}
+		}); */
+		modalOn();
+	}
+</script>
+<script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -23,7 +23,6 @@
        <!-- custom CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css" />
         
     </head>
     <body>

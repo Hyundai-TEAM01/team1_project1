@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css"/>
 
 <div class="home-container">
-    <div class="filterWrap">필터</div>
+    <!-- <div class="filterWrap">필터</div> -->
     <ul class="itemlist">
         <li class="column">
             <a href="product/content">
