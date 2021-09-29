@@ -47,7 +47,7 @@
                     <ul class="header-option">
                         <li>
 							<sec:authorize access="isAnonymous()">
-							<a href="${pageContext.request.contextPath}/ch17/loginForm" class="btn btn-success btn-sm">로그인</a>
+							<a href="${pageContext.request.contextPath}/member/loginForm" class="btn btn-success btn-sm">로그인</a>
 							</sec:authorize>
 					
 							<sec:authorize access="isAuthenticated()">

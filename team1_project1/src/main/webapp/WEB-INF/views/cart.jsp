@@ -40,11 +40,11 @@
                 <td class="center aligned">
                     <i class="minus square outline icon"><a></a></i>
                     <div class="ui mini input">
-                        <input type="text" class="center aligned amount">
+                        <input type="text" class="center aligned amount" placeholder="1">
                     </div>
                     <i class="plus square outline icon"></i>
                 </td>
-                <td class="center aligned"><span class="price">₩180,600</span></td>
+                <td class="center aligned"><span class="price"><i class="won sign icon"></i>180,600</span></td>
                 <td class="center aligned"><button class="ui basic button">삭제</button></td>
               </tr>
             </tbody>
@@ -66,13 +66,13 @@
                   <div class="column right aligned">
                     <div class="ui vertical">
                       <div class="item ">
-                        <span class="item-key">상품합계</span><span class="item-value"><i class="won sign icon"></i>10,000000000</span>
+                        <span class="item-key">상품합계</span><span class="item-value"><i class="won sign icon"></i>180,600</span>
                       </div>
                       <div class="item ">
-                        <span class="item-key">배송비</span><span class="item-value"><i class="won sign icon"></i>10,000</span>
+                        <span class="item-key">배송비</span><span class="item-value"><i class="won sign icon"></i>0</span>
                       </div>
                       <div class="item">
-                        <span class="item-key">합계</span><span class="item-value"><i class="won sign icon"></i>10,000</span>
+                        <span class="item-key">합계</span><span class="item-value"><i class="won sign icon"></i>180,600</span>
                       </div>
                     </div>
                   </div>
