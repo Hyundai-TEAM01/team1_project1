@@ -39,10 +39,11 @@
                         <li class="li-size">
                             <span class="title">사이즈</span>
                             <select class="ui dropdown">
-                                <option value="3">95</option>
-                                <option value="2">100</option>
-                                <option value="1">105</option>
-                                <option value="0">110</option>
+                            	<option value="">Size</option>
+                                <option value="95">95</option>
+                                <option value="100">100</option>
+                                <option value="105">105</option>
+                                <option value="110">110</option>
                             </select>
                         </li>
                         
