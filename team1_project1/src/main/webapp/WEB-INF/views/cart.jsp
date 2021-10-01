@@ -18,90 +18,8 @@
                         <th class="center aligned">선택</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr id="num2">
-                        <td class="center aligned">
-                            <input type="checkbox" name="check_box" />
-                        </td>
-                        <td>
-                            <div class="ui items">
-                                <div class="item">
-                                    <div class="ui small image">
-                                        <img src="http://newmedia.thehandsome.com/MM/2B/SS/MM2B4WPS087M_KE_W01.jpg/dims/resize/684x1032/" style="width: 100px; height: 150px" />
-                                    </div>
-                                    <div class="middle aligned content">
-                                        <div class="description">
-                                            <p>CLUB MONACO</p>
-                                            <p>셋업 슬림 팬츠</p>
-                                            <p class="grey small">
-                                                color :
-                                                <span class="p_color">beige</span>
-                                                / size :
-                                                <span class="p_size">100</span>
-                                            </p>
-                                            <a class="ui right floated change-btn">옵션 변경</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="center aligned amount-icon">
-                            <a href="javascript:amount(-1, 2)"><i class="minus square outline icon"></i></a>
-                            <div class="ui mini input">
-                                <input type="text" class="center aligned amount" value="1" maxlength="3" />
-                            </div>
-                            <a href="javascript:amount(1, 2)"><i class="plus square outline icon"></i></a>
-                        </td>
-                        <td class="center aligned">
-                            <div class="init-price">180600</div>
-                            <i class="won sign small icon"></i><span class="price">0</span>
-                        </td>
-                        <td class="center aligned">
-                            <button class="ui basic button">삭제</button>
-                        </td>
-                    </tr>
-
-                    <tr id="num1">
-                        <td class="center aligned">
-                            <input type="checkbox" name="check_box" />
-                        </td>
-                        <td>
-                            <div class="ui items">
-                                <div class="item">
-                                    <div class="ui small image">
-                                        <img src="http://newmedia.thehandsome.com/MM/2B/SS/MM2B4WPS087M_KE_W01.jpg/dims/resize/684x1032/" style="width: 100px; height: 150px" />
-                                    </div>
-                                    <div class="middle aligned content">
-                                        <div class="description">
-                                            <p>CLUB MONACO</p>
-                                            <p>셋업 슬림 팬츠</p>
-                                            <p class="grey small">
-                                                color :
-                                                <span class="p_color">beige</span>
-                                                / size :
-                                                <span class="p_size">100</span>
-                                                <a class="ui right floated change-btn">옵션 변경</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="center aligned amount-icon">
-                            <a href="javascript:amount(-1, 1)"><i class="minus square outline icon"></i></a>
-                            <div class="ui mini input">
-                                <input type="text" class="center aligned amount" value="1" maxlength="3" />
-                            </div>
-                            <a href="javascript:amount(1, 1)"><i class="plus square outline icon"></i></a>
-                        </td>
-                        <td class="center aligned">
-                            <div class="init-price">180600</div>
-                            <i class="won sign small icon"></i><span class="price">0</span>
-                        </td>
-                        <td class="center aligned">
-                            <button class="ui basic button">삭제</button>
-                        </td>
-                    </tr>
+                <tbody class="info-body">
+                    
                 </tbody>
             </table>
             <div class="ui divider"></div>
@@ -252,6 +170,7 @@
             // 전체 제품 가격 계산
             function calProductPriceAll() {
                 $("tbody tr").each((idx, item) => {
+                	console.log('run');
                     calProductPrice(item);
                 });
             }
@@ -282,7 +201,8 @@
 
             // 초기 접속 시
             function initSetting() {
-                calProductPriceAll();
+                printProductList();
+                
                 updateAmoumtEvent();
                 allProductAmount();
                 allPriceSet();
@@ -363,5 +283,70 @@
                     
                 }
             }
+            
+            // 서버에서 받은 상품 목록 표시
+            function printProductList() {
+                $.ajax({
+                    url: "getlist",
+                }).done((data) => {
+                    for(product of data.infoList[0]){
+                    	createProduct(product);
+                    }
+	                calProductPriceAll();
+                });
+                
+            }
+
+            function createProduct(product) {
+                let html = '<tr id="num' + product.cartdetailno + '">';
+                html += '<td class="center aligned">';
+                html += '<input type="checkbox" name="check_box" />';
+                html += "</td>";
+                html += "<td>";
+                html += '<div class="ui items">';
+                html += ' <div class="item">';
+                html += '<div class="ui small image">';
+                html += '<img src="' + product.imgurl + '" style="width: 100px; height: 150px" />';
+                html += "</div>";
+                html += '<div class="middle aligned content">';
+                html += '<div class="description">';
+                html += "<p>" + product.pbrand + "</p>";
+                html += "<p>" + product.pname + "</p>";
+                html += '<p class="grey small">';
+                html += "color :";
+                html += '<span class="p_color">' + colorFormatting(product.pcolor) + "</span>";
+                html += "/ size :";
+                html += '<span class="p_size">' + product.psize + "</span>";
+                html += '<a class="ui right floated change-btn">옵션 변경</a>';
+                html += "</p></div></div></div></div></td>";
+                html += '<td class="center aligned amount-icon">';
+                html += '  <a href="javascript:amount(-1,' + product.cartdetailno + ')"><i class="minus square outline icon"></i></a>';
+                html += '<div class="ui mini input">';
+                html += '<input type="text" class="center aligned amount" value="' + product.amount + '" maxlength="3" />';
+                html += "</div>";
+                html += '<a href="javascript:amount(1,' + product.cartdetailno + ')"><i class="plus square outline icon"></i></a>';
+                html += "</td>";
+                html += '<td class="center aligned">';
+                html += '<div class="init-price">' + product.pprice + "</div>";
+                html += '<i class="won sign small icon"></i><span class="price">0</span>';
+                html += "</td>";
+                html += '<td class="center aligned">';
+                html += '<button class="ui basic button">삭제</button>';
+                html += "</td>";
+                html += "</tr>";
+
+                $(".info-body").append(html);
+            }
+            
+            function colorFormatting(color){
+            	let result;
+            	
+            	if(color ==='GY'){
+            		result = 'GRAY';
+            	}
+            	
+            	return result;
+            }
+            
         </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
