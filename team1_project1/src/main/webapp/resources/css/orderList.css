@@ -43,6 +43,7 @@
     background: #fcfcfc;
     border: 1px solid #ccc;
     color: #888;
+    outline: none;
 }
 
 .date-button {
@@ -63,7 +64,7 @@ select.ui.dropdown {
 }
 
 .search {
-    min-width: 350px;
+    min-width: 358px;
     height: 28px;
     line-height: 30px;
     text-indent: 10px;

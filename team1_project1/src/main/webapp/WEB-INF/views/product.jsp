@@ -11,7 +11,7 @@
             <div>
                 <ul>
                     <li>
-                        <img class="product-img" src="/resources/images/product/MM2B7WSH021H9A_BK_T01_684_1032.jpg">
+                        <img class="product-img" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_684_1032.jpg">
                     </li>
                 </ul>
             </div>
@@ -31,8 +31,8 @@
                         <li>
                             <span class="title">색상</span>
                             <ul class="color">
-                                <li><a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_24_24.jpg"></a></li>
-                                <li><a><img src="/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_24_24.jpg"></a></li>
+                                <li><a><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_24_24.jpg"></a></li>
+                                <li><a><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_24_24.jpg"></a></li>
                             </ul>
                         </li>
 

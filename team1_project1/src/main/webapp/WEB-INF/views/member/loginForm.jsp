@@ -24,7 +24,7 @@
 		
 		<div class="ui middle aligned center aligned grid">
 			<div class="column">
-				<a href="/"><img src="/resources/images/top-header-handsome-logo.png" class="image"></a>
+				<a href="/"><img src="${pageContext.request.contextPath}/resources/images/top-header-handsome-logo.png" class="image"></a>
 		
 				<form class="ui large form" method="post" action="${pageContext.request.contextPath}/login">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
