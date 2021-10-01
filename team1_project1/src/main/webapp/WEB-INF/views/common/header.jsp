@@ -167,7 +167,7 @@
                             </div>
                         </li>
                         <li class="depth1">
-                        	<a>이벤트</a>
+                        	<a href="/event">이벤트</a>
                         </li>
                     </ul>
                 </div>
