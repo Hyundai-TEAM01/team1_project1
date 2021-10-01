@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.CartDAO">
+	<select id="getCartDetailList" resultType="cartDetail" parameterType="int">
+		SELECT cartdetailno, cartno, pcode, psize, pcolor, amount, regdate, isdeleted FROM CARTDETAIL WHERE CARTNO = #{cartNo}
+	</select>
+	
+	<select id="getCartProductList" resultType="cartProductInfo" parameterType="int">
+		SELECT cartdetailno, cartno, cd.pcode, psize, cd.pcolor, amount, regdate, isdeleted, imgurl1 as imgurl , pbrand, pname, pprice 
+		FROM CARTDETAIL cd, PRODUCTIMG img, PRODUCT p
+		WHERE CARTNO = #{cartNo} and cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode
+	</select>
+</mapper>
