@@ -9,27 +9,27 @@
 
 				<div class="footer-logo">
 					<a href="">
-						<img src="/resources/images/footer/footer-handsome-logo.png" alt="">
+						<img src="${pageContext.request.contextPath}/resources/images/footer/footer-handsome-logo.png" alt="">
 					</a>
 				</div>
 
 				<div class="ui footer-link">
 					<ul>
-						<li><a href="">hello</a></li>
-						<li><a href="">hello</a></li>
-						<li><a href="">hello</a></li>
+						<li><a href="">온라인 멤버십</a></li>
+						<li><a href="">한섬 VVIP 혜택</a></li>
+						<li><a href="">한섬마일리지 혜택</a></li>
 					</ul>
 					<ul>
-						<li><a href="">hello</a></li>
-						<li><a href="">hello</a></li>
-						<li><a href="">hello</a></li>
+						<li><a href="">고객센터</a></li>
+						<li><a href="">FAQ</a></li>
+						<li><a href="">수선진행조회</a></li>
 					</ul>
 				</div>
 
 			</div>
 
 			<div class="six wide column">
-				<div>right</div>
+				<div></div>
 
 			</div>
 
