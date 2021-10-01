@@ -23,8 +23,9 @@
        <!-- custom CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css" />
         
+        <!-- custom JS -->
+        <script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
     </head>
     <body>
         <header>
@@ -38,8 +39,136 @@
 
                 <div class="header-menu">
                     <ul class="header-category">
-                        <li><a>남성</a></li>
-                        <li><a>여성</a></li>
+                        <li class="depth1 dth-man">
+                            <a>남성</a>
+                            <div class="sub-category-wrap sub-man">
+                                <ul class="sub-category">
+                                    <li><a href="#">전체보기</a></li>
+                                    <li>
+                                        <a href="#">아우터</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">재킷</a></li>
+                                            <li><a href="#">점퍼</a></li>
+                                            <li><a href="#">가디건/베스트</a></li>
+                                            <li><a href="#">트랜치코트</a></li>
+                                            <li><a href="#">코트</a></li>
+                                            <li><a href="#">다운/패딩</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">탑</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">티셔츠</a></li>
+                                            <li><a href="#">셔츠</a></li>
+                                            <li><a href="#">니트</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">팬츠</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">루즈/테이퍼드</a></li>
+                                            <li><a href="#">슬림/스트레이트</a></li>
+                                            <li><a href="#">조거/트랙</a></li>
+                                            <li><a href="#">데님</a></li>
+                                            <li><a href="#">쇼츠</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">수트</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">드레스셔츠</a></li>
+                                            <li><a href="#">수트재킷</a></li>
+                                            <li><a href="#">수트팬츠</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">패션잡화</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">가방</a></li>
+                                            <li><a href="#">슈즈</a></li>
+                                            <li><a href="#">모자</a></li>
+                                            <li><a href="#">타이</a></li>
+                                            <li><a href="#">양말</a></li>
+                                            <li><a href="#">스카프/머플러</a></li>
+                                            <li><a href="#">비치웨어</a></li>
+                                            <li><a href="#">기타소품</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="depth1 dth-woman">
+                            <a>여성</a>
+                            <div class="sub-category-wrap sub-woman">
+                                <ul class="sub-category">
+                                    <li><a href="#">전체보기</a></li>
+                                    <li>
+                                        <a href="#">아우터</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">재킷</a></li>
+                                            <li><a href="#">점퍼</a></li>
+                                            <li><a href="#">가디건/베스트</a></li>
+                                            <li><a href="#">트랜치코트</a></li>
+                                            <li><a href="#">코트</a></li>
+                                            <li><a href="#">다운/패딩</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">탑</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">티셔츠</a></li>
+                                            <li><a href="#">블라우스</a></li>
+                                            <li><a href="#">셔츠</a></li>
+                                            <li><a href="#">니트</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">드레스</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">미니 드레스</a></li>
+                                            <li><a href="#">미디 드레스</a></li>
+                                            <li><a href="#">롱/맥시 드레스</a></li>
+                                            <li><a href="#">데님</a></li>
+                                            <li><a href="#">쇼츠</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">팬츠</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">캐주얼</a></li>
+                                            <li><a href="#">포멀</a></li>
+                                            <li><a href="#">데님</a></li>
+                                            <li><a href="#">쇼츠</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">스커트</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">미니 스커트</a></li>
+                                            <li><a href="#">펜슬 스커트</a></li>
+                                            <li><a href="#">플레어 스커트</a></li>
+                                            <li><a href="#">롱/맥시 스커트</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">패션잡화</a>
+                                        <ul class="sub-content">
+                                            <li><a href="#">가방</a></li>
+                                            <li><a href="#">슈즈</a></li>
+                                            <li><a href="#">모자</a></li>
+                                            <li><a href="#">주얼리</a></li>
+                                            <li><a href="#">스카프/머플러</a></li>
+                                            <li><a href="#">양말</a></li>
+                                            <li><a href="#">비치웨어</a></li>
+                                            <li><a href="#">기타소품</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="depth1">
+                        	<a>이벤트</a>
+                        </li>
                     </ul>
                 </div>
 

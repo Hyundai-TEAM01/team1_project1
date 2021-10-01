@@ -2,4 +2,29 @@ footer {
 	display: block;
 	margin-top: 100px;
 	padding: 10px;
+    height: 100px;
+}
+.ui.grid{
+    min-width: 1022px;
+}
+.footer-logo {
+    vertical-align : top;
+    display: inline-block;
+    margin-right: 26px;
+}
+.footer-link {
+    display: inline-block;
+}
+.footer-link ul {
+    vertical-align : top;
+    /* display: inline-block; */
+    float: left;
+}
+.footer-link li {
+    display: block;
+    width: 110px;
+}
+.footer-link li a {
+    font-size: 11px;
+    color: #363636;
 }

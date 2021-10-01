@@ -173,13 +173,13 @@
                                                 <span>@</span>
                                             </div>
                                             <div class="five wide field">
-                                                <input type="text" />
+                                                <input type="text" id="s_email"/>
                                             </div>
                                             <div class="five wide field">
-                                                <select class="ui search dropdown">
+                                                <select class="ui search dropdown" name="select-email">
                                                     <option value="">직접 입력</option>
-                                                    <option value="naver">naver.com</option>
-                                                    <option value="google">google.com</option>
+                                                    <option value="naver.com">naver.com</option>
+                                                    <option value="google.com">google.com</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -298,7 +298,7 @@
                     } else if (payment === "cash") {
                         str += '<div class="inline fields">';
                         str += '<div class="three wide field">';
-                        str += '<select class="ui selection dropdown">';
+                        str += '<select class="ui selection dropdown bank-seletion">';
                         str += '<option value="">은행사</option>';
                         str += '<option value="">현대</option>';
                         str += '<option value="">비씨</option>';
@@ -314,6 +314,18 @@
                     info.html(str);
                 });
             });
+            
+            
+            $(function(){
+                let s_email = $("select[name='select-email']");
+        	   	s_email.change(function () {
+                   if(s_email.val() !== ""){
+                       $("#s_email").val(s_email.val()).prop('readonly',true);
+                   }else{
+                    $("#s_email").val(s_email.val()).prop('readonly',false);
+                   }
+        	   });
+           });
         </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
