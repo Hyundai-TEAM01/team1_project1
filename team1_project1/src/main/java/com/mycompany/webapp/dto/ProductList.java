@@ -13,5 +13,6 @@ public class ProductList {
 	private String pbrand;
 	private int pprice;
 	private Date pdate;
+	private List<ProductImg> color;
 	// productimg와 productstock 추가해야함
 }

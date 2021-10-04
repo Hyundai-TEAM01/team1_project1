@@ -2,10 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ProductListDAO">
 	
-	<select id="getProductList" resultType="productList" parameterType="string">
-		SELECT PCA.ccode, PCA.pcode, PROD.pname, PROD.pbrand, PROD.pprice, PROD.pdate 
-		FROM PCATEGORY PCA 
-		JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
-		WHERE CCODE LIKE #{ccode}
+	<select id="getProductList" resultMap="productListResultMap" parameterType="string">
+		SELECT PCA.CCODE AS CCODE,
+		PCA.PCODE AS PCODE,
+		PROD.PNAME AS PNAME, 
+		PROD.PBRAND AS PBRAND, 
+		PROD.PPRICE AS PPRICE, 
+		PROD.PDATE AS PDATE, 
+		PRODIMG.PCOLOR AS PCOLOR, 
+		PRODIMG.IMGURL1 AS IMGURL1, 
+		PRODIMG.IMGURL2 AS IMGURL2, 
+		PRODIMG.IMGURL3 AS IMGURL3, 
+		PRODIMG.COLORURL AS COLORURL
+	    FROM PCATEGORY PCA 
+	    JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
+	    JOIN PRODUCTIMG PRODIMG ON PROD.PCODE = PRODIMG.PCODE
+	    WHERE CCODE LIKE #{ccode}
+		
 	</select>
+	
+	<resultMap id="productListResultMap" type="productList">
+		<result property="ccode" column="CCODE"/>
+		<result property="pcode" column="PCODE"/>
+		<result property="pname" column="PNAME"/>
+		<result property="pbrand" column="PBRAND"/>
+		<result property="pprice" column="PPRICE"/>
+		<result property="pdate" column="PDATE"/>
+		<collection property="color" ofType="productImg">
+			<id property="pcode" column="PCODE"/>
+			<result property="pcolor" column="PCOLOR"/>
+			<result property="imgurl1" column="IMGURL1"/>
+			<result property="imgurl2" column="IMGURL2"/>
+			<result property="imgurl3" column="IMGURL3"/> 
+			<result property="colorurl" column="COLORURL"/> 
+		</collection>
+	</resultMap>
 </mapper>
