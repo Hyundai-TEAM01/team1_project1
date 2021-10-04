@@ -75,13 +75,18 @@
                 let amount = parseInt(input.val());
 
                 amount += num;
-
                 // 재고값 가져오기
-                let stock = 3;
+                let stockAmount = parseInt(amountDic[idx]);
 
                 if (amount === 0) {
                     // 제거 질문 팝업
-                } else {
+                } else if(stockAmount < amount){
+                	// 재고 초과 팝업
+                	console.log("재고보다 많습니다.");
+                	input.val(stockAmount);
+                    calProductPrice($(input).closest("tr"));
+                }
+                else {
                     input.val(amount);
                     calProductPrice($(input).closest("tr"));
                 }
@@ -92,7 +97,7 @@
             function updateAmoumtEvent() {
                 $("tbody tr").each((idx, item) => {
                     // 재고값 가져오기
-                    let stock = 3;
+                    let stock = parseInt(amountDic[$(item).attr("id").replace('num','')]);
                     let inputTag = $(item).find("input.amount");
                     let before_val;
                     inputTag
@@ -105,7 +110,7 @@
 
                             if (change_val > stock) {
                                 // 재고 알림 팝업
-
+								console.log("재고보다 많습니다.");
                                 // 재고값으로 다시 설정
                                 inputTag.val(stock);
                                 calProductPrice(item);
@@ -170,7 +175,6 @@
             // 전체 제품 가격 계산
             function calProductPriceAll() {
                 $("tbody tr").each((idx, item) => {
-                	console.log('run');
                     calProductPrice(item);
                 });
             }
@@ -199,11 +203,9 @@
                 initSetting();
             });
 
-            // 초기 접속 시
+            // 초기 접속 시	
             function initSetting() {
                 printProductList();
-                
-                updateAmoumtEvent();
                 allProductAmount();
                 allPriceSet();
 
@@ -232,10 +234,8 @@
                     });
                 });
 
-                // 옵션 변경 클릭 이벤트 등록
-                $(".changebtn").each((idx, item) => {
-                    $(item).click(changeOption);
-                });
+                
+
             }
 
             // 금액 형태로 변환
@@ -244,7 +244,15 @@
             }
 
             // 상품 삭제(db)
-            function pDelete() {}
+            function pDelete(num) {
+            	
+            	$.ajax({
+            		url :'' ,
+            		method : 'DELETE' // post, delete 쓸지 결정하기
+            	}).done((data)=>{
+            		// 데이터 삭제 성공 여부 확인 후 처리하기!
+            	});
+            }
 
             // 상품 변경 반영(db)
             function pUpdate() {}
@@ -255,13 +263,12 @@
             //상품 삭제 물음 띄우기
             function isdeleteModal() {}
 
-            // 옵션 변경 클릭 시
+            // 옵션 변경
             function changeOption(item) {
                 let this_row = $(item).closest("tr");
                 let this_id = this_row.attr("id");
                 let html = "<tr id='" + this_id + "_op' class='op-add'>";
                 if (typeof $("#" + this_id + "_op").html() == "undefined") {
-                    console.log('run');
                     html += '<td class="center aligned"></td>';
                     html += '<td colspan="3"><div><div><span class="three wide small">COLOR</span>';
 
@@ -279,24 +286,52 @@
                     html += "</td></tr>";
 
                     this_row.after(html);
-                }else{
-                    
+                } else { // $("#" + this_id + "_op") 태그 삭제
+                	
                 }
             }
+            
+            // 재고량 저장 전역 변수
+            var amountDic = {};
             
             // 서버에서 받은 상품 목록 표시
             function printProductList() {
                 $.ajax({
-                    url: "getlist",
+                    url: "getCartProductInfoList",
                 }).done((data) => {
                     for(product of data.infoList[0]){
                     	createProduct(product);
+                    	
                     }
 	                calProductPriceAll();
+	                
+	                
+		           	// 재고량 가져오기 
+                    for(stock of data.stockList[0]){
+                    	let keys = Object.keys(stock);
+                    	amountDic[keys[0]] = stock[keys[0]];
+                    }
+             		
+	               
+	           		// 옵션 변경 클릭 이벤트 등록
+	                $(".change-btn").each((idx, item) => {
+	                    $(item).click(() => {
+	                        changeOption(item);
+	                    });
+	                });
+	           		
+	           		$(".delete-btn").each((idx,item)=>{
+	           			$(item).click(()=>{
+	           				let cdno = $(item).closest("tr").attr('id').replace('num','');
+	           				console.log(cdno + "삭제");
+	           			})
+	           		})
+	                updateAmoumtEvent();
                 });
                 
             }
 
+            // 상품 목록 생성
             function createProduct(product) {
                 let html = '<tr id="num' + product.cartdetailno + '">';
                 html += '<td class="center aligned">';
@@ -313,9 +348,9 @@
                 html += "<p>" + product.pbrand + "</p>";
                 html += "<p>" + product.pname + "</p>";
                 html += '<p class="grey small">';
-                html += "color :";
+                html += "color&nbsp:&nbsp";
                 html += '<span class="p_color">' + colorFormatting(product.pcolor) + "</span>";
-                html += "/ size :";
+                html += "&nbsp/&nbspsize&nbsp:&nbsp";
                 html += '<span class="p_size">' + product.psize + "</span>";
                 html += '<a class="ui right floated change-btn">옵션 변경</a>';
                 html += "</p></div></div></div></div></td>";
@@ -331,13 +366,14 @@
                 html += '<i class="won sign small icon"></i><span class="price">0</span>';
                 html += "</td>";
                 html += '<td class="center aligned">';
-                html += '<button class="ui basic button">삭제</button>';
+                html += '<button class="ui basic button delete-btn">삭제</button>';
                 html += "</td>";
                 html += "</tr>";
 
                 $(".info-body").append(html);
             }
             
+            // 색상 용어 변경 함수
             function colorFormatting(color){
             	let result;
             	
@@ -347,6 +383,9 @@
             	
             	return result;
             }
+            
+
+
             
         </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
