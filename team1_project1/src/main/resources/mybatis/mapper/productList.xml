@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.ProductListDAO">
+	
+	<select id="getProductList" resultType="productList" parameterType="string">
+		SELECT PCA.ccode, PCA.pcode, PROD.pname, PROD.pbrand, PROD.pprice, PROD.pdate 
+		FROM PCATEGORY PCA 
+		JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
+		WHERE CCODE LIKE #{ccode}
+	</select>
+</mapper>
