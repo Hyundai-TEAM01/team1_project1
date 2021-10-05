@@ -66,9 +66,6 @@ th {
 .o-table th:nth-child(5) {
     width: 12%;
 }
-.o-table th:nth-child(6) {
-    width: 12%;
-}
 
 td {
     padding: 15px;
@@ -81,6 +78,7 @@ td {
     border-left: 0;
 }
 .o-num {
+	margin: 0;
 }
 .sum-date {
     display: block;

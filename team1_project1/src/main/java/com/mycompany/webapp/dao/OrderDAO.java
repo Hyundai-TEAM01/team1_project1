@@ -11,5 +11,5 @@ import com.mycompany.webapp.dto.OrderList;
 public interface OrderDAO {
 	public List<OrderList> getOrderList(int mNo);
 
-	public List<OrderDetail> getOrderDetailList(int mNo, int pOrderNo);
+	public List<OrderDetail> getOrderDetail(int mNo, int pOrderNo);
 }
