@@ -5,5 +5,8 @@
 	<typeAliases>
 		<typeAlias type="com.mycompany.webapp.dto.CartDetail" alias="cartDetail"/>
 		<typeAlias type="com.mycompany.webapp.dto.CartProductInfo" alias="cartProductInfo"/>
+		
+		<typeAlias type="com.mycompany.webapp.dto.ProductList" alias="productList"/>
+		<typeAlias type="com.mycompany.webapp.dto.ProductImg" alias="productImg"/>
 	</typeAliases>	
 </configuration>
