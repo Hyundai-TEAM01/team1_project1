@@ -5,5 +5,7 @@
 	<typeAliases>
 		<typeAlias type="com.mycompany.webapp.dto.CartDetail" alias="cartDetail"/>
 		<typeAlias type="com.mycompany.webapp.dto.CartProductInfo" alias="cartProductInfo"/>
+		<typeAlias type="com.mycompany.webapp.dto.OrderList" alias="orderList"/>
+		<typeAlias type="com.mycompany.webapp.dto.OrderDetail" alias="orderDetail"/>
 	</typeAliases>	
 </configuration>
