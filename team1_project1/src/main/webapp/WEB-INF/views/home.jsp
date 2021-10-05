@@ -90,14 +90,15 @@
 		$.ajax({
 			url: "getProductList",
 		}).done((data) => {
-			for(product of data.productList){
+			console.log(data);
+			/* for(product of data.productList){
 				createCategoryProduct(product);
-			}
+			} */
 		});
 	}
 	
 	function createCategoryProduct(product){
-		console.log(product)
+		console.log(product);
 		/* let html = '<li class="column" targetcode="' + product.pcode + '">'; */
 
 	}

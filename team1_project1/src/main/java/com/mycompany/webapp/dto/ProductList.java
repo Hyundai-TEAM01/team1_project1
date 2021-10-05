@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class ProductList {
+	private int pno;
 	private String ccode;
 	private String pcode;
 	private String pname;

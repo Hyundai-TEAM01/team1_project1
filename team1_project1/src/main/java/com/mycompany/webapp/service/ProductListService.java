@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ProductListDAO;
+import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductList;
 
 @Service
@@ -18,9 +19,10 @@ public class ProductListService {
 	@Resource
 	private ProductListDAO productListDAO;
 	
-	public List<ProductList> getProductList(String ccode){
-		String tempCcode = "MEN_TOP_SHIRTS";
-		
-		return productListDAO.getProductList(tempCcode);
+	public List<ProductList> getProductList(Pager pager){
+		return productListDAO.selectByCategoryPage(pager);
+	}
+	public int getTotalProducListtNum(String ccode) {
+		return productListDAO.productListCount(ccode);
 	}
 }

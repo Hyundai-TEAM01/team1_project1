@@ -2,28 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ProductListDAO">
 	
-	<select id="getProductList" resultMap="productListResultMap" parameterType="string">
-		SELECT PCA.CCODE AS CCODE,
-		PCA.PCODE AS PCODE,
-		PROD.PNAME AS PNAME, 
-		PROD.PBRAND AS PBRAND, 
-		PROD.PPRICE AS PPRICE, 
-		PROD.PDATE AS PDATE, 
-		PROD.ENABLED AS ENABLED,
-		PRODIMG.PCOLOR AS PCOLOR, 
-		PRODIMG.IMGURL1 AS IMGURL1, 
-		PRODIMG.IMGURL2 AS IMGURL2, 
-		PRODIMG.IMGURL3 AS IMGURL3, 
-		PRODIMG.COLORURL AS COLORURL
-	    FROM PCATEGORY PCA 
-	    JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
-	    JOIN PRODUCTIMG PRODIMG ON PROD.PCODE = PRODIMG.PCODE
-	    WHERE CCODE LIKE #{ccode}
-	    ORDER BY ENABLED
+	<select id="selectByCategoryPage" resultMap="productListResultMap" parameterType="pager">
+		SELECT RNUM, CCODE, PCODE, PNAME, PBRAND, PPRICE, PDATE, ENABLED, PCOLOR, IMGURL1, IMGURL2, IMGURL3, COLORURL
+		FROM(
+			SELECT ROWNUM AS RNUM, CCODE, PCODE, PNAME, PBRAND, PPRICE, PDATE, ENABLED, PCOLOR, IMGURL1, IMGURL2, IMGURL3, COLORURL
+			FROM (
+				SELECT PCA.CCODE AS CCODE,
+				PCA.PCODE AS PCODE,
+				PROD.PNAME AS PNAME, 
+				PROD.PBRAND AS PBRAND, 
+				PROD.PPRICE AS PPRICE, 
+				PROD.PDATE AS PDATE, 
+				PROD.ENABLED AS ENABLED,
+				PRODIMG.PCOLOR AS PCOLOR, 
+				PRODIMG.IMGURL1 AS IMGURL1, 
+				PRODIMG.IMGURL2 AS IMGURL2, 
+				PRODIMG.IMGURL3 AS IMGURL3, 
+				PRODIMG.COLORURL AS COLORURL
+			    FROM PCATEGORY PCA 
+			    JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
+			    JOIN PRODUCTIMG PRODIMG ON PROD.PCODE = PRODIMG.PCODE
+			    WHERE CCODE LIKE #{ccode}||'%'
+			    ORDER BY ENABLED
+			)
+			WHERE ROWNUM &lt;= #{endRowNo}
+		)
+		WHERE RNUM &gt;= #{startRowNo}
 
 	</select>
 
 	<resultMap id="productListResultMap" type="productList">
+		<result property="pno" column="RNUM"/>
 		<result property="ccode" column="CCODE"/>
 		<result property="pcode" column="PCODE"/>
 		<result property="pname" column="PNAME"/>
@@ -40,4 +49,8 @@
 			<result property="colorurl" column="COLORURL"/> 
 		</collection>
 	</resultMap>
+	
+	<select id="productListCount" resultType="int">
+		SELECT COUNT(*) FROM PCATEGORY WHERE CCODE=#{ccode}||'%'
+	</select>
 </mapper>
