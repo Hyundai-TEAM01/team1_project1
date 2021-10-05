@@ -1,5 +1,6 @@
 package com.mycompany.webapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,10 +20,18 @@ public class CartService {
 	@Resource
 	private CartDAO cartDao;
 	
-	public List<CartProductInfo> getCartDetailList(int mno){
+	public List<CartProductInfo> getCartProductList(int mno){
 		int cartNo = 1; // mno로 cartno 가져오기
 		
 		
 		return cartDao.getCartProductList(cartNo);
+	}
+	
+	public int deleteCartDetail(int cdno) {
+		return cartDao.removeCartDetail(cdno);
+	}
+	
+	public int deleteCartDetailList(ArrayList<String> cdnoList) {
+		return cartDao.removeCartDetailList(cdnoList);
 	}
 }
