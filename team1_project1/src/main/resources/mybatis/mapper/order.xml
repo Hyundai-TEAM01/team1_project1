@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.OrderDAO">
+	<select id="getOrderList" resultType="orderList" parameterType="int">
+		SELECT po.porderno, po.porderdate, pod.pcode, pod.pcolor, pod.psize, pod.podprice, pod.podamount 
+		FROM productorder po, porderdetail pod
+		WHERE po.porderno = pod.porderno
+		AND mno = #{mNo}
+	</select>
+	
+	<select id="getOrderDetailList" resultType="orderDetail" parameterType="int">
+		SELECT po.porderno, po.porderdate, pod.pcode, pod.pcolor, pod.psize, pod.podprice, pod.podamount, po.pordertotalpoint, po.porderphone, po.pordername, po.porderphone, po.porderaddr1, po.porderaddr2, po.porderaddr3, po.pordertel, po.porderrequest,po.pordertotalorgprice, po.porderdiscount, po.porderpayprice, po.porderstatus, po.porderdonedate, po.porderpayname, po.porderpayno
+		FROM productorder po, porderdetail pod
+		WHERE po.porderno = pod.porderno
+		AND mno = #{param1} AND po.porderno = #{param2}
+	</select>
+</mapper>

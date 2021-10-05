@@ -76,6 +76,32 @@
     </div>
 
 </div>
+<script>
+	$(function () {
+	    init();
+	});
+
+	function init(){
+		// ccode에 따른 productList 출력
+		printCategoryProductList();
+	}
+	
+	function printCategoryProductList(){
+		$.ajax({
+			url: "getProductList",
+		}).done((data) => {
+			for(product of data.productList){
+				createCategoryProduct(product);
+			}
+		});
+	}
+	
+	function createCategoryProduct(product){
+		console.log(product)
+		/* let html = '<li class="column" targetcode="' + product.pcode + '">'; */
+
+	}
+</script>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

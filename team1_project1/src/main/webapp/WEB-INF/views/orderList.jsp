@@ -144,4 +144,6 @@
 	            </div>
 	</div>
 
+	<script src="${pageContext.request.contextPath}/resources/js/orderList.js"></script>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
