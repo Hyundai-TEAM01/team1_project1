@@ -2,17 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.OrderDAO">
-	<select id="getOrderList" resultType="orderList" parameterType="int">
-		SELECT po.porderno, po.porderdate, pod.pcode, pod.pcolor, pod.psize, pod.podprice, pod.podamount 
-		FROM productorder po, porderdetail pod
-		WHERE po.porderno = pod.porderno
-		AND mno = #{mNo}
+	<!-- 주문 목록 페이지 불러오기 -->
+	<resultMap id="OrderListResult" type="orderList">
+	    <result property="porderno" column="PORDERNO"/>
+	    <result property="porderdate" column="PORDERDATE"/>
+	    <collection property="orderItems" column="PORDERNO" javaType="java.util.ArrayList" ofType="orderItem" select="getOrderItem"/>
+	</resultMap>
+	
+	<select id="getOrderList" resultMap="OrderListResult" parameterType="int">
+		SELECT porderno, porderdate
+		FROM productorder
+		WHERE mno = #{mNo}
 	</select>
 	
-	<select id="getOrderDetailList" resultType="orderDetail" parameterType="int">
-		SELECT po.porderno, po.porderdate, pod.pcode, pod.pcolor, pod.psize, pod.podprice, pod.podamount, po.pordertotalpoint, po.porderphone, po.pordername, po.porderphone, po.porderaddr1, po.porderaddr2, po.porderaddr3, po.pordertel, po.porderrequest,po.pordertotalorgprice, po.porderdiscount, po.porderpayprice, po.porderstatus, po.porderdonedate, po.porderpayname, po.porderpayno
-		FROM productorder po, porderdetail pod
-		WHERE po.porderno = pod.porderno
-		AND mno = #{param1} AND po.porderno = #{param2}
+	<!-- 주문 목록, 상세 페이지 주문상품아이템 -->
+	<select id="getOrderItem" resultType="orderItem">
+		SELECT pod.podno, pod.porderno, pod.pcode, pod.pcolor, pod.psize, pod.podprice, pod.podamount, pod.podstatus, pimg.imgurl1, p.pbrand, p.pname, p.pprice
+		FROM porderdetail pod, productimg pimg, product p
+		WHERE pod.porderno = #{porderno} AND pod.pcode = pimg.pcode AND pod.pcode = p.pcode
+	</select>
+	
+	<!-- 주문상세페이지 불러오기  -->	
+	<resultMap id="OrderDetailResult" type="orderDetail">
+	    <result property="porderno" column="PORDERNO"/>
+	    <result property="mno" column="MNO"/>
+	    <result property="pordermphone" column="PORDERMPHONE"/>
+	    <result property="pordername" column="PORDERNAME"/>
+	    <result property="porderphone" column="PORDERPHONE"/>
+	    <result property="porderaddr1" column="PORDERADDR1"/>
+	    <result property="porderaddr2" column="PORDERADDR2"/>
+	    <result property="porderaddr3" column="PORDERADDR3"/>
+	    <result property="pordertel" column="PORDERTEL"/>
+	    <result property="porderrequest" column="PORDERREQUEST"/>
+	    <result property="porderemail" column="PORDEREMAIL"/>
+	    <result property="pordertotalorgprice" column="PORDERTOTALORGPRICE"/>
+	    <result property="porderdiscount" column="PORDERDISCOUNT"/>
+	    <result property="porderpayprice" column="PORDERPAYPRICE"/>
+	    <result property="pordertotalpoint" column="PORDERTOTALPOINT"/>
+	    <result property="porderdate" column="PORDERDATE"/>
+	    <result property="porderdonedate" column="PORDERDONEDATE"/>
+	    <result property="porderpayment" column="PORDERPAYMENT"/>
+	    <result property="porderpayname" column="PORDERPAYNAME"/>
+	    <result property="porderpayno" column="PORDERPAYNO"/>
+	    <collection property="orderItems" column="PORDERNO" javaType="java.util.ArrayList" ofType="orderItem" select="getOrderItem"/>
+	</resultMap>
+	
+	<select id="getOrderDetail" resultMap="OrderDetailResult" parameterType="int">
+		SELECT porderno, mno, pordermphone, pordername, porderphone,
+		 porderaddr1, porderaddr2, porderaddr3, pordertel,
+		 porderrequest, porderemail, pordertotalorgprice,
+		 porderdiscount, porderpayprice, pordertotalpoint,
+		 porderdate, porderdonedate, porderpayment,
+		 porderpayname, porderpayno, porderpayinstallment
+		FROM productorder
+		WHERE mno = #{param1} AND porderno = #{param2}
 	</select>
 </mapper>

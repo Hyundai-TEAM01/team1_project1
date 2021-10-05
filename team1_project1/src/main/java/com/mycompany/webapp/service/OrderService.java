@@ -25,11 +25,11 @@ public class OrderService {
 		return orderDao.getOrderList(sampleMno);
 	}
 
-	public List<OrderDetail> getOrderDetailList(int mNo, int pOrderNo) {
+	public List<OrderDetail> getOrderDetail(int mNo, int pOrderNo) {
 		// 유저 넘버와 그에 맞는 주문번호로 상품주문상세정보 가져오기
 		int samplemNo = 1;
 		int samplepOrderNo = 1;
-		return orderDao.getOrderDetailList(samplemNo, samplepOrderNo);
+		return orderDao.getOrderDetail(samplemNo, samplepOrderNo);
 	}
 
 }
