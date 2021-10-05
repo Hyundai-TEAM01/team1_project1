@@ -9,6 +9,7 @@
 		PROD.PBRAND AS PBRAND, 
 		PROD.PPRICE AS PPRICE, 
 		PROD.PDATE AS PDATE, 
+		PROD.ENABLED AS ENABLED,
 		PRODIMG.PCOLOR AS PCOLOR, 
 		PRODIMG.IMGURL1 AS IMGURL1, 
 		PRODIMG.IMGURL2 AS IMGURL2, 
@@ -18,9 +19,10 @@
 	    JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
 	    JOIN PRODUCTIMG PRODIMG ON PROD.PCODE = PRODIMG.PCODE
 	    WHERE CCODE LIKE #{ccode}
-		
+	    ORDER BY ENABLED
+
 	</select>
-	
+
 	<resultMap id="productListResultMap" type="productList">
 		<result property="ccode" column="CCODE"/>
 		<result property="pcode" column="PCODE"/>
@@ -28,9 +30,10 @@
 		<result property="pbrand" column="PBRAND"/>
 		<result property="pprice" column="PPRICE"/>
 		<result property="pdate" column="PDATE"/>
+		<result property="enabled" column="ENABLED"/>
 		<collection property="color" ofType="productImg">
-			<id property="pcode" column="PCODE"/>
-			<result property="pcolor" column="PCOLOR"/>
+			<id property="pcolor" column="PCOLOR"/>
+			<result property="pcode" column="PCODE"/>
 			<result property="imgurl1" column="IMGURL1"/>
 			<result property="imgurl2" column="IMGURL2"/>
 			<result property="imgurl3" column="IMGURL3"/> 
