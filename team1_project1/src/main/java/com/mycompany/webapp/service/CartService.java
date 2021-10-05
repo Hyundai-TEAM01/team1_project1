@@ -31,7 +31,15 @@ public class CartService {
 		return cartDao.removeCartDetail(cdno);
 	}
 	
-	public int deleteCartDetailList(ArrayList<String> cdnoList) {
+	public int deleteCartDetailList(String[] cdnoList) {
 		return cartDao.removeCartDetailList(cdnoList);
 	}
+	
+	
+	public List<CartProductInfo> getCartDetailList(String[] pList){
+		logger.info("service run");
+		return cartDao.getCartProductListByArray(pList);
+	}
+	
+	
 }

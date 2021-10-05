@@ -9,19 +9,36 @@
 	<select id="getCartProductList" resultType="cartProductInfo" parameterType="int">
 		SELECT cartdetailno, cartno, cd.pcode, psize, cd.pcolor, amount, regdate, isdeleted, imgurl1 as imgurl , pbrand, pname, pprice 
 		FROM CARTDETAIL cd, PRODUCTIMG img, PRODUCT p
-		WHERE CARTNO = #{cartNo} and cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode
+		WHERE CARTNO = #{cartNo} and cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode and isdeleted = 0
 	</select>
 	
-	<delete id="removeCartDetail" parameterType="int">
-		DELETE FROM cartdetail WHERE cartdetailno = #{cartdetailno}
-	</delete>
+	<update id="removeCartDetail" parameterType="int">
+		UPDATE cartdetail SET isdeleted = 1 WHERE cartdetailno = #{cartdetailno}
+	</update>
 	
-	<delete id="removeCartDetailList">
-		DELETE FROM cartdetail 
+	<update id="removeCartDetailList">
+		UPDATE cartdetail SET isdeleted = 1 
 		WHERE cartdetailno IN 
-			<foreach collection="list" item="item" separator="," open="(" close=")">
+			<foreach collection="array" item="item" separator="," open="(" close=")">
 				${item}
 			</foreach>
-		
-	</delete>
+	</update>
+	
+	<insert id="insertCartDetail" parameterType="cartDetail">
+		INSERT INTO cartdetail values (SEQ_CARTDETAILNO.NEXTVAL,#{cartNo}, #{pcode},#{psize},#{pcolor},#{amount},SYSDATE,0)
+	</insert>
+	
+	<select id="selectByCartDetailNo" parameterType="int" resultType="cartDetail">
+		SELECT cartdetailno, cartno, pcode, psize, pcolor, amount, regdate, isdeleted FROM CARTDETAIL WHERE cartdetailno = #{cartdetailno}
+	</select>
+	
+	
+	<select id="getCartProductListByArray" resultType="cartProductInfo">
+		SELECT cartdetailno, cartno, cd.pcode, psize, cd.pcolor, amount, regdate, isdeleted, imgurl1 as imgurl , pbrand, pname, pprice 
+		FROM CARTDETAIL cd, PRODUCTIMG img, PRODUCT p
+		WHERE cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode and isdeleted = 0 AND cartdetailno IN 
+			<foreach collection="array" item="item" separator="," open="(" close=")">
+				#{item}
+			</foreach>
+	</select>
 </mapper>
