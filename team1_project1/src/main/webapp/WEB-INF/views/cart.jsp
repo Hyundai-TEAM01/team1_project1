@@ -55,7 +55,7 @@
             <div class="ui divider"></div>
             <div class="ui five column center aligned padded grid">
                 <div class="column">
-                    <button class="ui button">선택 상품 삭제</button>
+                    <button class="ui button select-delete">선택 상품 삭제</button>
                 </div>
 
                 <div class="column">
@@ -234,7 +234,8 @@
                     });
                 });
 
-                
+                // 선택 삭제 버튼 이벤트 할당
+                $("button.select-delete").click(pListDelete);
 
             }
 
@@ -244,18 +245,55 @@
             }
 
             // 상품 삭제(db)
-            function pDelete(num) {
-            	
+            function pDelete(cdno) {
+            	console.log("삭제 실행");
             	$.ajax({
-            		url :'' ,
-            		method : 'DELETE' // post, delete 쓸지 결정하기
+            		url :"cartDetailDelete" ,
+            		method : 'DELETE', // post, delete 쓸지 결정하기
+            		data : cdno
             	}).done((data)=>{
             		// 데이터 삭제 성공 여부 확인 후 처리하기!
+            		console.log(data.result);
+            		if(data.result == "1"){
+            			console.log("정상적으로 삭제");
+            			window.location.reload();
+            		}else{            			
+            			console.log("삭제 실패");
+            		}
+            	});
+            }
+            
+            // 선택 상품 삭제
+            function pListDelete(){
+            	let pList =[];
+            	$("tbody input[name='check_box']").each((idx,item)=>{
+            		if($(item).prop("checked") === true){
+            			pList.push($(item).closest("tr").attr("id").replace("num",""));
+            		}
+            	});
+            	
+            	if(pList.length === 0){
+            		return;
+            	}
+            	
+            	$.ajax({
+            		url: "cartDetailListDelete",
+            		method : "delete",
+            		data : JSON.stringify(pList),
+            		contentType : "Application/json; charset=UTF-8;"
+            	}).done((data)=>{
+            		window.location.reload();
             	});
             }
 
             // 상품 변경 반영(db)
-            function pUpdate() {}
+            function pUpdate() {
+            	console.log("실행");
+            	$.ajax({
+            		url : "cartUpdate"
+            	}).done((data)=>{})
+            	
+            }
 
             // 상품 재고값 가져오기
             function getStockAmount() {}
@@ -323,10 +361,12 @@
 	           		$(".delete-btn").each((idx,item)=>{
 	           			$(item).click(()=>{
 	           				let cdno = $(item).closest("tr").attr('id').replace('num','');
-	           				console.log(cdno + "삭제");
+	           				pDelete(cdno);
 	           			})
 	           		})
 	                updateAmoumtEvent();
+
+	           		
                 });
                 
             }

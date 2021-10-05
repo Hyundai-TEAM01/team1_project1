@@ -11,4 +11,17 @@
 		FROM CARTDETAIL cd, PRODUCTIMG img, PRODUCT p
 		WHERE CARTNO = #{cartNo} and cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode
 	</select>
+	
+	<delete id="removeCartDetail" parameterType="int">
+		DELETE FROM cartdetail WHERE cartdetailno = #{cartdetailno}
+	</delete>
+	
+	<delete id="removeCartDetailList">
+		DELETE FROM cartdetail 
+		WHERE cartdetailno IN 
+			<foreach collection="list" item="item" separator="," open="(" close=")">
+				${item}
+			</foreach>
+		
+	</delete>
 </mapper>

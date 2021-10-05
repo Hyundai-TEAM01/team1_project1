@@ -1,5 +1,6 @@
 package com.mycompany.webapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,8 +10,10 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,7 +44,7 @@ public class CartController {
 	public String getCartProductInfoList() {
 		JSONObject json = new JSONObject();
 		
-		List<CartProductInfo> li = cartService.getCartDetailList(0);
+		List<CartProductInfo> li = cartService.getCartProductList(0);
 		json.append("infoList", li);
 		
 		JSONArray jsonArr = new JSONArray();
@@ -58,4 +61,25 @@ public class CartController {
 		json.append("stockList", jsonArr);
 		return json.toString();
 	}
+	
+	@DeleteMapping(value = "/cartDetailDelete", produces = "Application/json; charset=UTF-8;")
+	@ResponseBody
+	public String cartDetailDelete(@RequestBody String cdno) {
+		JSONObject json = new JSONObject();
+		json.put("result", cartService.deleteCartDetail(Integer.parseInt(cdno)));
+		
+		return json.toString();
+	}
+	
+	@DeleteMapping(value = "/cartDetailListDelete", produces = "Application/json; charset=UTF-8;")
+	@ResponseBody
+	public String cartDetailList(@RequestBody ArrayList<String> pList) {
+		JSONObject json = new JSONObject();
+		json.put("result", cartService.deleteCartDetailList(pList));
+		
+		return json.toString();
+	}
+	
+	
+	
 }
