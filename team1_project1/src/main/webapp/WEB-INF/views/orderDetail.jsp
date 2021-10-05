@@ -156,5 +156,7 @@
                 </tr>
             </table>
         </div>
+        
+      <script src="${pageContext.request.contextPath}/resources/js/orderDetail.js"></script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
