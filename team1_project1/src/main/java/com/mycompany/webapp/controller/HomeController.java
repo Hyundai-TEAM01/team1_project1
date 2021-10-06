@@ -48,16 +48,6 @@ public class HomeController {
 		pager.setCcode(ccode);
 		logger.info("ProductList param : " + pager.getTotalPageNo() + " " + pager.getEndPageNo());
 		
-		HashMap<String, Object> pagerMap = new HashMap<String, Object>();
-		pagerMap.put("groupNo", pager.getGroupNo());
-		pagerMap.put("startPageNo", pager.getStartPageNo());
-		pagerMap.put("endPageNo", pager.getEndPageNo());
-		pagerMap.put("pageNo", pager.getPageNo());
-		pagerMap.put("groupNo", pager.getGroupNo());
-		pagerMap.put("totalGroupNo", pager.getTotalGroupNo());
-		pagerMap.put("totalPageNo", pager.getTotalPageNo());
-		pagerMap.put("ccode", pager.getCcode());
-		
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map<String, Object> map = objectMapper.convertValue(pager, Map.class);
 		
