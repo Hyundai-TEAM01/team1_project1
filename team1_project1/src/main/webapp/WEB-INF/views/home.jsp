@@ -19,46 +19,51 @@
 
 	function init(){
 		// ccode에 따른 productList, pager 출력
-		printCategoryProductList(1, "MEN_TOP_SHIRTS");
+		printCategoryProductList(1, "WOMEN_Top_Shirts");
 	}
 	
 	function printCategoryProductList(pageNo, ccode){
+		if(window.location.search != ''){
+			let urlParams = new URLSearchParams(window.location.search);
+			pageNo = urlParams.get('pageNo');
+			ccode = urlParams.get('ccode');
+			console.log("urlParam : " + pageNo + " " +ccode);	
+		}
 		$.ajax({
-			url: "getProductList",
-			data: {"pageNo" : pageNo, "ccode" : ccode},
+			url: 'getProductList' + '?ccode=' + ccode + '&pageNo=' + pageNo,
+			/* data: {"pageNo" : pageNo, "ccode" : ccode}, */
 		}).done((data) => {
 			console.log(data);
-			for(product of data.productList){
-				createCategoryProduct(product);
-			}
-			/* createPager(data.pager[0]); */
+			createCategoryProduct(data.productList);
 			if(data.pager.totalPageNo>0){
 	            setHtml(data.pager);
 	            setAction(data.pager);
 	        }else{
 	        	$(".paging").html('');
 	        }
-			
 		});
 	}
 	
-	function createCategoryProduct(product){
-		
-		let html = '<li class="column mg-product">';
-        html += '<a href="product/' + product.pcode + "_" + product.color[0].pcolor + "?ccode=" + product.ccode + '">';
-       	html += '<span><img class="main-img" src="' + product.color[0].imgurl1 + '"></span></a>';
-        html += '<a><span class="brand">' + product.pbrand + '</span>';
-        html += '<span class="title">' + product.pname + '</span>';
-        html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
-        html += '<span class="flag"><span class="product">NEW</span></span></a>';
-        html += '<div class="color-more-wrap">';
-        for(color of product.color){
-        	html += '<a><img class="img-color-more" src="' + color.colorurl +'"></a>';
-        }
-    	html += '</div>';
-    	html += '</li>';
-    	
-    	$(".itemlist").append(html);
+	function createCategoryProduct(productList){
+		let itemlist = $(".itemlist");
+		itemlist.html('');
+		for(product of productList){
+			let html = '<li class="column mg-product">';
+	        html += '<a href="product/' + product.pcode + "_" + product.color[0].pcolor + "?ccode=" + product.ccode + '">';
+	       	html += '<span><img class="main-img" src="' + product.color[0].imgurl1 + '"></span></a>';
+	        html += '<a><span class="brand">' + product.pbrand + '</span>';
+	        html += '<span class="title">' + product.pname + '</span>';
+	        html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
+	        html += '<span class="flag"><span class="product">NEW</span></span></a>';
+	        html += '<div class="color-more-wrap">';
+	        for(color of product.color){
+	        	html += '<a><img class="img-color-more" src="' + color.colorurl +'"></a>';
+	        }
+	    	html += '</div>';
+	    	html += '</li>';
+	    	
+	    	itemlist.append(html);	
+		}
 	}
 	
 	// pager 생성
@@ -131,7 +136,7 @@
 	}
 	
 	function goPage(pageNo, ccode){
-		$(".itemlist").html('');
+		history.pushState('', '', '?ccode=' + ccode +"&pageNo=" + pageNo);
 		printCategoryProductList(pageNo, ccode);
     };
 

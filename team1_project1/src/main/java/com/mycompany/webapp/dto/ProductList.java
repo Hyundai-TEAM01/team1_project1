@@ -3,9 +3,13 @@ package com.mycompany.webapp.dto;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductList {
 	private int pno;
 	private String ccode;
@@ -16,5 +20,4 @@ public class ProductList {
 	private Date pdate;
 	private char enabled;
 	private List<ProductImg> color;
-	// productimg와 productstock 추가해야함
 }

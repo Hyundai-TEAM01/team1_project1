@@ -56,14 +56,13 @@ public class HomeController {
 
 	@GetMapping(value = "/getProductList", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
-	public String getProductList(@RequestParam(name = "pageNo", defaultValue="1") int pageNo, @RequestParam(name = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) throws JsonProcessingException {
+	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, @RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) throws JsonProcessingException {
+		logger.info("실행");
 		JSONObject json = new JSONObject();
-
+		logger.info(pageNo + " hello " + ccode);
 		int totalRows = productListService.getTotalProducListtNum(ccode);
-		logger.info("totalRows : " + Integer.toString(totalRows));
-		Pager pager = new Pager(12, 5, totalRows, pageNo);
+		Pager pager = new Pager(12, 10, totalRows, pageNo);
 		pager.setCcode(ccode);
-		logger.info("ProductList param : " + pager.getTotalPageNo() + " " + pager.getEndPageNo());
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		Map<String, Object> map = objectMapper.convertValue(pager, Map.class);

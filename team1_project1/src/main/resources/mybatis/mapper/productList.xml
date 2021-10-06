@@ -2,35 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ProductListDAO">
 	
-	<select id="selectByCategoryPage" resultMap="productListResultMap" parameterType="pager">
-		SELECT RNUM, CCODE, PCODE, PNAME, PBRAND, PPRICE, PDATE, ENABLED, PCOLOR, IMGURL1, IMGURL2, IMGURL3, COLORURL
-		FROM(
-			SELECT ROWNUM AS RNUM, CCODE, PCODE, PNAME, PBRAND, PPRICE, PDATE, ENABLED, PCOLOR, IMGURL1, IMGURL2, IMGURL3, COLORURL
-			FROM (
-				SELECT PCA.CCODE AS CCODE,
-				PCA.PCODE AS PCODE,
-				PROD.PNAME AS PNAME, 
-				PROD.PBRAND AS PBRAND, 
-				PROD.PPRICE AS PPRICE, 
-				PROD.PDATE AS PDATE, 
-				PROD.ENABLED AS ENABLED,
-				PRODIMG.PCOLOR AS PCOLOR, 
-				PRODIMG.IMGURL1 AS IMGURL1, 
-				PRODIMG.IMGURL2 AS IMGURL2, 
-				PRODIMG.IMGURL3 AS IMGURL3, 
-				PRODIMG.COLORURL AS COLORURL
-			    FROM PCATEGORY PCA 
-			    JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
-			    JOIN PRODUCTIMG PRODIMG ON PROD.PCODE = PRODIMG.PCODE
-			    WHERE CCODE LIKE #{ccode}||'%'
-			    ORDER BY ENABLED, PDATE DESC, PCODE
-			)
-			WHERE ROWNUM &lt;= #{endRowNo}
-		)
-		WHERE RNUM &gt;= #{startRowNo}
-
-	</select>
-
 	<resultMap id="productListResultMap" type="productList">
 		<result property="pno" column="RNUM"/>
 		<result property="ccode" column="CCODE"/>
@@ -40,15 +11,38 @@
 		<result property="pprice" column="PPRICE"/>
 		<result property="pdate" column="PDATE"/>
 		<result property="enabled" column="ENABLED"/>
-		<collection property="color" ofType="productImg">
-			<id property="pcolor" column="PCOLOR"/>
-			<result property="pcode" column="PCODE"/>
-			<result property="imgurl1" column="IMGURL1"/>
-			<result property="imgurl2" column="IMGURL2"/>
-			<result property="imgurl3" column="IMGURL3"/> 
-			<result property="colorurl" column="COLORURL"/> 
-		</collection>
+		<collection property="color" column="PCODE" javaType="java.util.ArrayList" ofType="productImg" select="selectByProductImg"/>
 	</resultMap>
+	<!-- 카테고리별 상품 목록 조회 -->
+	<select id="selectByCategoryPage" resultMap="productListResultMap" parameterType="pager">
+		SELECT rnum, ccode, pcode, pname, pbrand, pprice, pdate, enabled
+		FROM(
+			SELECT rownum AS rnum, ccode, pcode, pname, pbrand, pprice, pdate, enabled
+			FROM (
+				SELECT pca.ccode AS ccode,
+				pca.pcode AS pcode,
+				prod.pname AS pname, 
+				prod.pbrand AS pbrand, 
+				prod.pprice AS pprice, 
+				prod.pdate AS pdate, 
+				prod.enabled AS enabled
+				FROM pcategory pca 
+				JOIN product prod ON pca.pcode = prod.pcode
+				WHERE ccode LIKE #{ccode}||'%'
+				ORDER BY enabled, pdate DESC, pcode
+			)
+			WHERE rownum &lt;= #{endRowNo}
+		)
+		WHERE rnum &gt;= #{startRowNo}
+	</select>
+	<!-- 상품별 컬러별 이미지 조회 -->
+	<select id="selectByProductImg" resultType="productImg">
+		SELECT prod.pcode, prodimg.pcolor AS pcolor, prodimg.imgurl1 AS imgurl1, prodimg.imgurl2 AS imgurl2, prodimg.imgurl3 AS imgurl3, prodimg.colorurl AS colorurl
+		FROM product prod
+		JOIN productimg prodimg
+		ON prod.pcode = prodimg.pcode
+		WHERE prod.pcode = #{pcode}
+	</select>
 	
 	<select id="productListCount" resultType="int">
 		SELECT COUNT(*) FROM PCATEGORY WHERE CCODE LIKE #{ccode}||'%'
