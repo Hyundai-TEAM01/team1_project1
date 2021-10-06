@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.mycompany.webapp.dao.OrderDAO;
 import com.mycompany.webapp.dto.OrderDetail;
 import com.mycompany.webapp.dto.OrderList;
+import com.mycompany.webapp.dto.ProductOrder;
 
 @Service
 public class OrderService {
@@ -30,6 +31,10 @@ public class OrderService {
 		int samplemNo = 1;
 		int samplepOrderNo = 1;
 		return orderDao.getOrderDetail(samplemNo, samplepOrderNo);
+	}
+	
+	public int newOrder(ProductOrder po) {
+		return orderDao.createOrder(po);
 	}
 
 }

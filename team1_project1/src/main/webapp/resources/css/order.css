@@ -104,6 +104,17 @@ input[name='porderdiscount'] {
 }
 
 .m-wrap {
-	align-content : center;
+	align-content: center;
 	vertical-align: middle;
+}
+
+.small-input {
+	width: 20% !important;
+	align-content: center;
+	vertical-align: middle;
+}
+
+input[name='porderpayno'] {
+	margin-left: 10px !important;
+	margin-right: 10px !important;	
 }

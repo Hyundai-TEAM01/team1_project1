@@ -7,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.dto.ProductOrder;
 import com.mycompany.webapp.service.OrderService;
 
 @Controller
@@ -57,5 +59,24 @@ public class OrderController {
 		json.append("result", orderService.getOrderDetail(1, 1));
 		return json.toString();
 	}
+	
+	@PostMapping(value = "/newOrder", produces = "Application/json; charset=UTF-8;")
+	@ResponseBody
+	public String newOrder(ProductOrder order) {
+		logger.info(order.toString());
+		
+		int mno = 1;
+		order.setMno(mno);
+		int result = orderService.newOrder(order);
+		
+		if(result == 1) {
+			// 성공
+		}else {
+			// 실패 또는 오류
+		}
+		
+		return null;
+	}
+	
 
 }
