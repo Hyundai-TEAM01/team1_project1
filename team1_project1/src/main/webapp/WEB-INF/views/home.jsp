@@ -6,63 +6,7 @@
 
 <div class="home-container">
     <!-- <div class="filterWrap">필터</div> -->
-    <ul class="itemlist">
-        <li class="column">
-            <a href="product/content">
-                <span><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01.jpg"></span>
-            </a> <a>
-                <span class="brand">CLUB MONACO</span> <span class="title">하운드투스 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>168,000</span> <span class="flag"><span class="product">NEW</span></span>
-            </a>
-            <div class="color-more-wrap">
-                <a></a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
-                <a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
-            </div></li>
-
-        <li class="column">
-            <a href="product/content">
-                <span><img src="http://newmedia.thehandsome.com/MM/2B/FW/MM2B9WSH029HOA_GY_T01.jpg"></span>
-            </a> <a>
-                <span class="brand">CLUB MONACO</span> <span class="title">포켓 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>178,000</span> <span class="flag"><span class="product">NEW</span></span>
-            </a>
-            <div class="color-more-wrap">
-                <a></a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
-                <a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
-            </div></li>
-
-        <li class="column">
-            <a href="product/content">
-                <span><img src="http://newmedia.thehandsome.com/SH/2B/FW/SH2B9WSHT06M_MD_T01.jpg"></span>
-            </a> <a>
-                <span class="brand">SYSTEM HOMME</span> <span class="title">[PARIS] 코듀로이 셔츠</span> <span class="price"><i class="won sign icon"></i>275,000</span> <span class="flag"></span>
-            </a>
-            <div class="color-more-wrap">
-                <a></a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
-                <a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
-            </div></li>
-
-        <li class="column">
-            <a href="product/content">
-                <span><img src="http://newmedia.thehandsome.com/TH/2B/FW/TH2B9WSH713M_BL_T01.jpg"></span>
-            </a> <a>
-                <span class="brand">TIME HOMME</span> <span class="title">투톤 체크 셔츠</span> <span class="price"><i class="won sign icon"></i>395,000</span> <span class="flag"></span>
-            </a>
-            <div class="color-more-wrap">
-                <a></a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
-                <a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
-            </div></li>
-
-        <li class="column">
-            <a href="product/content">
-                <span><img src="http://newmedia.thehandsome.com/TH/2B/FW/TH2B9WSH708M_BR_T01.jpg"></span>
-            </a> <a>
-                <span class="brand">TIME HOMME</span> <span class="title">트위드 셔츠</span> <span class="price"><i class="won sign icon"></i>850,000</span> <span class="flag"></span>
-            </a>
-            <div class="color-more-wrap">
-                <a></a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_13_14.jpg"></a>
-                <a><img class="img-color-more" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_13_14.jpg"></a>
-            </div></li>
-
-    </ul>
+    <ul class="itemlist"></ul>
 
     <div class="paging">
         <a href="#" class="prev2"><i class="angle double left icon"></i></a>
@@ -74,15 +18,16 @@
         <a href="#" class="next"><i class="angle right icon"></i></a>
         <a href="#" class="next2"><i class="angle double right icon"></i></a>
     </div>
-
+    
 </div>
 <script>
 	$(function () {
 	    init();
+	    console.log("실행");
 	});
 
 	function init(){
-		// ccode에 따른 productList 출력
+		// ccode에 따른 productList, pager 출력
 		printCategoryProductList();
 	}
 	
@@ -90,18 +35,40 @@
 		$.ajax({
 			url: "getProductList",
 		}).done((data) => {
-			console.log(data);
-			/* for(product of data.productList){
+			for(product of data.productList[0]){
 				createCategoryProduct(product);
-			} */
+			}
+			console.log(data);
+			/* createPager(data.pager[0]); */
 		});
 	}
 	
 	function createCategoryProduct(product){
 		console.log(product);
-		/* let html = '<li class="column" targetcode="' + product.pcode + '">'; */
-
+		let html = '<li class="column mg-product">';
+	        html += '<a href="product/' + product.pcode + "_" + product.color[0].pcolor + "?ccode=" + product.ccode + '">';
+	       	html += '<span><img class="main-img" src="' + product.color[0].imgurl1 + '"></span></a>';
+	        html += '<a><span class="brand">' + product.pbrand + '</span>';
+	        html += '<span class="title">' + product.pname + '</span>';
+	        html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
+	        html += '<span class="flag"><span class="product">NEW</span></span></a>';
+	        html += '<div class="color-more-wrap">';
+	        for(color of product.color){
+	        	html += '<a><img class="img-color-more" src="' + color.colorurl +'"></a>';
+	        }
+	    	html += '</div>';
+	    	html += '</li>';
+	    	$(".itemlist").append(html);
 	}
+	
+	// pager 생성
+	function createPager(pager){
+		
+	}
+	
+	function wonChange(num) {
+        return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
 
 
