@@ -10,6 +10,7 @@
 		<typeAlias type="com.mycompany.webapp.dto.OrderDetail" alias="orderDetail"/>
 		<typeAlias type="com.mycompany.webapp.dto.ProductList" alias="productList"/>
 		<typeAlias type="com.mycompany.webapp.dto.ProductImg" alias="productImg"/>
+		<typeAlias type="com.mycompany.webapp.dto.ProductOrder" alias="productOrder"/>
 		<typeAlias type="com.mycompany.webapp.dto.Pager" alias="pager"/>
 	</typeAliases>	
 </configuration>

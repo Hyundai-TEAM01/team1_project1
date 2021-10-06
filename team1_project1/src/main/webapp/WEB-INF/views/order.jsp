@@ -33,7 +33,7 @@
                                 </tr>
                                 <tr>
                                     <td class="center aligned">휴대폰</td>
-                                    <td>010-0000-0000</td>
+                                    <td class="mphone">010-0000-0000</td>
                                 </tr>
                                 <tr>
                                     <td class="center aligned">E-mail</td>
@@ -394,10 +394,21 @@
 	            	mp = mp === "" ? 0 : mp;
 	            	$("[name=porderdiscount]").val(mp);
 	            	
+            		let plist = "";
+            		$(".info-body tr").each((idx,item)=>{
+            			plist += $(item).attr("id")+",";
+            		})
+            		plist = plist.slice(0,-1);
+            		console.log(plist);
+	            	
 					$("form").append("<input type='text' name='porderphone' value='"+porderphone+"'>");   
 					$("form").append("<input type='text' name='pordertel' value='"+pordertel+"'>");   
-					$("form").append("<input type='text' name='porderemail' value='"+porderemail+"'>");   
+					$("form").append("<input type='text' name='porderemail' value='"+porderemail+"'>");  
+					$("form").append("<input type='text' name='pordermphone' value='"+$(".mphone").html().replace("-","")+"'>");  					
+					$("form").append("<input type='text' name='plist' value='"+plist+"'>");  					
             		$("form").submit();
+            		
+
             	}
             }
             
