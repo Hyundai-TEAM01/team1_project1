@@ -23,7 +23,7 @@
 			    JOIN PRODUCT PROD ON PCA.PCODE = PROD.PCODE 
 			    JOIN PRODUCTIMG PRODIMG ON PROD.PCODE = PRODIMG.PCODE
 			    WHERE CCODE LIKE #{ccode}||'%'
-			    ORDER BY ENABLED
+			    ORDER BY ENABLED, PDATE DESC, PCODE
 			)
 			WHERE ROWNUM &lt;= #{endRowNo}
 		)
@@ -51,6 +51,6 @@
 	</resultMap>
 	
 	<select id="productListCount" resultType="int">
-		SELECT COUNT(*) FROM PCATEGORY WHERE CCODE=#{ccode}||'%'
+		SELECT COUNT(*) FROM PCATEGORY WHERE CCODE LIKE #{ccode}||'%'
 	</select>
 </mapper>
