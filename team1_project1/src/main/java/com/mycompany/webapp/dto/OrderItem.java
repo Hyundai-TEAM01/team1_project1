@@ -13,8 +13,8 @@ public class OrderItem {
 	private String pcode;
 	private String pcolor;
 	private String psize;
-	private int porderprice;
-	private int porderamount;
+	private int podprice;
+	private int podamount;
 	private String podstatus;
 	private String imgurl1;
 	private String pbrand;

@@ -5,10 +5,10 @@ $(function () {
 	.done((data) => {
 		if(data && data.result) { // 데이터 잘 불러왔는가
 			console.log(data.result);
-			if(data.result[0].length > 0) { // 데이터 품목이 1개 이상인가
+			if(data.result !== 'fail') {
 				let itemStr = "";
-								
-				data.result[0].forEach((item) => {
+							
+				data.result.forEach((item) => {
 					let porderno = item.porderno;
 					let porderdate = item.porderdate;
 					let itemCnt = item.orderItems.length;
@@ -17,7 +17,7 @@ $(function () {
 					itemStr += "<td rowspan=" + itemCnt + '" class="order-num">';
 					itemStr += '<p class="o-num">' + porderno + '</p>';
 					itemStr += '<span class="sum-date">(' + printDate(porderdate) + ')</span>';
-					itemStr += '<a href="orderdetail" class="btn-view">상세보기</a>';
+					itemStr += '<a href="orderdetail?code=' + porderno + '" class="btn-view">상세보기</a>';
 					itemStr += '</td>';
 					item.orderItems.forEach((orderItem, idx) => {
 						let imgurl1 = orderItem.imgurl1;
@@ -25,10 +25,10 @@ $(function () {
 						let pname = orderItem.pname;
 						let pcolor = orderItem.pcolor;
 						let psize = orderItem.psize;
-						let pprice = orderItem.pprice;
-						let porderamount = orderItem.porderamount;
+						let pprice = orderItem.podprice;
+						let porderamount = orderItem.podamount;
 						let podstatus = orderItem.podstatus;
-
+	
 						itemStr += '<td>'
 						itemStr += '<div class="pt-list">';
 						itemStr += '<a href="#"><img src="' + imgurl1 + '" alt="상품이미지"/></a>';
@@ -44,11 +44,11 @@ $(function () {
 				});	
 				$('#otable').html(itemStr);
 			} else {
-				console.log("hello");
 				let itemStr = '<tr></tr>';
 				itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
 				$('#otable').html(itemStr);
 			}
+			
 		}
 		else {
 			let itemStr = '<tr></tr>';

@@ -1,90 +1,93 @@
 $(function () {
+	const urlParams = new URLSearchParams(window.location.search);
+	const code = urlParams.get('code');
+	console.log(code);
     $.ajax({
-		url: 'getorderdetaillist'
+		url: 'getorderdetaillist?code=' + code
 	})
 	.done((data) => {
+		console.log(data);
 		if(data && data.result) { // 데이터 잘 불러왔는가
 			console.log(data.result);
-			if(data.result[0].length > 0) { // 데이터 품목이 1개 이상인가
-				let itemStr = "";
-				
-				data.result[0].forEach((item) => {
-					const mno = item.mno;
-					const porderno = item.porderno;
-					$(".ono").html(porderno);
-					const porderdate = item.porderdate;
-					$(".odate").html(porderdate);
-					const pordertotalpoint = item.pordertotalpoint;
-					let pordersaleprice = 0; // 총 판매가
-					$(".podsaleprice").html(pordersaleprice);
-					let porderdeliveryprice = 2500; // 배송비
-					$(".poddeliveryprice").html(porderdeliveryprice);
-					const porderdiscount = item.porderdiscount;
-					$(".poddiscount").html(porderdiscount);
-					const porderpayprice = item.porderpayprice;
-					$(".podpayprice").html(wonChange(porderpayprice));
-					const porderpayment = item.porderpayment; // 결제정보
-					const porderpayname = item.porderpayname;
-					$(".podpayname").html(porderpayname);
-					const porderpayno = item.porderpayno;
-					$(".podpayno").html(porderpayno);
-					const porderpayinstallment = item.porderpayinstallment;
-					$(".porderpayinstallment").html(porderpayinstallment);
-					const porderaddr1 = item.porderaddr1;
-					$(".podaddr1").html(porderaddr1);
-					const porderaddr2 = item.porderaddr2;
-					$(".podaddr2").html(porderaddr2);
-					const porderaddr3 = item.porderaddr3;
-					$(".podaddr3").html(porderaddr3);
-					const pordername = item.pordername;
-					$(".podname").html(pordername);
-					const porderphone = item.porderphone;
-					$(".podphone").html(porderphone);
-					const pordertel = item.pordertel;
-					$(".podtel").html(pordertel);
-					const porderrequest = item.porderrequest;
-					$(".podrequest").html(porderrequest);
-					const itemCnt = item.orderItems.length;
-					console.log(itemCnt);
-					let itemStr =  "";
-					item.orderItems.forEach((orderItem, idx) => {
-						let imgurl1 = orderItem.imgurl1;
-						let pbrand = orderItem.pbrand;
-						let pname = orderItem.pname;
-						let pcolor = orderItem.pcolor;
-						let psize = orderItem.psize;
-						let pprice = orderItem.pprice;
-						let porderamount = orderItem.porderamount;
-						let podstatus = orderItem.podstatus;
-						pordersaleprice += parseInt(pprice); // 총 판매가 갱신
-						
-						itemStr += '<tr>';
-                        itemStr += '<td class="order-num">';
-                        itemStr += '<div class="pt-list">';
-                        itemStr += '<a href="#"><img src="' + imgurl1 + '" alt="상품이미지"/></a>';
-                        itemStr += '<div class="pt-info">';
-                        itemStr += '<a href="#"><span class="info-brand">' + pbrand + '</span>';
-                        itemStr += '<span class="info-ptname">' + pname + '</span></a>';
-                        itemStr += '<p class="pt-color">color : ' + pcolor + '<span class="and-line">/</span>';
-                        itemStr += 'size : ' + psize + '</p>';
-                        itemStr += '</div>';
-                        itemStr += '</div>';
-                        itemStr += '</td>';
-                        itemStr += '<td>' + porderamount + '</td>';
-                        itemStr += '<td><i class="won sign icon small"></i>' + wonChange(pprice) + '</td>';
-                        itemStr += idx === 0 ? '<td rowspan="' + itemCnt + '">' + pordertotalpoint + '</td>' : '';
-                        itemStr += '<td>' + podstatus + '<span class="sum-date">' + printDate(porderdate) + '</span></td></tr>';
-					});
-					$('.podsaleprice').html(wonChange(pordersaleprice));
-					if(pordersaleprice >= 30000) {
-						porderdeliveryprice = 0;	
-					}
-					$('.poddeliveryprice').html(wonChange(porderdeliveryprice));
-					$('#odtable').html(itemStr);
+			let itemStr = "";
+			
+			data.result.forEach((item) => {
+				const mno = item.mno;
+				const porderno = item.porderno;
+				$(".ono").html(porderno);
+				const porderdate = item.porderdate;
+				$(".odate").html(porderdate);
+				const pordertotalpoint = item.pordertotalpoint;
+				let pordersaleprice = 0; // 총 판매가
+				$(".podsaleprice").html(pordersaleprice);
+				let porderdeliveryprice = 2500; // 배송비
+				$(".poddeliveryprice").html(porderdeliveryprice);
+				const porderdiscount = item.porderdiscount;
+				$(".poddiscount").html(porderdiscount);
+				const porderpayprice = item.porderpayprice;
+				$(".podpayprice").html(wonChange(porderpayprice));
+				const porderpayment = item.porderpayment; // 결제정보
+				const porderpayname = item.porderpayname;
+				$(".podpayname").html(porderpayname);
+				const porderpayno = item.porderpayno;
+				$(".podpayno").html(porderpayno);
+				const porderpayinstallment = item.porderpayinstallment;
+				$(".porderpayinstallment").html(porderpayinstallment);
+				const porderaddr1 = item.porderaddr1;
+				$(".podaddr1").html(porderaddr1);
+				const porderaddr2 = item.porderaddr2;
+				$(".podaddr2").html(porderaddr2);
+				const porderaddr3 = item.porderaddr3;
+				$(".podaddr3").html(porderaddr3);
+				const pordername = item.pordername;
+				$(".podname").html(pordername);
+				const porderphone = item.porderphone;
+				$(".podphone").html(porderphone);
+				const pordertel = item.pordertel;
+				$(".podtel").html(pordertel);
+				const porderrequest = item.porderrequest;
+				$(".podrequest").html(porderrequest);
+				const itemCnt = item.orderItems.length;
+				console.log(itemCnt);
+				let itemStr =  "";
+				item.orderItems.forEach((orderItem, idx) => {
+					let imgurl1 = orderItem.imgurl1;
+					let pbrand = orderItem.pbrand;
+					let pname = orderItem.pname;
+					let pcolor = orderItem.pcolor;
+					let psize = orderItem.psize;
+					let pprice = orderItem.podprice;
+					let porderamount = orderItem.podamount;
+					let podstatus = orderItem.podstatus;
+					pordersaleprice += parseInt(pprice); // 총 판매가 갱신
+					
+					itemStr += '<tr>';
+                    itemStr += '<td class="order-num">';
+                    itemStr += '<div class="pt-list">';
+                    itemStr += '<a href="#"><img src="' + imgurl1 + '" alt="상품이미지"/></a>';
+                    itemStr += '<div class="pt-info">';
+                    itemStr += '<a href="#"><span class="info-brand">' + pbrand + '</span>';
+                    itemStr += '<span class="info-ptname">' + pname + '</span></a>';
+                    itemStr += '<p class="pt-color">color : ' + pcolor + '<span class="and-line">/</span>';
+                    itemStr += 'size : ' + psize + '</p>';
+                    itemStr += '</div>';
+                    itemStr += '</div>';
+                    itemStr += '</td>';
+                    itemStr += '<td>' + porderamount + '</td>';
+                    itemStr += '<td><i class="won sign icon small"></i>' + wonChange(pprice) + '</td>';
+                    itemStr += idx === 0 ? '<td rowspan="' + itemCnt + '">' + pordertotalpoint + '</td>' : '';
+                    itemStr += '<td>' + podstatus + '<span class="sum-date">' + printDate(porderdate) + '</span></td></tr>';
 				});
-			} else {
-				$(".ono").html("잘못된 주문 상세조회입니다.");
-			}
+				$('.podsaleprice').html(wonChange(pordersaleprice));
+				if(pordersaleprice >= 30000) {
+					porderdeliveryprice = 0;	
+				}
+				$('.poddeliveryprice').html(wonChange(porderdeliveryprice));
+				$('#odtable').html(itemStr);
+			});
+		
+		} else {
+			$(".ono").html("잘못된 주문 상세조회입니다.");
 		}
 	}); // done
 	
