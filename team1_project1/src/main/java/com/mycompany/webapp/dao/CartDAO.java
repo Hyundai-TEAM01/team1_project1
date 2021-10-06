@@ -13,5 +13,8 @@ public interface CartDAO {
 	public List<CartDetail> getCartDetailList(int cartNo);
 	public List<CartProductInfo> getCartProductList(int cartNo);
 	public int removeCartDetail(int cartDetailNo);
-	public int removeCartDetailList(ArrayList<String> cartDetailNoList);
+	public int removeCartDetailList(String[] cartDetailNoList);
+	public int insertCartDetail(CartDetail cartDetail);
+	public CartDetail selectByCartDetailNo(int cartDetailNo);
+	public List<CartProductInfo> getCartProductListByArray(String[] pList);
 }
