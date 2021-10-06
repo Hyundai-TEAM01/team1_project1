@@ -19,7 +19,7 @@
 
 	function init(){
 		// ccode에 따른 productList, pager 출력
-		printCategoryProductList(1, "MEN_TOP_SHIRTS");
+		printCategoryProductList(1, "WOMEN_Top_Shirts");
 	}
 	
 	function printCategoryProductList(pageNo, ccode){

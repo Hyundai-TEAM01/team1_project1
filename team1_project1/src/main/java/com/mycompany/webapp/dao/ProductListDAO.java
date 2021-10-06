@@ -11,5 +11,8 @@ import com.mycompany.webapp.dto.ProductList;
 @Mapper
 public interface ProductListDAO {
 	public List<ProductList> selectByCategoryPage(Pager pager);
+	public List<ProductImg> selectByProductImg(String pcode);
+
 	public int productListCount(String ccode);
+	
 }
