@@ -31,17 +31,17 @@ public class OrderService {
 	private CartDAO cartDao;
 	
 
-	public List<OrderList> getOrderList(int mNo) {
+	public List<OrderList> getOrderList(int mno) {
 		// 유저 넘버로 주문 목록 가져오기
-		int sampleMno = 1;
-		return orderDao.getOrderList(sampleMno);
+		// int sampleMno = 1;
+		return orderDao.getOrderList(mno);
 	}
 
-	public List<OrderDetail> getOrderDetail(int mNo, int pOrderNo) {
+	public List<OrderDetail> getOrderDetail(int mno, int porderno) {
 		// 유저 넘버와 그에 맞는 주문번호로 상품주문상세정보 가져오기
-		int samplemNo = 1;
-		int samplepOrderNo = 1;
-		return orderDao.getOrderDetail(samplemNo, samplepOrderNo);
+		// int samplemNo = 1;
+		// int samplepOrderNo = 1;
+		return orderDao.getOrderDetail(mno, porderno);
 	}
 	
 	@Transactional

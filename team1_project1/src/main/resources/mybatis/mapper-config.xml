@@ -12,5 +12,6 @@
 		<typeAlias type="com.mycompany.webapp.dto.ProductImg" alias="productImg"/>
 		<typeAlias type="com.mycompany.webapp.dto.ProductOrder" alias="productOrder"/>
 		<typeAlias type="com.mycompany.webapp.dto.Pager" alias="pager"/>
+		<typeAlias type="com.mycompany.webapp.dto.Member" alias="member"/>
 	</typeAliases>	
 </configuration>
