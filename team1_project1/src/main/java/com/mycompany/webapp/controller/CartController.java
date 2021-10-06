@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.CartDetail;
 import com.mycompany.webapp.dto.CartProductInfo;
+import com.mycompany.webapp.dto.ProductOrder;
 import com.mycompany.webapp.service.CartService;
 
 @Controller
@@ -103,15 +104,5 @@ public class CartController {
 		
 		return json.toString();
 	}
-
-	
-	@PostMapping(value = "/newOrder", produces = "Application/json; charset=UTF-8;")
-	@ResponseBody
-	public String newOrder(@RequestBody String str) {
-		logger.info(str);
-		return null;
-	}
-	
-	
 	
 }
