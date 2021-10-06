@@ -16,38 +16,8 @@
                                 <th class="center aligned">판매가</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="ui items">
-                                        <div class="item">
-                                            <div class="ui small image">
-                                                <img src="http://newmedia.thehandsome.com/MM/2B/SS/MM2B4WPS087M_KE_W01.jpg/dims/resize/684x1032/" style="width: 80px; height: 120px" />
-                                            </div>
-                                            <div class="middle aligned content">
-                                                <div class="description">
-                                                    <p>CLUB MONACO</p>
-                                                    <p>셋업 슬림 팬츠</p>
-                                                    <p class="grey small">
-                                                        color :
-                                                        <span class="p_color">beige</span>
-                                                        / size :
-                                                        <span class="p_size">100</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="center aligned">
-                                    <div>
-                                        <div class="ui input input-wrap">
-                                            <input type="text" class="center aligned amount" readonly value="1" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="center aligned"><i class="won sign icon small"></i><span class="price">180,600</span></td>
-                            </tr>
+                        <tbody class="info-body">
+                            
                         </tbody>
                     </table>
 
@@ -73,41 +43,41 @@
                         </table>
                     </div>
 
-                    <h3>배송지 정보</h3>
+                    <h3>배송지 정보<span class="explain"><span class="star">*</span> 표시는 필수항목입니다.</span></h3>
                     <form class="ui form">
                         <table class="ui definition table">
                             <tbody>
                                 <tr>
-                                    <td class="center aligned">배송지 주소</td>
+                                    <td class="center aligned"><span class="star">*</span>배송지 주소</td>
                                     <td>
                                         <div class="inline fields">
                                             <div class="three wide field">
-                                                <input type="text" class="addr1" placeholder="우편번호"/>
+                                                <input type="text" class="addr1 " placeholder="우편번호" required name="addr1"/>
                                             </div>
                                             <a class="ui button" href="javascript:execDaumPostcode()">우편번호 검색</a>
                                         </div>
                                         <div class="field">
-                                            <input type="text" class="addr2" placeholder="주소"/>
+                                            <input type="text" class="addr2" placeholder="주소" required name="addr2"/>
                                         </div>
                                         <div class="field">
-                                            <input type="text" class="addr3" placeholder="상세주소"/>
+                                            <input type="text" class="addr3" placeholder="상세주소" required name="addr3"/>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="center aligned">수령인</td>
+                                    <td class="center aligned"><span class="star">*</span>수령인</td>
                                     <td>
                                         <div class="four wide field">
-                                            <input type="text" />
+                                            <input type="text" required name="pordername" />
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="center aligned">휴대폰 번호</td>
+                                    <td class="center aligned"><span class="star">*</span>휴대폰 번호</td>
                                     <td>
                                         <div class="inline fields">
                                             <div class="three wide field">
-                                                <select class="ui search dropdown" name="p-start">
+                                                <select class="ui search dropdown" name="p-start" required >
                                                     <option value="010">010</option>
                                                     <option value="011">011</option>
                                                     <option value="016">016</option>
@@ -117,13 +87,13 @@
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" maxlength="4" />
+                                                <input type="text" minlength="3" maxlength="4"  name="phone2" pattern="[0-9]+"/>
                                             </div>
                                             <div class="field">
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" maxlength="4" />
+                                                <input type="text" minlength="3" maxlength="4" name="phone3" pattern="[0-9]+"/>
                                             </div>
                                         </div>
                                     </td>
@@ -143,13 +113,13 @@
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" />
+                                                <input type="text" name="tel2" pattern="[0-9]+"/>
                                             </div>
                                             <div class="field">
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" />
+                                                <input type="text" name="tel3" pattern="[0-9]+"/>
                                             </div>
                                         </div>
                                     </td>
@@ -158,7 +128,7 @@
                                     <td class="center aligned">배송 요청 사항</td>
                                     <td>
                                         <div class="ten wide field">
-                                            <input type="text" />
+                                            <input type="text" name="porderrequest"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -167,7 +137,7 @@
                                     <td>
                                         <div class="inline fields">
                                             <div class="five wide field">
-                                                <input type="text" />
+                                                <input type="text" name="porderemail"/>
                                             </div>
                                             <div class="field">
                                                 <span>@</span>
@@ -187,7 +157,13 @@
                                 </tr>
                             </tbody>
                         </table>
-
+						<h3>마일리지 적용<span class="explain"><span class="star">*</span>100M 단위로 사용 가능합니다.</span></h3>
+						<div class="m-wrap">
+							<input class="ui input" type="text" placeholder="총 500M" name="porderdiscount" pattern="[0-9]+">
+							<button class="ui button m-apply">적용</button>
+						</div>
+   
+                        
                         <h3>결제 수단 선택</h3>
                         <table class="ui definition table">
                             <tbody>
@@ -195,12 +171,10 @@
                                     <td>결제수단</td>
                                     <td>
                                         <div>
-                                            <form>
-                                                <input type="radio" value="card" name="payment" id="card" class="ml-10" checked />
+                                                <input type="radio" value="card" name="payment" id="card" class="ml-10" checked/>
                                                 <label for="card">신용카드</label>
                                                 <input type="radio" value="cash" name="payment" id="cash" class="ml-10" />
                                                 <label for="cash">무통장 입금</label>
-                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -210,7 +184,7 @@
                         <div class="payment-info">
                             <div class="inline fields">
                                 <div class="three wide field">
-                                    <select class="ui selection dropdown">
+                                    <select class="ui selection dropdown" required name="porderpayname">
                                         <option value="">카드사</option>
                                         <option value="">현대</option>
                                         <option value="">비씨</option>
@@ -218,10 +192,12 @@
                                     </select>
                                 </div>
                                 <div class="ten wide field">
-                                    <div class="ui input"><input type="text" placeholder="카드번호" /></div>
+                                    <div class="ui input"><input type="text" minlength="16" placeholder="카드번호" required name="porderpayno"/></div>
                                 </div>
                             </div>
                         </div>
+                        
+
                     </form>
                 </div>
 
@@ -234,7 +210,7 @@
                                 <div class="ui grid color-555-small">
                                     <div class="row">
                                         <div class="six wide column left aligned">상품 합계</div>
-                                        <div class="ten wide column right aligned"><i class="won sign icon small"></i><span class="p-price">180,600</span></div>
+                                        <div class="ten wide column right aligned"><i class="won sign icon small"></i><span class="p-price"></span></div>
                                     </div>
                                     <div class="row">
                                         <div class="six wide column left aligned">배송비</div>
@@ -250,7 +226,7 @@
                                     <div class="twelve wide column right aligned">
                                         <h3 class="t-p-color">
                                             <i class="won sign icon small"></i>
-                                            <span class="total-price">150,500</span>
+                                            <span class="total-price"></span>
                                         </h3>
                                     </div>
                                 </div>
@@ -259,7 +235,7 @@
                         <div class="m-box">
                             <h5 class="color-555">구매 시 지급 예정 포인트</h5>
                             <div class="save-m">
-                                <sapn>마일리지</sapn>
+                                <span>마일리지</span>
                                 <div class="save-m-point">0</div>
                                 <span>M</span>
                             </div>
@@ -271,9 +247,32 @@
                 </div>
             </div>
         </div>
+
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
             $(function () {
+            	// 쇼핑백에서 가져온 상품 목록
+            	var productList = "";
+                <c:forEach items="${pList}" var="item">
+               		productList +=(${item})+",";
+            	</c:forEach>
+            	
+            	productList = productList.slice(0,-1);
+   
+            	$.ajax({
+            		url : "getOrderList",
+            		data : {"productList":productList}
+            	}).done((data)=>{
+            		for(item of data.infoList[0]){
+            			createProduct(item);
+            		}
+            	   	setSumPrice();
+            	   	setTotalPrice();
+            		
+            	});
+            	
+            	
+            	
                 $("input:radio[name='payment']").click(function () {
                     let payment = $("input:checked[name='payment']").val();
                     let info = $("div.payment-info");
@@ -283,7 +282,7 @@
                     if (payment === "card") {
                         str += '<div class="inline fields">';
                         str += '<div class="three wide field">';
-                        str += '<select class="ui selection dropdown">';
+                        str += '<select class="ui selection dropdown" required name="porderpayname">';
                         str += '<option value="">카드사</option>';
                         str += '<option value="">현대</option>';
                         str += ' <option value="">비씨</option>';
@@ -292,13 +291,13 @@
                         str += "</div>";
 
                         str += '<div class="ten wide field">';
-                        str += '<input type="text" placeholder="카드번호">';
+                        str += '<input type="text" placeholder="카드번호" minlength="16" required name="porderpayno">';
                         str += "</div>";
                         str += "</div>";
                     } else if (payment === "cash") {
                         str += '<div class="inline fields">';
                         str += '<div class="three wide field">';
-                        str += '<select class="ui selection dropdown bank-seletion">';
+                        str += '<select class="ui selection dropdown bank-seletion" required name="porderpayname">';
                         str += '<option value="">은행사</option>';
                         str += '<option value="">현대</option>';
                         str += '<option value="">비씨</option>';
@@ -313,10 +312,8 @@
 
                     info.html(str);
                 });
-            });
-            
-            
-            $(function(){
+                
+                // 이메일 입력 설정
                 let s_email = $("select[name='select-email']");
         	   	s_email.change(function () {
                    if(s_email.val() !== ""){
@@ -325,9 +322,45 @@
                     $("#s_email").val(s_email.val()).prop('readonly',false);
                    }
         	   });
-           });
+        	   	
+        	   	
+        	   	// 결제하기 버튼 이벤트 할당
+               	$(".pay-btn").click(order);
+        	   	
+        	   	// 마일리지 적용 버튼 이벤트 할당
+               	$(".m-apply").click(function(){
+               		event.preventDefault();
+               		let mpoint = $("input[name='porderdiscount']").val();
+               		if(mpoint !== ""){
+               			console.log("run");
+               			let realm = Math.floor(parseInt(mpoint)/100) * 100;
+               			$("input[name='porderdiscount']").val(realm);
+               			let html = '<div class="row">';
+               			html += '<div class="six wide column left aligned">마일리지</div>';
+               			html += '<div class="ten wide column right aligned"><i class="minus icon small"></i>&nbsp<i class="won sign icon small"></i><span class="m-discount">'+realm+'</span></div></div>';
+               			
+						$(".color-555-small").append(html);    
+               		}
+               	});
+   
+            });
             
-            // https://postcode.map.daum.net/guide 사용
+			
+            function order(){
+            	
+            	$("form").attr("method","post");
+            	$("form").attr("action","newOrder");
+            	
+            	if(document.getElementsByTagName("form")[0].reportValidity()){            		
+            		$("form").submit();
+            	}
+            }
+            
+            
+            
+            
+            
+            // 우편번호 검색 api , https://postcode.map.daum.net/guide 사용
             function execDaumPostcode() {
                 new daum.Postcode({
                     oncomplete: function (data) {
@@ -376,6 +409,61 @@
                         $(".addr3").focus();
                     },
                 }).open();
+            }
+           	
+            function wonChange(num) {
+            	return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+            }
+            
+            // 가져온 상품 html로 변환
+            function createProduct(product){
+                let html = "";
+                html += '<tr id='+product.cartdetailno+'>';
+                html += '<td>';
+                html += '<div class="ui items">';
+                html += '<div class="item">';
+                html += '<div class="ui small image">';
+                html += '<img src="'+ product.imgurl +'" style="width: 80px; height: 120px" />';
+                html += '</div>';
+                html += '<div class="middle aligned content">';
+                html += '<div class="description">';
+                html += '<p>'+ product.pbrand +'</p>';
+                html += '<p>'+ product.pname+'</p>';
+                html += '<p class="grey small">';
+                html += 'color&nbsp:&nbsp';
+                html += '<span class="p_color">'+product.pcolor+'</span>';
+                html += '&nbsp/&nbspsize&nbsp:&nbsp';
+                html += '<span class="p_size">'+ product.psize +'</span>';
+                html += '</p>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</td>';
+                html += '<td class="center aligned">';
+                html += '<div>';
+                html += '<div class="ui input input-wrap">';
+                html += '<input type="text" class="center aligned amount" readonly value="'+product.amount+'" />';
+                html += '</div>';
+                html += '</div>';
+                html += '</td>';
+                html += '<td class="center aligned"><i class="won sign icon small"></i><span class="price">'+wonChange(parseInt(product.amount)*parseInt(product.pprice))+'</span></td>';
+                html += '</tr>';
+                $("tbody.info-body").append(html);
+            }
+            
+            function setSumPrice(){
+            	let sum = 0;
+            	$("span.price").each((idx,item)=>{
+            		sum += parseInt($(item).html().replace(",",""));
+            	});
+            	$(".p-price").html(wonChange(sum));
+            }
+            
+            function setTotalPrice(){
+            	let pPrice = parseInt($(".p-price").html().replace(",",""));
+            	let postPrice = parseInt($(".post-price").html().replace(",",""));
+            	$(".total-price").html(wonChange(pPrice+postPrice));
             }
         </script>
 

@@ -1,7 +1,5 @@
 package com.mycompany.webapp.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,17 +7,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartProductInfo {
-	private int cartdetailno;
-	private int cartno;
+public class OrderItem {
+	private int podno; // 상품디테일 pk
+	private int porderno; // 상품주문 fk
 	private String pcode;
-	private String psize;
 	private String pcolor;
-	private int amount;
-	private Date regdate;
-	private char isdeleted;
-	private String imgurl;
+	private String psize;
+	private int porderprice;
+	private int porderamount;
+	private String podstatus;
+	private String imgurl1;
 	private String pbrand;
 	private String pname;
-	private int pprice;
+	private String pprice;
 }

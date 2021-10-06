@@ -134,6 +134,7 @@ td {
     border-left: 0;
 }
 .o-num {
+	margin: 0;
 }
 .sum-date {
     display: block;
@@ -188,6 +189,15 @@ td {
     padding: 0 5px;
     font-size: 11px;
     color: #999;
+}
+
+.no-data {
+	padding: 50px;
+	color: #c69c6c;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 22px;
+	border-left: none;
 }
 
 .paging {

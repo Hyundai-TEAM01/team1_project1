@@ -19,37 +19,43 @@ public class OrderController {
 	@Resource
 	OrderService orderService;
 
+	// 주문목록페이지
 	@RequestMapping("/orderlist")
 	public String orderList() {
 
 		return "orderList";
 	}
 
+	// 주문목록페이지 - 목록리스트(JSON)
 	@GetMapping(value = "/getorderlist", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
 	public String getOrderList() {
 		logger.info(orderService.getOrderList(1).toString());
 
 		JSONObject json = new JSONObject();
-
 		json.append("result", orderService.getOrderList(1));
+		logger.info(json.toString());
+		
 		return json.toString();
 	}
 
+	// 주문상세페이지
 	@RequestMapping("/orderdetail")
 	public String orderDetail() {
 
 		return "orderDetail";
 	}
 
+	// 주문상세페이지 - 상세내용(JSON)
 	@GetMapping(value = "/getorderdetaillist", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
 	public String getOrderDetailList() {
-		logger.info(orderService.getOrderDetailList(1, 1).toString());
+		logger.info(orderService.getOrderDetail(1, 1).toString());
 
 		JSONObject json = new JSONObject();
 
-		json.append("result", orderService.getOrderDetailList(1, 1));
+		json.append("result", orderService.getOrderDetail(1, 1));
 		return json.toString();
 	}
+
 }
