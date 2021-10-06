@@ -11,10 +11,16 @@ import com.mycompany.webapp.dto.CartProductInfo;
 @Mapper
 public interface CartDAO {
 	public List<CartDetail> getCartDetailList(int cartNo);
+
 	public List<CartProductInfo> getCartProductList(int cartNo);
+
 	public int removeCartDetail(int cartDetailNo);
+
 	public int removeCartDetailList(String[] cartDetailNoList);
+
 	public int insertCartDetail(CartDetail cartDetail);
+
 	public CartDetail selectByCartDetailNo(int cartDetailNo);
-	public List<CartProductInfo> getCartProductListByArray(String[] pList);
+
+	public List<CartProductInfo> getCartProductListByArray(String[] pList, int cartno);
 }

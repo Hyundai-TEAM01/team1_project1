@@ -38,7 +38,7 @@ public class CartService {
 	
 	public List<CartProductInfo> getCartDetailList(String[] pList){
 		logger.info("service run");
-		return cartDao.getCartProductListByArray(pList);
+		return cartDao.getCartProductListByArray(pList, -1);
 	}
 	
 	
