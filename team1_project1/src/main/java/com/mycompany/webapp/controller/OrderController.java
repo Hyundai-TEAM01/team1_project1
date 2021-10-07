@@ -87,11 +87,11 @@ public class OrderController {
 	}
 
 	@PostMapping(value = "/newOrder", produces = "Application/json; charset=UTF-8;")
-	public String newOrder(ProductOrder order, String plist, Model model) {
-		int mno = 1;
-		int mpoint = 500;
-		order.setMno(mno);
-		OrderResult result = orderService.newOrder(order, plist, mpoint);
+	public String newOrder(ProductOrder order, String plist, Model model, Authentication authentication) {
+		MemberDetails minfo = (MemberDetails)authentication.getPrincipal();
+
+		order.setMno(minfo.getMno());
+		OrderResult result = orderService.newOrder(order, plist, minfo.getMpoint());
 
 		if (result.equals(OrderResult.SUCCESS)) {
 			return "redirect:/orderdetail?code=" + order.getPorderno();

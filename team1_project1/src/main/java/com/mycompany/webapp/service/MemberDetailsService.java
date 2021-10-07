@@ -38,7 +38,7 @@ public class MemberDetailsService implements UserDetailsService {
 		authorities.add(new SimpleGrantedAuthority(member.getMrole()));
 
 		MemberDetails memberDetails = new MemberDetails(member.getMid(), member.getMpassword(), member.isMenable(),
-				authorities, member.getMno());
+				authorities, member.getMno(), member.getMphone(),member.getMemail(), member.getMpoint(), member.getMname(), member.getCartCnt());
 
 		return memberDetails;
 	}

@@ -44,4 +44,16 @@
 				AND cartno = #{param2}
 			</if>
 	</select>
+	
+	<select id="getCartNoByMno" resultType="int">
+		SELECT cartno FROM cart WHERE member_mno = #{mno}
+	</select>
+	
+	<select id="getCartDetailByCartdetailno" resultType="cartDetail">
+		SELECT * FROM cartdetail WHERE cartdetailno = #{param1} AND cartno = #{param2}
+	</select>
+	
+	<update id="updateCartdetail" parameterType="cartDetail">
+		UPDATE cartdetail SET amount = #{amount} WHERE cartdetailno = #{cartDetailNo}
+	</update>
 </mapper>

@@ -29,15 +29,15 @@
                             <tbody>
                                 <tr>
                                     <td class="center aligned">주문자</td>
-                                    <td>홍길동</td>
+                                    <td>${mname}</td>
                                 </tr>
                                 <tr>
                                     <td class="center aligned">휴대폰</td>
-                                    <td class="mphone">010-0000-0000</td>
+                                    <td class="mphone">${mphone}</td>
                                 </tr>
                                 <tr>
                                     <td class="center aligned">E-mail</td>
-                                    <td>user @ google.com</td>
+                                    <td>${memail}</td>
                                 </tr>
                             </tbody>
                         </table>

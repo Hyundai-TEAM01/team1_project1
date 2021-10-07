@@ -25,6 +25,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header2.css" />
         
+        <!-- custom JS -->
+        <script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
     </head>
     <body>
 	    <header>
@@ -59,7 +61,7 @@
 								</sec:authorize>
 							</li>
 	                        <li><a href="${pageContext.request.contextPath}/orderlist">마이페이지</a></li>
-	                        <li><a href="${pageContext.request.contextPath}/cart/content"><i class="shopping bag icon"></i>(0)</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/cart/content"><i class="shopping bag icon"></i>(<span class="cartcnt">0</span>)</a></li>
 	                    </ul>
 	                </div>
 	            </div>

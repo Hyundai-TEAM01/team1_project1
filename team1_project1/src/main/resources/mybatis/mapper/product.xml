@@ -47,4 +47,8 @@
 	<select id="productListCount" resultType="int">
 		SELECT COUNT(*) FROM PCATEGORY WHERE CCODE LIKE #{ccode}||'%'
 	</select>
+	
+	<select id="getProductAmount" resultType="int">
+		SELECT pamount FROM productstock WHERE pcode = #{pcode} AND psize = #{psize} AND pcolor = #{pcolor}
+	</select>
 </mapper>
