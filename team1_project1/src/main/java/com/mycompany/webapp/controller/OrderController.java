@@ -49,7 +49,7 @@ public class OrderController {
 
 			// 주문목록 전체 갯수
 			int totalRows = orderService.getOrderListCount(mno);
-			Pager pager = new Pager(5, 5, totalRows, pageNo);
+			Pager pager = new Pager(1, 5, totalRows, pageNo);
 			logger.info(pager.toString());
 
 			String pagerInString = new Gson().toJson(pager);
