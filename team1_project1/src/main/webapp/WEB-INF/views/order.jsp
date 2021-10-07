@@ -44,7 +44,7 @@
                     </div>
 
                     <h3>배송지 정보<span class="explain"><span class="star">*</span> 표시는 필수항목입니다.</span></h3>
-                    <form class="ui form">
+                    <form class="ui form" id="infoForm">
                         <table class="ui definition table">
                             <tbody>
                                 <tr>
@@ -128,7 +128,7 @@
                                     <td class="center aligned">배송 요청 사항</td>
                                     <td>
                                         <div class="ten wide field">
-                                            <input type="text" name="porderrequest"/>
+                                            <input type="text" name="porderrequest" maxlength="49"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -159,7 +159,7 @@
                         </table>
 						<h3>마일리지 적용<span class="explain"><span class="star">*</span>100M 단위로 사용 가능합니다.</span></h3>
 						<div class="m-wrap">
-							<input class="ui input" type="text" placeholder="총 500M" name="porderdiscount" pattern="[0-9]+">
+							<input class="ui input" type="text" placeholder="${mpoint}" name="porderdiscount" pattern="[0-9]+">
 							<button class="ui button m-apply">적용</button>
 						</div>
    
@@ -254,7 +254,8 @@
 
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
-        	const myMpoint = 500;
+	        const myMpoint = ${mpoint};
+	        
             $(function () {
             	// 쇼핑백에서 가져온 상품 목록
             	var productList = "";
@@ -278,39 +279,42 @@
             	
             	
             	
-                $("input:radio[name='payment']").click(function () {
-                    let payment = $("input:checked[name='payment']").val();
+                $("input:radio[name='porderpayment']").click(function () {
+                    let payment = $("input:checked[name='porderpayment']").attr("id");
                     let info = $("div.payment-info");
                     info.html("");
                     let str = "";
 
                     if (payment === "card") {
-                        str += '<div class="inline fields">';
-                        str += '<div class="three wide field">';
-                        str += '<select class="ui selection dropdown" required name="porderpayname">';
-                        str += '<option value="">카드사</option>';
-                        str += '<option value="">현대</option>';
-                        str += ' <option value="">비씨</option>';
-                        str += '<option value="">국민</option>';
-                        str += "</select>";
-                        str += "</div>";
-
-                        str += '<div class="ten wide field">';
-                        str += '<input type="text" placeholder="카드번호" minlength="16" required name="porderpayno">';
-                        str += "</div>";
-                        str += "</div>";
-                    } else if (payment === "cash") {
+						str += '<div class="inline fields">';
+						str += '<select required name="porderpayname" class="small-input">';
+						str +=  '<option value="">카드사</option>';
+						str +=  '<option value="현대">현대</option>';
+						str += '<option value="비씨">비씨</option>';
+						str += '<option value="국민">국민</option>';
+						str += '</select>';
+						
+						str += '<input class="ui input" type="text" minlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>';
+						
+						str += '<select required name="porderpayinstallment" class="small-input">';
+						str += '<option value="일시불">일시불</option>';
+						str += '<option value="3개월">3개월</option>';
+						str += '<option value="6개월">6개월</option>';
+						str += '<option value="12개월">12개월</option>';
+						str += '</select>';
+						str += '</div>';                    
+                  } else if (payment === "cash") {
                         str += '<div class="inline fields">';
                         str += '<div class="three wide field">';
                         str += '<select class="ui selection dropdown bank-seletion" required name="porderpayname">';
                         str += '<option value="">은행사</option>';
-                        str += '<option value="">현대</option>';
-                        str += '<option value="">비씨</option>';
-                        str += '<option value="">국민</option>';
+                        str += '<option value="국민">국민</option>';
+                        str += '<option value="농협">농협</option>';
+                        str += '<option value="하나">하나</option>';
                         str += "</select>";
                         str += "</div>";
                         str += '<div class="ten wide field">';
-                        str += '<input type="text" placeholder="123412341234" name="porderpayno" readonly>';
+                        str += '<input type="text" value="123412341234" name="porderpayno" readonly>';
                         str += "</div>";
                         str += "</div>";
                     }
@@ -385,7 +389,11 @@
             	porderemail = porderemail.split("@")[0] === "" ? "" : porderemail;
          		console.log("porderemail : " + porderemail);
             	
-            	if(document.getElementsByTagName("form")[0].reportValidity()){            			            	
+         		
+         		let payment = $("input:checked[name='porderpayment']").attr("id");
+         		
+         		
+            	if(document.getElementById("infoForm").reportValidity()){            			            	
 	            	$("tr").remove('.phone-wrap');
 	            	$("tr").remove('.tel-wrap');
 	            	$("tr").remove('.email-wrap');
@@ -405,7 +413,13 @@
 					$("form").append("<input type='text' name='pordertel' value='"+pordertel+"'>");   
 					$("form").append("<input type='text' name='porderemail' value='"+porderemail+"'>");  
 					$("form").append("<input type='text' name='pordermphone' value='"+$(".mphone").html().replace("-","")+"'>");  					
-					$("form").append("<input type='text' name='plist' value='"+plist+"'>");  					
+					$("form").append("<input type='text' name='plist' value='"+plist+"'>");  	
+					
+					if(payment === "cash"){
+						$("form").append("<input type='text' name='porderpayinstallment' value='입금 완료'>"); 
+					}
+					
+					
             		$("form").submit();
             		
 
@@ -511,14 +525,14 @@
             function setSumPrice(){
             	let sum = 0;
             	$("span.price").each((idx,item)=>{
-            		sum += parseInt($(item).html().replace(",",""));
+            		sum += parseInt($(item).html().replaceAll(",",""));
             	});
             	$(".p-price").html(wonChange(sum));
             }
             
             function setTotalPrice(){
-            	let pPrice = parseInt($(".p-price").html().replace(",",""));
-            	let postPrice = parseInt($(".post-price").html().replace(",",""));
+            	let pPrice = parseInt($(".p-price").html().replaceAll(",",""));
+            	let postPrice = parseInt($(".post-price").html().replaceAll(",",""));
             	let discountPrice = parseInt($(".m-discount").length == 0 ? 0 : $(".m-discount").html());
 				let sum = pPrice+postPrice - discountPrice;
             	$(".total-price").html(wonChange(sum));

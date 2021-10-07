@@ -19,4 +19,5 @@ public interface ProductDAO {
 	
 	public int getProductAmount(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor);
 
+	public int updateProductStock(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor, @Param("amount") int amount);
 }

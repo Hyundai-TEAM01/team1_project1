@@ -1,5 +1,7 @@
 package com.mycompany.webapp.controller;
 
+import javax.annotation.Resource;
+
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,12 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.dao.CartDAO;
+import com.mycompany.webapp.dao.MemberDAO;
 import com.mycompany.webapp.dto.MemberDetails;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Resource
+	MemberDAO memberDao;
+	
+	@Resource
+	CartDAO cartDao;
 	
 	@RequestMapping("/loginForm")
 	public String loginForm() {
@@ -34,7 +44,7 @@ public class MemberController {
 		if(authentication == null) {
 			json.put("cartcnt",0);
 		}else {
-			json.put("cartcnt", ((MemberDetails)authentication.getPrincipal()).getCartCnt());
+			json.put("cartcnt", memberDao.getCartCnt(cartDao.getCartNoByMno(((MemberDetails)authentication.getPrincipal()).getMno())));
 		}
 		
 		return json.toString();

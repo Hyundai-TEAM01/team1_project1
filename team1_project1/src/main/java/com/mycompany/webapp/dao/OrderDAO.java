@@ -9,6 +9,7 @@ import com.mycompany.webapp.dto.OrderDetail;
 import com.mycompany.webapp.dto.OrderList;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductOrder;
+import com.mycompany.webapp.dto.ProductOrderDetail;
 
 @Mapper
 public interface OrderDAO {
@@ -22,4 +23,6 @@ public interface OrderDAO {
 	public List<OrderDetail> getOrderDetail(int mno, int porderno);
 
 	public int createOrder(ProductOrder po);
+	
+	public int createOrderDetailByList(List<ProductOrderDetail> list);
 }

@@ -51,4 +51,8 @@
 	<select id="getProductAmount" resultType="int">
 		SELECT pamount FROM productstock WHERE pcode = #{pcode} AND psize = #{psize} AND pcolor = #{pcolor}
 	</select>
+	
+	<update id="updateProductStock">
+		UPDATE productstock SET pamount = #{amount} WHERE  pcode = #{pcode} AND psize = #{psize} AND pcolor = #{pcolor}
+	</update>
 </mapper>

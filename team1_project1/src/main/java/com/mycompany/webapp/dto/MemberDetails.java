@@ -16,23 +16,19 @@ public class MemberDetails extends User {
 	private int cartCnt;
 	
 	public MemberDetails(String mid, String mpassword, boolean menabled, List<GrantedAuthority> mAuthorities, int mno,
-			String mphone, String memail, int mpoint, String mname, int cartCnt) {
+			String mphone, String memail, int mpoint, String mname) {
 		super(mid, mpassword, menabled, true, true, true, mAuthorities);
 		this.mno = mno;
 		this.mphone = mphone;
 		this.memail = memail;
 		this.mpoint = mpoint;
 		this.mname = mname;
-		this.cartCnt = cartCnt;
 	}
 
 	public int getMno() {
 		return mno;
 	}
-	public int getCartCnt() {
-		return cartCnt;
-	}
-
+	
 	public int getMpoint() {
 		return mpoint;
 	}

@@ -56,4 +56,16 @@
 	<update id="updateCartdetail" parameterType="cartDetail">
 		UPDATE cartdetail SET amount = #{amount} WHERE cartdetailno = #{cartDetailNo}
 	</update>
+	
+	<update id="purchaseCartDetail" parameterType="int">
+		UPDATE cartdetail SET isdeleted = 2 WHERE cartdetailno = #{cartdetailno}
+	</update>
+	
+	<update id="purchaseCartDetailList">
+		UPDATE cartdetail SET isdeleted = 2 
+		WHERE cartdetailno IN 
+			<foreach collection="array" item="item" separator="," open="(" close=")">
+				${item}
+			</foreach>
+	</update>
 </mapper>
