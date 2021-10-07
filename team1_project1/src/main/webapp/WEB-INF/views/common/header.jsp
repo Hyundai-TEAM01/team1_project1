@@ -47,8 +47,8 @@
                                     <li>
                                         <a href="?pageNo=1&ccode=MEN_OUTER">아우터</a>
                                         <ul class="sub-content">
-                                            <li><a href="?pageNo=1&ccode=MEN_OUTER_JACKET">재킷</a></li>
-                                            <li><a href="?pageNo=1&ccode=MEN_OUTER_JUMPER">점퍼</a></li>
+                                            <li><a href="productList?pageNo=1&ccode=MEN_OUTER_JACKET">재킷</a></li>
+                                            <li><a href="productList?pageNo=1&ccode=MEN_OUTER_JUMPER">점퍼</a></li>
                                             <li><a href="?pageNo=1&ccode=MEN_OUTER_CARDIGAN/VEST">가디건/베스트</a></li>
                                             <li><a href="?pageNo=1&ccode=MEN_OUTER_TRENCHCOAT">트랜치코트</a></li>
                                             <li><a href="?pageNo=1&ccode=MEN_OUTER_COAT">코트</a></li>

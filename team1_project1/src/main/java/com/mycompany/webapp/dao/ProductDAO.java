@@ -9,7 +9,7 @@ import com.mycompany.webapp.dto.ProductImg;
 import com.mycompany.webapp.dto.ProductList;
 
 @Mapper
-public interface ProductListDAO {
+public interface ProductDAO {
 	public List<ProductList> selectByCategoryPage(Pager pager);
 	public List<ProductImg> selectByProductImg(String pcode);
 
