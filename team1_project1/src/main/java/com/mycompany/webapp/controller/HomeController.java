@@ -31,7 +31,7 @@ public class HomeController {
 	@Resource
 	private ProductListService productListService;
 
-	@RequestMapping("/")
+	@RequestMapping(value = {"/", "/productList"})
 	public String content(Authentication authentication) {
 		logger.info("실행");
 
@@ -42,7 +42,6 @@ public class HomeController {
 			int mno = memberDetails.getMno();
 			logger.info("로그인한 사용자 정보 : " + mno);
 		}
-
 		return "home";
 	}
 
