@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.mycompany.webapp.dto.MemberDetails;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductList;
@@ -58,17 +59,16 @@ public class HomeController {
 	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, @RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) throws JsonProcessingException {
 		logger.info("실행");
 		JSONObject json = new JSONObject();
-		logger.info(pageNo + " hello " + ccode);
 		int totalRows = productListService.getTotalProducListtNum(ccode);
 		Pager pager = new Pager(12, 10, totalRows, pageNo);
-		pager.setCcode(ccode);
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, Object> map = objectMapper.convertValue(pager, Map.class);
+		String pagerInString = new Gson().toJson(pager);
+        JSONObject pagerObject = new JSONObject(pagerInString);
+        pagerObject.put("ccode", ccode);
 		
-		List<ProductList> productList = productListService.getProductList(pager);
+		List<ProductList> productList = productListService.getProductList(ccode, pager);
 		
-		json.put("pager", map);
+		json.put("pager", pagerObject);
 		json.put("productList", productList);
 
 		return json.toString();
