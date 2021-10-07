@@ -18,7 +18,7 @@
 	});
 
 	function init(){
-		// ccode에 따른 productList, pager 출력
+		// 홈페이지 디폴트 출력
 		printCategoryProductList(1, "WOMEN_Top_Shirts");
 	}
 	
@@ -97,46 +97,34 @@
 	    
         thisArea.find(".prev2").click(function(){
             goPage(1, pager.ccode);
-            if($(".itemlist").length > 0){
-                $(document).scrollTop(0);
-            }
         });
 
         thisArea.find(".prev").click(function(){
             let pageNum = pager.startPageNo - 1;
             if(pageNum < 1) pageNum = 1;
             goPage(pageNum, pager.ccode);
-            if($(".itemlist").length > 0){
-                $(document).scrollTop(0);
-            }
         });
 
         thisArea.find(".pageBtn").click(function(){
             goPage($(this).attr("pageNum"), pager.ccode);
-            if($(".itemlist").length > 0){
-                $(document).scrollTop(0);
-            }
         });
 
         thisArea.find(".next").click(function(){
             let pageNum = pager.endPageNo + 1;
             if(pageNum>pager.totalPageNo) pageNum = pager.endPageNo;
             goPage(pageNum, pager.ccode);
-            if($(".itemlist").length > 0){
-                $(document).scrollTop(0);
-            }
         });
 
         thisArea.find(".next2").click(function(){
             goPage(pager.totalPageNo, pager.ccode);
-            if($(".itemlist").length > 0){
-                $(document).scrollTop(0);
-            }
         });
 	}
 	
 	function goPage(pageNo, ccode){
 		history.pushState('', '', 'productList?ccode=' + ccode +"&pageNo=" + pageNo);
+		if($(".itemlist").length > 0){
+            $(document).scrollTop(0);
+        }
 		printCategoryProductList(pageNo, ccode);
     };
 
@@ -144,6 +132,23 @@
 	function wonChange(num) {
         return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+	
+	$(window).on('popstate', function (event) {
+		const data = event.originalEvent.state;
+		$.ajax({
+			url: data.data,
+			data: {page:data.page, type: data.type, keyword: data.keyword},
+			type: "get",
+			success: (result) => {
+				$(".content").html(result); 
+	//alert(JSON.stringify(data)); 
+	//검색 처리 위해서 
+	//$("#type").val(data.type||"t"); //$("#keyword").val(data.keyword); 
+			} 
+		}) 
+	});
+	
+
 </script>
 
 

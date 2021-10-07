@@ -43,42 +43,42 @@
                             <a>남성</a>
                             <div class="sub-category-wrap sub-man">
                                 <ul class="sub-category">
-                                    <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN">전체보기</a></li>
+                                    <li><a href="${pageContext.request.contextPath}productList?ccode=MEN&pageNo=1">전체보기</a></li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER">아우터</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER&pageNo=1">아우터</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER_JACKET">재킷</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER_JUMPER">점퍼</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER_CARDIGAN/VEST">가디건/베스트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER_TRENCHCOAT">트랜치코트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER_COAT">코트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_OUTER_DOWNJUMPER">다운/패딩</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER_JACKET&pageNo=1">재킷</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER_JUMPER&pageNo=1">점퍼</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER_CARDIGAN/VEST&pageNo=1">가디건/베스트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER_TRENCHCOAT&pageNo=1">트랜치코트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER_COAT&pageNo=1">코트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_OUTER_DOWNJUMPER&pageNo=1">다운/패딩</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_TOP">탑</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=MEN_TOP&pageNo=1">탑</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_TOP_T-SHIRTS">티셔츠</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_TOP_SHIRTS">셔츠</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_TOP_KNIT">니트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_TOP_T-SHIRTS&pageNo=1">티셔츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_TOP_SHIRTS&pageNo=1">셔츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_TOP_KNIT&pageNo=1">니트</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_PANTS">팬츠</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=MEN_PANTS&pageNo=1">팬츠</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_PANTS_루즈/테이퍼드">루즈/테이퍼드</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_PANTS_스트레이트">슬림/스트레이트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_PANTS_조거/트랙">조거/트랙</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_PANTS_데님">데님</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_PANTS_쇼츠">쇼츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_PANTS_루즈/테이퍼드&pageNo=1">루즈/테이퍼드</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_PANTS_스트레이트&pageNo=1">슬림/스트레이트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_PANTS_조거/트랙&pageNo=1">조거/트랙</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_PANTS_데님&pageNo=1">데님</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_PANTS_쇼츠&pageNo=1">쇼츠</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_Suit">수트</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=MEN_Suit&pageNo=1">수트</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_Suit_DRESSSHIRTS">드레스셔츠</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_Suit_SUITJACKET">수트재킷</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=MEN_Suit_SUITPANTS">수트팬츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_Suit_DRESSSHIRTS&pageNo=1">드레스셔츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_Suit_SUITJACKET&pageNo=1">수트재킷</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=MEN_Suit_SUITPANTS&pageNo=1">수트팬츠</a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -101,51 +101,51 @@
                             <a>여성</a>
                             <div class="sub-category-wrap sub-woman">
                                 <ul class="sub-category">
-                                    <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN">전체보기</a></li>
+                                    <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN&pageNo=1">전체보기</a></li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER">아우터</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER&pageNo=1">아우터</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER_JACKET">재킷</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER_JUMPER">점퍼</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER_Cardigan/Vest">가디건/베스트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER_TRENCHCOAT">트랜치코트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER_COAT">코트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_OUTER_DOWNJUMPER">다운/패딩</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER_JACKET&pageNo=1">재킷</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER_JUMPER&pageNo=1">점퍼</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER_Cardigan/Vest&pageNo=1">가디건/베스트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER_TRENCHCOAT&pageNo=1">트랜치코트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER_COAT&pageNo=1">코트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_OUTER_DOWNJUMPER&pageNo=1">다운/패딩</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_Top">탑</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=WOMEN_Top&pageNo=1">탑</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_Top_T-Shirts">티셔츠</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_Top_Blouse">블라우스</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_Top_Shirts">셔츠</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_Top_Knit">니트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_Top_T-Shirts&pageNo=1">티셔츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_Top_Blouse&pageNo=1">블라우스</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_Top_Shirts&pageNo=1">셔츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_Top_Knit&pageNo=1">니트</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_DRESS">드레스</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=WOMEN_DRESS&pageNo=1">드레스</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_DRESS_MINIDRESS">미니 드레스</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_DRESS_MIDIDRESS">미디 드레스</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_DRESS_LONG/MAXIDRESS">롱/맥시 드레스</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_DRESS_MINIDRESS&pageNo=1">미니 드레스</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_DRESS_MIDIDRESS&pageNo=1">미디 드레스</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_DRESS_LONG/MAXIDRESS&pageNo=1">롱/맥시 드레스</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_PANTS">팬츠</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=WOMEN_PANTS&pageNo=1">팬츠</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_PANTS_CASUAL">캐주얼</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_PANTS_FORMAL">포멀</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_PANTS_DENIM">데님</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_PANTS_SHORTS">쇼츠</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_PANTS_CASUAL&pageNo=1">캐주얼</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_PANTS_FORMAL&pageNo=1">포멀</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_PANTS_DENIM&pageNo=1">데님</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_PANTS_SHORTS&pageNo=1">쇼츠</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_SKIRT">스커트</a>
+                                        <a href="${pageContext.request.contextPath}productList?ccode=WOMEN_SKIRT&pageNo=1">스커트</a>
                                         <ul class="sub-content">
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_SKIRT_MINISKIRT">미니 스커트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_SKIRT_PENCILSKIRT">펜슬 스커트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_SKIRT_FLARESKIRT">플레어 스커트</a></li>
-                                            <li><a href="${pageContext.request.contextPath}productList?pageNo=1&ccode=WOMEN_SKIRT_LONG/MAXISKIRT">롱/맥시 스커트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_SKIRT_MINISKIRT&pageNo=1">미니 스커트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_SKIRT_PENCILSKIRT&pageNo=1">펜슬 스커트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_SKIRT_FLARESKIRT&pageNo=1">플레어 스커트</a></li>
+                                            <li><a href="${pageContext.request.contextPath}productList?ccode=WOMEN_SKIRT_LONG/MAXISKIRT&pageNo=1">롱/맥시 스커트</a></li>
                                         </ul>
                                     </li>
                                     <li>
