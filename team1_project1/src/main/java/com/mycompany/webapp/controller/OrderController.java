@@ -11,11 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.mycompany.webapp.dto.MemberDetails;
+import com.mycompany.webapp.dto.OrderListQuery;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductOrder;
 import com.mycompany.webapp.service.OrderService;
@@ -38,24 +38,26 @@ public class OrderController {
 	// 주문목록페이지 - 목록리스트 페이징 적용(JSON)
 	@GetMapping(value = "/getorderlist", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
-	public String getOrderListByPage(Authentication authentication,
-			@RequestParam(name = "pageNo", defaultValue = "1") int pageNo) {
+	public String getOrderListByPage(Authentication authentication, OrderListQuery query) {
 		logger.info("실행");
 		JSONObject json = new JSONObject();
 		if (authentication != null) {
+			logger.info(query.toString());
 			// 로그인한 유저 정보의 넘버로 데이터 얻기
 			MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
 			int mno = memberDetails.getMno();
 
 			// 주문목록 전체 갯수
-			int totalRows = orderService.getOrderListCount(mno);
-			Pager pager = new Pager(1, 5, totalRows, pageNo);
+			int totalRows = orderService.getOrderListCount(mno, query);
+			// (한번에 보여지는 게시물 수, 한번에 보여지는 페이징 번호 수, 페이지)
+			Pager pager = new Pager(2, 5, totalRows, query.getPageNo());
 			logger.info(pager.toString());
 
 			String pagerInString = new Gson().toJson(pager);
 			JSONObject pagerObject = new JSONObject(pagerInString);
 
-			json.put("result", orderService.getOrderListByPage(mno, pager));
+			// 주문 목록(로그인한 사람번호, 페이저, 검색쿼리)
+			json.put("result", orderService.getOrderListByPage(mno, pager, query));
 			json.put("pagination", pagerObject);
 		} else {
 			json.put("result", "fail");
