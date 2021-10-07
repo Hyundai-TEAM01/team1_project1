@@ -160,6 +160,12 @@ function modalOn(what) {
 // 모달 종료
 function modalOff(what) {
 	$("." + what).removeClass("on");
+	if(what == "modal-delete"){
+		$("input.amount").each((idx, item)=>{
+			if($(item).val() == '0')
+				window.location.reload();
+		});
+	}
 	
 }
 
@@ -419,4 +425,5 @@ function initSetting() {
 	$("button.select-order").click(pListOrder);
 
 
+	console.log(amountDic);
 }

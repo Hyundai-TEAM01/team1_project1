@@ -5,8 +5,8 @@
 	<!-- 로그인된 유저의 정보 가져오기 -->
 	<select id="getLoginMember" resultType="member" parameterType="string">
 		SELECT mno, mid, mpassword, memail, mname, mbirth,
-			   mphone, mregdate, menable, mpoint, mrole
-		FROM member
-		WHERE mid = #{mid}
+			   mphone, mregdate, menable, mpoint, mrole,cartcnt
+		FROM member, (SELECT cartno, count(*) AS cartcnt  FROM cartdetail WHERE isdeleted = 0 group by cartno)
+		WHERE mid = #{mid} AND cartno = (SELECT cartno FROM member, cart  WHERE mid=#{mid} AND member_mno = mno)
 	</select>
 </mapper>

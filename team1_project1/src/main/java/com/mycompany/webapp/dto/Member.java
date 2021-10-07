@@ -21,5 +21,6 @@ public class Member {
 	private boolean menable;
 	private int mpoint;
 	private String mrole;
+	private int cartCnt;
 
 }

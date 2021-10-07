@@ -43,11 +43,15 @@ public class CartController {
 	}
 
 	@RequestMapping("/order")
-	public String order(@RequestParam String pList, Model model) {
-
+	public String order(@RequestParam String pList, Model model, Authentication authentication) {
+		MemberDetails minfo = (MemberDetails)authentication.getPrincipal();
 		// mno 가져와서 유효성 확인 추가 하기!!
 		String[] productList = pList.split(",");
 		model.addAttribute("pList", productList);
+		model.addAttribute("mphone", minfo.getMphone());
+		model.addAttribute("memail", minfo.getMemail());
+		model.addAttribute("mname", minfo.getMname());
+		
 		return "order";
 	}
 
@@ -68,7 +72,8 @@ public class CartController {
 			JSONObject temp = new JSONObject();
 
 			// getStockAmount(cinfo.getPcode(),cinfo.getPcolor(),cinfo.getPsize()) 생성하기
-			temp.append(String.valueOf(cinfo.getCartdetailno()), "5");
+			temp.append(String.valueOf(cinfo.getCartdetailno()), 
+					cartService.getStockAmount(cinfo.getPcode(), cinfo.getPsize(), cinfo.getPcolor()));
 			jsonArr.put(temp);
 		}
 

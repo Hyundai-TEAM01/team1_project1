@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.CartDAO;
 import com.mycompany.webapp.dao.MemberDAO;
+import com.mycompany.webapp.dao.ProductDAO;
 import com.mycompany.webapp.dto.CartDetail;
 import com.mycompany.webapp.dto.CartProductInfo;
 
@@ -27,6 +28,9 @@ public class CartService {
 	
 	@Resource
 	private MemberDAO memberDao;
+	
+	@Resource
+	private ProductDAO productDao;
 	
 	public List<CartProductInfo> getCartProductList(int mno){
 		int cartNo = cartDao.getCartNoByMno(mno);
@@ -72,5 +76,8 @@ public class CartService {
 		return false;
 	}
 	
+	public int getStockAmount(String pcode, String psize, String pcolor) {
+		return productDao.getProductAmount(pcode, psize, pcolor);
+	}
 	
 }
