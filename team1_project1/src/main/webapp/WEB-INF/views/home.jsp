@@ -136,7 +136,7 @@
 	}
 	
 	function goPage(pageNo, ccode){
-		history.pushState('', '', '?ccode=' + ccode +"&pageNo=" + pageNo);
+		history.pushState('', '', 'productList?ccode=' + ccode +"&pageNo=" + pageNo);
 		printCategoryProductList(pageNo, ccode);
     };
 
