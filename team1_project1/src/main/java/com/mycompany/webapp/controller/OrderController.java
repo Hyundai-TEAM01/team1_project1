@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.mycompany.webapp.dto.MemberDetails;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductOrder;
@@ -66,8 +67,13 @@ public class OrderController {
 			// 주문목록 전체 갯수
 			int totalRows = orderService.getOrderListCount(mno);
 			Pager pager = new Pager(5, 5, totalRows, pageNo);
+			logger.info(pager.toString());
+
+			String pagerInString = new Gson().toJson(pager);
+			JSONObject pagerObject = new JSONObject(pagerInString);
 
 			json.put("result", orderService.getOrderListByPage(mno, pager));
+			json.put("pagination", pagerObject);
 		} else {
 			json.put("result", "fail");
 		}
