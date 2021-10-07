@@ -117,3 +117,11 @@ header {
     display: inline-block;
     padding: 0 4px;
 }
+
+.header-logout {
+	border: none;
+	background-color: white;
+	color: #000;
+	font-weight: 600;
+	font-size: 13px;
+}

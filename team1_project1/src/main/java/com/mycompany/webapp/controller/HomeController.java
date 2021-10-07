@@ -2,13 +2,14 @@ package com.mycompany.webapp.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mycompany.webapp.dto.MemberDetails;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductList;
 import com.mycompany.webapp.service.ProductListService;
@@ -23,50 +27,57 @@ import com.mycompany.webapp.service.ProductListService;
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@Resource
 	private ProductListService productListService;
-	
-	
+
 	@RequestMapping("/")
-	public String content() {
+	public String content(Authentication authentication) {
 		logger.info("실행");
+
+		if (authentication == null) {
+			logger.info("로그인한 사용자 정보 없음!!!");
+		} else {
+			MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+			int mno = memberDetails.getMno();
+			logger.info("로그인한 사용자 정보 : " + mno);
+		}
+
 		return "home";
 	}
-	
+
+//	@RequestMapping("/")
+//	public String content(@AuthenticationPrincipal MemberDetails memberDetails) {
+//		logger.info("실행");
+//
+//		logger.info("로그인한 사용자 정보 : " + memberDetails.getMno());
+//		return "home";
+//	}
+
 	@GetMapping(value = "/getProductList", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
-	public String getProductList(@RequestParam(defaultValue="1") int pageNo, String ccode, Model model) {
-		String tempCcode = "MEN_TOP_SHIRTS";
+	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, @RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) throws JsonProcessingException {
+		logger.info("실행");
 		JSONObject json = new JSONObject();
-
-		int totalRows = productListService.getTotalProducListtNum(tempCcode);
+		logger.info(pageNo + " hello " + ccode);
+		int totalRows = productListService.getTotalProducListtNum(ccode);
+		Pager pager = new Pager(12, 10, totalRows, pageNo);
+		pager.setCcode(ccode);
 		
-		Pager pager = new Pager(12, 5, totalRows, pageNo);
-		pager.setCcode(tempCcode);
-		model.addAttribute("pager", pager);
-		
-		HashMap<String, Object> pagerMap = new HashMap<String, Object>();
-		pagerMap.put("groupNo", pager.getGroupNo());
-		pagerMap.put("startPageNo", pager.getStartPageNo());
-		pagerMap.put("endPageNo", pager.getEndPageNo());
-		pagerMap.put("pageNo", pager.getPageNo());
-		pagerMap.put("groupNo", pager.getGroupNo());
-		pagerMap.put("totalGroupNo", pager.getTotalGroupNo());
-		pagerMap.put("totalPageNo", pager.getTotalPageNo());
-//		JSONArray pagerJson = new JSONArray(pager);
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> map = objectMapper.convertValue(pager, Map.class);
 		
 		List<ProductList> productList = productListService.getProductList(pager);
 		
-		json.append("pager", pagerMap);
-		json.append("productList", productList);
-		
+		json.put("pager", map);
+		json.put("productList", productList);
+
 		return json.toString();
 	}
-	
+
 	@RequestMapping("/error/403")
 	public String error403() {
 		logger.info("실행");
 		return "error/403";
 	}
-}  
+}

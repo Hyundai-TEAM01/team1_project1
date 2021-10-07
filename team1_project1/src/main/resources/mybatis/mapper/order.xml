@@ -57,4 +57,15 @@
 		FROM productorder
 		WHERE mno = #{param1} AND porderno = #{param2}
 	</select>
+	
+	<insert id="createOrder" parameterType="productOrder">
+		<selectKey keyProperty="porderno" resultType="int" order="BEFORE">
+    		SELECT SEQ_PORDERNO.NEXTVAL FROM DUAL
+  		</selectKey>
+	
+		INSERT INTO productorder VALUES(#{porderno}, #{mno}, #{pordermphone},#{pordername},#{porderphone},#{porderaddr1},
+		#{porderaddr2},#{porderaddr3},#{pordertel},#{porderrequest},#{porderemail},#{pordertotalorgprice},#{porderdiscount},#{porderpayprice}
+		,#{pordertotalpoint},SYSDATE,null,#{porderpayment},#{porderpayname},#{porderpayno},#{porderpayinstallment})
+	
+	</insert>
 </mapper>
