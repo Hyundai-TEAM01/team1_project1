@@ -12,7 +12,29 @@
 	<select id="getOrderList" resultMap="OrderListResult" parameterType="int">
 		SELECT porderno, porderdate
 		FROM productorder
-		WHERE mno = #{mNo}
+		WHERE mno = #{mno}
+	</select>
+	
+	<!-- 주문 목록 페이징 처리(진행중) -->
+	<select id="getOrderListByPage" resultMap="OrderListResult">
+		SELECT rnum, porderno, porderdate
+		FROM (
+		SELECT ROWNUM AS rnum, porderno, porderdate
+			FROM (
+				SELECT porderno, porderdate
+				FROM productorder
+				WHERE mno = #{mno}
+				ORDER BY porderdate DESC
+			)
+		WHERE ROWNUM &lt;= #{pager.endRowNo}  <!-- endRowNo -->
+		)
+		WHERE rnum &gt;= #{pager.startRowNo} <!-- startRowNo -->
+
+	</select>
+	
+	<!-- 주문 목록 갯수 가져오기(유저번호) -->
+	<select id="getOrderListCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM productorder WHERE mno = #{mno}
 	</select>
 	
 	<!-- 주문 목록, 상세 페이지 주문상품아이템 -->
