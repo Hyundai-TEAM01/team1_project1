@@ -48,6 +48,21 @@
 		SELECT COUNT(*) FROM PCATEGORY WHERE CCODE LIKE #{ccode}||'%'
 	</select>
 	
+	<resultMap id="productResultMap" type="productDetail">
+		<result property="pcode" column="PCODE"/>
+		<result property="pname" column="PNAME"/>
+		<result property="pcontent" column="PCONTENT"/>
+		<result property="pbrand" column="PBRAND"/>
+		<result property="pprice" column="PPRICE"/>
+		<result property="pdate" column="PDATE"/>
+		<result property="enabled" column="ENABLED"/>
+		<collection property="color" column="PCODE" javaType="java.util.ArrayList" ofType="productImg" select="selectByProductImg"/>
+	</resultMap>
+	<!-- 상품 상세 조회 -->
+	<select id="getProductDetail" resultMap="productResultMap">
+		SELECT pcode, pname, pcontent, pbrand, pprice, pdate, enabled FROM product WHERE pcode = #{pcode}
+	</select>
+	<!-- 상품 컬러, 사이즈 수량 조회 -->
 	<select id="getProductAmount" resultType="int">
 		SELECT pamount FROM productstock WHERE pcode = #{pcode} AND psize = #{psize} AND pcolor = #{pcolor}
 	</select>

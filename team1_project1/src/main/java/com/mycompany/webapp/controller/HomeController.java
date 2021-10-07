@@ -56,7 +56,7 @@ public class HomeController {
 
 	@GetMapping(value = "/getProductList", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
-	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, @RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) throws JsonProcessingException {
+	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, @RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) {
 		logger.info("실행");
 		JSONObject json = new JSONObject();
 		int totalRows = productListService.getTotalProducListtNum(ccode);
