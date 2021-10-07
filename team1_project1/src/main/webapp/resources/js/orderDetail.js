@@ -33,7 +33,7 @@ $(function () {
 				const porderpayno = item.porderpayno;
 				$(".podpayno").html(porderpayno);
 				const porderpayinstallment = item.porderpayinstallment;
-				$(".porderpayinstallment").html(porderpayinstallment);
+				$(".podpayinstallment").html(porderpayinstallment);
 				const porderaddr1 = item.porderaddr1;
 				$(".podaddr1").html(porderaddr1);
 				const porderaddr2 = item.porderaddr2;

@@ -14,6 +14,7 @@ import com.mycompany.webapp.dao.OrderDAO;
 import com.mycompany.webapp.dto.CartProductInfo;
 import com.mycompany.webapp.dto.OrderDetail;
 import com.mycompany.webapp.dto.OrderList;
+import com.mycompany.webapp.dto.OrderListQuery;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductOrder;
 
@@ -31,15 +32,15 @@ public class OrderService {
 	@Resource
 	private CartDAO cartDao;
 
-	// 유저 넘버로 주문 목록 가져오기(페이징)
-	public List<OrderList> getOrderListByPage(int mno, Pager pager) {
+	// 주문 목록 갯수 가져오기(유저번호 + 페이징 + 검색쿼리[상품명, 주문번호])
+	public List<OrderList> getOrderListByPage(int mno, Pager pager, OrderListQuery query) {
 		// int sampleMno = 1;
-		return orderDao.getOrderListByPage(mno, pager);
+		return orderDao.getOrderListByPage(mno, pager, query);
 	}
 
-	// 유저 넘버로 주문 목록의 갯수 가져오기
-	public int getOrderListCount(int mno) {
-		return orderDao.getOrderListCount(mno);
+	// 주문 목록 갯수 가져오기(유저번호 + 페이징 + 검색쿼리[상품명, 주문번호])
+	public int getOrderListCount(int mno, OrderListQuery query) {
+		return orderDao.getOrderListCount(mno, query);
 	}
 
 	// 유저 넘버와 그에 맞는 주문번호로 상품주문상세정보 가져오기

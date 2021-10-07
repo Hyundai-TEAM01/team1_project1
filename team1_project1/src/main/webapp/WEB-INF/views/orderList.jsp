@@ -7,33 +7,31 @@
 	            <form class="order-form">
 	                <ul>
 	                    <li>
-	                        <label for=""
+	                        <label
 	                            ><i class="circle outline icon"></i>조회기간</label
 	                        >
 	                        <input
 	                            class="date"
 	                            type="date"
-	                            name="orderdate"
-	                            value="startdate"
+	                            name="startdate"
 	                        />
 	                        <span>-</span>
 	                        <input
 	                            class="date"
 	                            type="date"
-	                            name="orderdate"
-	                            value="enddate"
+	                            name="enddate"
 	                        />
-	                        <button class="date-button">1주일</button>
-	                        <button class="date-button">1개월</button>
-	                        <button class="date-button">3개월</button>
+	                        <a id="setdatebtn1" href="javascript:void(0);" class="date-button">1주일</a>
+	                        <a id="setdatebtn2" href="javascript:void(0);" class="date-button">1개월</a>
+	                        <a id="setdatebtn3" href="javascript:void(0);" class="date-button">3개월</a>
 	                    </li>
 	                    <li>
-	                        <label for=""
+	                        <label
 	                            ><i class="circle outline icon"></i>검색구분</label
 	                        >
-	                        <select class="ui dropdown">
-	                            <option value="0">상품명</option>
-	                            <option value="1">주문번호</option>
+	                        <select class="ui dropdown" name="searchtype">
+	                            <option value="pname">상품명</option>
+	                            <option value="porderno">주문번호</option>
 	                        </select>
 	                        <input
 	                            class="search"
