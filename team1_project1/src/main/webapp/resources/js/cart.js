@@ -46,7 +46,7 @@ function printProductList() {
 
 		$(".delete-btn").each((idx, item) => {
 			$(item).click(() => {
-				let cdno = $(item).closest("tr").attr('id').replace('num', '');
+				let cdno = $(item).closest("tr").fattr('id').replace('num', '');
 				console.log("run dbtn");
 
 				// 삭제할지 물어보는 팝업 생성
@@ -166,12 +166,17 @@ function modalOff(what) {
 
 
 // 상품 변경 반영(db)
-function pUpdate() {
+function pUpdate(num, amount) {
 	console.log("실행");
 	$.ajax({
-		url : "cartUpdate"
-	}).done((data)=>{})
-	
+		url : "cartDetailUpdate",
+		method:"patch",
+		data : JSON.stringify({'cartDetailNo' : num, 'amount':amount}),
+		contentType : "application/json; chartset=UTF-8"
+	}).done((data)=>{
+		console.log(data.result);
+	})
+		
 }
 
 // 상품 재고값 가져오기
@@ -241,19 +246,23 @@ function amount(num, idx) {
 		modalOn("modal-soldout");
 		input.val(stockAmount);
 		calProductPrice($(input).closest("tr"));
+		pUpdate(num,stockAmount);
 	}
 	else {
 		input.val(amount);
 		calProductPrice($(input).closest("tr"));
+		pUpdate(idx,amount);
 	}
 	allPriceSet();
+	
 }
 
 // 제품 수량 변경 이벤트 발생 시 처리
 function updateAmoumtEvent() {
 	$("tbody tr").each((idx, item) => {
 		// 재고값 가져오기
-		let stock = parseInt(amountDic[$(item).attr("id").replace('num','')]);
+		let item_id = $(item).attr("id").replace('num','');
+		let stock = parseInt(amountDic[item_id]);
 		let inputTag = $(item).find("input.amount");
 		let before_val;
 		inputTag
@@ -270,8 +279,10 @@ function updateAmoumtEvent() {
 					// 재고값으로 다시 설정
 					inputTag.val(stock);
 					calProductPrice(item);
+					pUpdate(item_id,stock);
 				} else if (change_val == 0) {
 					// 제거 질문 팝업
+					modalOn("modal-delete");
 				} else {
 					amount(change_val, $(item).attr("id"));
 					calProductPrice(item);
