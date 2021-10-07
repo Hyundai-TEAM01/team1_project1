@@ -19,8 +19,8 @@ public class ProductListService {
 	@Resource
 	private ProductDAO productDAO;
 	
-	public List<ProductList> getProductList(Pager pager){
-		return productDAO.selectByCategoryPage(pager);
+	public List<ProductList> getProductList(String ccode, Pager pager){
+		return productDAO.selectByCategoryPage(ccode, pager);
 	}
 	public int getTotalProducListtNum(String ccode) {
 		return productDAO.productListCount(ccode);
