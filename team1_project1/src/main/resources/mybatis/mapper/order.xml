@@ -8,13 +8,7 @@
 	    <result property="porderdate" column="PORDERDATE"/>
 	    <collection property="orderItems" column="PORDERNO" javaType="java.util.ArrayList" ofType="orderItem" select="getOrderItem"/>
 	</resultMap>
-	
-	<select id="getOrderList" resultMap="OrderListResult" parameterType="int">
-		SELECT porderno, porderdate
-		FROM productorder
-		WHERE mno = #{mno}
-	</select>
-	
+
 	<!-- 주문 목록 페이징 처리(진행중) -->
 	<select id="getOrderListByPage" resultMap="OrderListResult">
 		SELECT rnum, porderno, porderdate

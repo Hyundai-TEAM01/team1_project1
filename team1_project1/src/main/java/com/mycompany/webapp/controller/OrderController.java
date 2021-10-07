@@ -35,25 +35,8 @@ public class OrderController {
 		return "orderList";
 	}
 
-	// 주문목록페이지 - 목록리스트(JSON)
+	// 주문목록페이지 - 목록리스트 페이징 적용(JSON)
 	@GetMapping(value = "/getorderlist", produces = "Application/json; charset=UTF-8;")
-	@ResponseBody
-	public String getOrderList(Authentication authentication) {
-		logger.info("실행");
-		JSONObject json = new JSONObject();
-		if (authentication != null) {
-			// 로그인한 유저 정보의 넘버로 데이터 얻기
-			MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
-			int mno = memberDetails.getMno();
-			json.put("result", orderService.getOrderList(mno));
-		} else {
-			json.put("result", "fail");
-		}
-		return json.toString();
-	}
-
-	// 주문목록페이지 - 목록리스트 페이징 적용(JSON)(진행중)
-	@GetMapping(value = "/getorderlistbypage", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
 	public String getOrderListByPage(Authentication authentication,
 			@RequestParam(name = "pageNo", defaultValue = "1") int pageNo) {

@@ -31,12 +31,6 @@ public class OrderService {
 	@Resource
 	private CartDAO cartDao;
 
-	// 유저 넘버로 주문 목록 가져오기
-	public List<OrderList> getOrderList(int mno) {
-		// int sampleMno = 1;
-		return orderDao.getOrderList(mno);
-	}
-
 	// 유저 넘버로 주문 목록 가져오기(페이징)
 	public List<OrderList> getOrderListByPage(int mno, Pager pager) {
 		// int sampleMno = 1;

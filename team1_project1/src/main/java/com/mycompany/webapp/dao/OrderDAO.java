@@ -12,10 +12,7 @@ import com.mycompany.webapp.dto.ProductOrder;
 
 @Mapper
 public interface OrderDAO {
-	// 주문 목록 가져오기(유저번호)
-	public List<OrderList> getOrderList(int mno);
-
-	// 주문 목록 가져오기(유저번호) 페이징
+	// 주문 목록 가져오기(유저번호, 페이저) + 페이징
 	public List<OrderList> getOrderListByPage(@Param("mno") int mno, @Param("pager") Pager pager);
 
 	// 주문 목록 갯수 가져오기(유저번호)
