@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ProductDAO;
 import com.mycompany.webapp.dto.Pager;
+import com.mycompany.webapp.dto.ProductDetail;
 import com.mycompany.webapp.dto.ProductList;
 
 @Service
@@ -24,5 +25,8 @@ public class ProductListService {
 	}
 	public int getTotalProducListtNum(String ccode) {
 		return productDAO.productListCount(ccode);
+	}
+	public ProductDetail getProductDetail(String pcode) {
+		return productDAO.getProductDetail(pcode);
 	}
 }
