@@ -25,6 +25,6 @@ public interface OrderDAO {
 	public List<OrderDetail> getOrderDetail(int mno, int porderno);
 
 	public int createOrder(ProductOrder po);
-	
+
 	public int createOrderDetailByList(List<ProductOrderDetail> list);
 }

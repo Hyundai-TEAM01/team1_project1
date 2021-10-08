@@ -18,17 +18,27 @@ function wonChange(num) {
 // 재고량 저장 전역 변수
 var amountDic = {};
 
+// cart 순서 enum
+var nOrder = {};
+
+// 제품의 색상별, 사이즈별 재고량 
+var detailAmount = [];
+
 // 서버에서 받은 상품 목록 표시
 function printProductList() {
 	$.ajax({
 		url: "getCartProductInfoList"
 	}).done((data) => {
 		let solditem = false;
+		let idxCnt = 0;
 		for (product of data.infoList[0]) {
 			createProduct(product);
+			nOrder[product.cartdetailno] = idxCnt;
+			idxCnt += 1;
 		};
 		calProductPriceAll();
-
+		
+		detailAmount = data.detailList[0];
 
 		// 재고량 가져오기 
 		for (stock of data.stockList[0]) {
@@ -36,7 +46,7 @@ function printProductList() {
 			let amount = stock[keys[0]];
 			amountDic[keys[0]] = amount;
 			
-			if(amount =='0'){
+			if(amount <= 0){
 				console.log("품절 상품 포함");
 				solditem = true;
 			}
@@ -54,7 +64,6 @@ function printProductList() {
 		$(".delete-btn").each((idx, item) => {
 			$(item).click(() => {
 				let cdno = $(item).closest("tr").fattr('id').replace('num', '');
-				console.log("run dbtn");
 
 				// 삭제할지 물어보는 팝업 생성
 
@@ -68,7 +77,7 @@ function printProductList() {
 		// 체크 박스별 상태 변경 이벤트 할당
 		$("input[name='check_box']").each((idx, item) => {
 			$(item).change(function() {
-				console.log("change");
+	
 				if ($(item).prop("checked") === false) {
 					// 상품 선택 해제된 경우
 					s_all.prop("checked", false);
@@ -82,7 +91,8 @@ function printProductList() {
 		if(solditem){
 			$(".info-body tr").each((idx,item)=>{
 				let id = $(item).attr("id").replace("num","");
-				if(amountDic[id] == '0'){
+				console.log(amountDic[id]);
+				if(amountDic[id] <= 0){
 					let info = "";
 					$(item).find(".sold-info").each((idx,item)=>{
 						info += $(item).html();
@@ -124,7 +134,7 @@ function createProduct(product) {
 	html += '<td class="center aligned amount-icon">';
 	html += '  <a href="javascript:amount(-1,' + product.cartdetailno + ')"><i class="minus square outline icon"></i></a>';
 	html += '<div class="ui mini input">';
-	html += '<input type="text" class="center aligned amount" value="' + product.amount + '" maxlength="3" />';
+	html += '<input type="text" class="center aligned amount" value="' + product.amount + '" maxlength="3" pattern ="[0-9]+"/>';
 	html += "</div>";
 	html += '<a href="javascript:amount(1,' + product.cartdetailno + ')"><i class="plus square outline icon"></i></a>';
 	html += "</td>";
@@ -148,8 +158,7 @@ function colorFormatting(color) {
 // 상품 삭제(db)
 function pDelete(cdno, modalname) {
 	cdno = parseInt(cdno);
-	console.log("cdno "+cdno);
-	console.log("삭제 실행");
+
 	$.ajax({
 		url: "cartDetailDelete",
 		method: 'POST',
@@ -179,7 +188,7 @@ function modalOff(what) {
 	$("." + what).removeClass("on");
 	if(what == "modal-delete"){
 		$("input.amount").each((idx, item)=>{
-			if($(item).val() == '0')
+			if($(item).val() <= 0)
 				window.location.reload();
 		});
 	}else if(what == "modal-info"){
@@ -192,7 +201,7 @@ function modalOff(what) {
 
 // 상품 변경 반영(db)
 function pUpdate(num, amount) {
-	console.log("실행");
+
 	$.ajax({
 		url : "cartDetailUpdate",
 		method:"patch",
@@ -204,26 +213,67 @@ function pUpdate(num, amount) {
 		
 }
 
-// 상품 재고값 가져오기
-function getStockAmount() {}
-
+// 상품 옵션 변경 반영
+function pOptionUpdate(num, size, color){
+	$.ajax({
+		url : "cartDetailOptionUpdate",
+		method:"patch",
+		data : JSON.stringify({'cartDetailNo' : num, 'psize':size, 'pcolor':color}),
+		contentType : "application/json; chartset=UTF-8"
+	}).done((data)=>{
+		console.log(data.result);
+		if(data.result == "duplicated"){
+			modalOn("modal-duplicated");
+		}else{			
+			window.location.reload();
+		}
+	})
+}
 
 
 // 옵션 변경
 function changeOption(item) {
 	let this_row = $(item).closest("tr");
+	let now_color = this_row.find("span.p_color").html();
+	let now_size = this_row.find("span.p_size").html();
 	let this_id = this_row.attr("id");
+	let real_id = this_id.replace("num","");
 	let html = "<tr id='" + this_id + "_op' class='op-add'>";
 	if (typeof $("#" + this_id + "_op").html() == "undefined") {
-		html += '<td class="center aligned"></td>';
-		html += '<td colspan="3"><div><div><span class="three wide small">COLOR</span>';
-
-		// 해당 제품의 컬러 칩셋과 사이즈 목록을 가져오기!
-		// 해당 컬러의 사이즈 품절의 경우 색 변경
+		
+		let colorSet = new Set();
+		let sizeSet = new Set();
+		let pamountDict = new Map();
+		let colorUrlDict = new Map();
+		
+		
+		for(let key in detailAmount[nOrder[real_id]]){
+			let obj = detailAmount[nOrder[real_id]][key]
+			for(let idx in obj){
+				colorSet.add(obj[idx].pcolor);
+				sizeSet.add(obj[idx].psize)
+				pamountDict.set(obj[idx].pcolor+obj[idx].psize,obj[idx].pamount);
+				colorUrlDict.set(obj[idx].pcolor,obj[idx].colorurl);
+			}
+		}
+		
 		// color 칩 목록 추가
-		html += '</div><div><span class="small">SIZE</span>';
-
-		// size 목록 추가
+		html += '<td class="center aligned"></td>';
+		html += '<td colspan="3"><div><div class="mb-3 option-color"><span class="option-span">COLOR</span>';
+		
+		colorSet.forEach((item)=>{
+			
+			html += '&nbsp&nbsp<a class="'+item;
+			if(item == now_color){
+				html += ' now-choose';
+			}
+			html += '"><img class="color-url" src='+colorUrlDict.get(item)+'></a>';
+		})
+		
+		html += '</div><div class="option-size"><span class="option-span">SIZE</span>';
+		
+		// size 버튼 추가
+		html += creatSizeButton(sizeSet , pamountDict, now_color);
 
 		html += "</div></div></td>";
 		html += '<td class="center aligned">';
@@ -233,12 +283,42 @@ function changeOption(item) {
 		html += "</td></tr>";
 
 		this_row.after(html);
-		// 변경 버튼 이벤트 할당
 		
+		this_row = $("#"+this_row.attr("id")+"_op");
+		this_row.find(".option-color a").each((idx, item)=>{
+			$(item).click(function(event){
+				event.preventDefault();
+				$(item).removeClass("now-choose");
+				changeColor($(item).attr("class"),this_row.attr('id'), pamountDict);
+			});
+		})
+		
+		optionSizeButtonClickEvent(this_row.attr("id"));
+		
+		// 변경 버튼 이벤트 할당
+		$("#u_btn_"+this_id).click(()=>{
+			let option_size = this_row.find(".option-size");
+			let chooseColor = this_row.find(".option-color a.now-choose").attr("class").replace(" now-choose","");
+			let chooseSize = this_row.find(".option-size button.now-choose").html();
+			console.log(chooseSize);
+			if(typeof chooseSize == "undefined"){				
+				if(option_size.find(".error-red").length == 0){					
+					option_size.append("<span class='error-red'>사이즈를 선택하세요</span>")
+				}
+			}else{
+				if(chooseColor == now_color && now_size == chooseSize){
+					console.log("동일 제품");
+					$("#" + this_id + "_op").hide();
+				}else{
+					pOptionUpdate(real_id,chooseSize,chooseColor);
+				}
+			}
+		});
 		
 		// 취소 버튼 이벤트 할당
 		$("#c_btn_"+this_id).click(function(){                    	
 			$("#" + this_id + "_op").hide();
+			$("#"+ this_id +"_op").find("span.error-red").remove();
 		})
 		
 	} else { 
@@ -249,6 +329,89 @@ function changeOption(item) {
 		}
 	}
 }  
+
+function changeColor(color, rowid, pamountDict){
+	$("#"+rowid).find(".option-color a").each((idx,item)=>{
+		$(item).removeClass("now-choose");
+	});
+	
+	$("#"+rowid).find(".option-color a"+"."+color).each((idx,item)=>{
+		$(item).addClass("now-choose");
+		// 현재 선택된 값에 맞게 disable 변경
+		$("#"+rowid).find(".option-size button").each((idx,item)=>{
+			$(item).removeClass("sold-out");
+			$(item).removeClass("now-choose");
+			$(item).attr("disabled",false);
+			if(pamountDict.get(color+$(item).html()) == '0'){
+				$(item).addClass("sold-out");
+				$(item).attr("disabled",true);
+			}
+			
+		});
+	});
+}
+
+function creatSizeButton(sizeSet , pamountDict , now_color){
+	let sortedSize = sortBySize(sizeSet);
+	let html = "";
+	sortedSize.forEach((item)=>{
+			html +='&nbsp&nbsp<button class="ui basic button small'
+			if(pamountDict.get(now_color+item) == '0'){
+				html += ' sold-out" disabled';
+			}else{
+				html += '"'
+			}
+			html+='>'+item+'</button>';
+		});
+	return html;
+}
+
+function optionSizeButtonClickEvent(rowid){
+	$("#"+rowid).find(".option-size button").each((idx,item)=>{
+		$(item).click(()=>{
+			$("#"+rowid).find(".option-size button").each((idx,item)=>{
+				$(item).removeClass("now-choose");
+			});
+			
+			$(item).addClass("now-choose");
+		});
+	});
+}
+
+
+// order 값
+const sizeOrder = {
+	'XSS' : -1,
+	'XXS' : 0,
+	'XS' : 1,
+	'S' : 2,
+	'MS' : 3,
+	'M' : 4,
+	'ML' : 5,
+	'L' : 6,
+	'XL' : 7,
+	'XXL' : 8,
+	'XXXL' : 9,
+	'FR' : 100
+}
+
+// 사이즈 정렬 함수
+function sortBySize(obj){
+	let check = false;
+	let arr = [];
+	for(let item of obj.keys()){
+		if(item.match("[a-zA-Z]+")){
+			check = true;
+		}
+		arr.push(item);
+	}
+	if(!check){
+		return arr.sort();
+	}else{
+		return arr.sort(function(a,b){return  parseInt(sizeOrder[a]) - parseInt(sizeOrder[b])});
+	}
+}
+
 
 // 상품 수량 변경
 function amount(num, idx) {
@@ -296,6 +459,12 @@ function updateAmoumtEvent() {
 				before_val = parseInt(this.value);
 			})
 			.change(function () {
+				if(!$(this).val().match("[0-9]+")){
+					inputTag.val(before_val);
+					return ;
+				}
+				
+				
 				let change_val = parseInt($(this).val());
 
 				if (change_val > stock) {
@@ -305,11 +474,11 @@ function updateAmoumtEvent() {
 					inputTag.val(stock);
 					calProductPrice(item);
 					pUpdate(item_id,stock);
-				} else if (change_val == 0) {
+				} else if (change_val <= 0) {
 					// 제거 질문 팝업
 					modalOn("modal-delete");
 				} else {
-					amount(change_val, $(item).attr("id"));
+					amount(0, $(item).attr("id").replace("num",""));
 					calProductPrice(item);
 				}
 
@@ -373,7 +542,7 @@ function calProductPriceAll() {
 
 // 전체 제품 가격 합 적용
 function allPriceSet() {
-	console.log("all price set run");
+	
 	let sum = 0;
 	$("tbody tr").each((idx, item) => {
 
@@ -381,7 +550,6 @@ function allPriceSet() {
 			sum += calProductPrice(item);
 		}
 	});
-	console.log(sum);
 
 	$("#p_total").html(wonChange(sum));
 
@@ -410,6 +578,32 @@ function pListDelete(){
 		modalOff("modal-deletelist");
 		window.location.reload();
 	});
+}
+
+// 선택 상품 주문
+function pListOrder(){
+	let pList = [];
+	$("tbody input[name='check_box']").each((idx,item)=>{
+		if($(item).prop("checked") === true){
+			pList.push($(item).closest("tr").attr("id").replace("num",""));
+		}
+	});
+	
+	if(pList.length === 0){
+		return;
+	}
+
+	
+	let form = $("<form></form>");
+	let input = $("<input></input>");
+	input.attr("type","hidden");
+	input.attr("name","pList");
+	input.attr("value", pList);
+	form.append(input);
+	form.attr("method","post");
+	form.attr("action","order");
+	$("body").append(form);
+	form.submit();
 }
 
 $(function() {
@@ -451,6 +645,4 @@ function initSetting() {
 	// 선택 상품 주문 버튼 이벤트 할당
 	$("button.select-order").click(pListOrder);
 
-
-	console.log(amountDic);
 }

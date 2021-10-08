@@ -3,6 +3,7 @@ package com.mycompany.webapp.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,15 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.CartDetail;
+import com.mycompany.webapp.dto.CartProductDetail;
 import com.mycompany.webapp.dto.CartProductInfo;
 import com.mycompany.webapp.dto.MemberDetails;
-import com.mycompany.webapp.dto.ProductOrder;
 import com.mycompany.webapp.service.CartService;
 import com.mycompany.webapp.service.CartService.CartUpdateResult;
 
 @Controller
 @RequestMapping("/cart")
-public class CartController {
+public class CartController {	
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
 	@Resource
@@ -63,22 +64,29 @@ public class CartController {
 		MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
 
 		JSONObject json = new JSONObject();
-
-		List<CartProductInfo> li = cartService.getCartProductList(memberDetails.getMno());
+		Map<String,List> map = cartService.getCartProductList(memberDetails.getMno());
+		List<CartProductInfo> li = map.get("cartProductInfoList");
 		json.append("infoList", li);
 
 		JSONArray jsonArr = new JSONArray();
+		JSONArray jsonArr2 = new JSONArray();
 
 		for (CartProductInfo cinfo : li) {
 			JSONObject temp = new JSONObject();
+			JSONObject temp2 = new JSONObject();
 
 			// getStockAmount(cinfo.getPcode(),cinfo.getPcolor(),cinfo.getPsize()) 생성하기
 			temp.append(String.valueOf(cinfo.getCartdetailno()), 
 					cartService.getStockAmount(cinfo.getPcode(), cinfo.getPsize(), cinfo.getPcolor()));
+			
+			temp2.put(cinfo.getPcode(), (List<CartProductDetail>)map.get(cinfo.getPcode()));
+			
 			jsonArr.put(temp);
+			jsonArr2.put(temp2);
 		}
 
 		json.append("stockList", jsonArr);
+		json.append("detailList", jsonArr2);
 		return json.toString();
 	}
 
@@ -135,6 +143,37 @@ public class CartController {
 			json.put("result", "알 수 없는 오류로 실패");
 		}
 
+		
+		return json.toString();
+	}
+	
+	@PatchMapping(value = "/cartDetailOptionUpdate", produces = "Application/json; charset=UTF-8")
+	@ResponseBody
+	public String cartDetailOptionUpdate(@RequestBody HashMap<String, String> info, Authentication authentication) {
+		JSONObject json = new JSONObject();
+		
+		CartDetail cartDetail = new CartDetail();
+		cartDetail.setAmount(1);
+		cartDetail.setCartDetailNo(Integer.parseInt(info.get("cartDetailNo")));
+		cartDetail.setPcolor(info.get("pcolor"));
+		cartDetail.setPsize(info.get("psize"));
+		
+		logger.info(cartDetail.toString());
+		
+		int mno = ((MemberDetails) authentication.getPrincipal()).getMno();
+		CartUpdateResult result = cartService.updateCartDetailOption(mno, cartDetail.getCartDetailNo(), cartDetail);
+		
+		if(result.equals(CartUpdateResult.SUCCESS)) {
+			json.put("result", "성공");
+		}else if(result.equals(CartUpdateResult.NOT_VALID)) {			
+			json.put("result", "잘못된 상품 수정 오류");
+		}else if(result.equals(CartUpdateResult.DUPLICATED)) {
+			json.put("result", "duplicated");
+		}
+		else {
+			json.put("result", "알 수 없는 오류로 실패");
+		}
+		
 		
 		return json.toString();
 	}

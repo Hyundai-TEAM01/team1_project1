@@ -201,6 +201,7 @@ td {
 	border-left: none;
 }
 
+/* 페이징 버튼 */
 .paging {
     margin-top: 40px;
     text-align: center;
