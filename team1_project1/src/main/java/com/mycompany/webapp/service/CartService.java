@@ -1,7 +1,9 @@
 package com.mycompany.webapp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,13 +16,14 @@ import com.mycompany.webapp.dao.MemberDAO;
 import com.mycompany.webapp.dao.ProductDAO;
 import com.mycompany.webapp.dto.CartDetail;
 import com.mycompany.webapp.dto.CartProductInfo;
+import com.mycompany.webapp.dto.ProductImg;
 
 @Service
 public class CartService {
 	private static final Logger logger = LoggerFactory.getLogger(CartService.class);
 	
 	public enum CartUpdateResult{
-		SUCCESS, FAIL, NOT_VALID
+		SUCCESS, FAIL, NOT_VALID, DUPLICATED
 	}
 	
 	@Resource
@@ -32,9 +35,16 @@ public class CartService {
 	@Resource
 	private ProductDAO productDao;
 	
-	public List<CartProductInfo> getCartProductList(int mno){
+	public Map<String, List> getCartProductList(int mno){
 		int cartNo = cartDao.getCartNoByMno(mno);
-		return cartDao.getCartProductList(cartNo);
+		List<CartProductInfo> cartProductInfoList = cartDao.getCartProductList(cartNo);
+		Map<String, List> map = new HashMap<>();
+		
+		for(CartProductInfo info : cartProductInfoList) {
+			map.put(info.getPcode(), cartDao.getCartProductDetailByPcode(info.getPcode()));
+		}
+		map.put("cartProductInfoList", cartProductInfoList);
+		return map;
 	}
 	
 	public int deleteCartDetail(int cartdetailno) {
@@ -53,6 +63,26 @@ public class CartService {
 				return CartUpdateResult.SUCCESS;
 			}else {
 				return CartUpdateResult.FAIL;				
+			}
+			
+		}else {
+			return CartUpdateResult.NOT_VALID;
+		}
+	}
+	
+	public CartUpdateResult updateCartDetailOption(int mno, int cartdetailno, CartDetail cartDetail) {
+		if (checkInCart(mno, cartdetailno)) {
+			
+			if(cartDao.getCartDetailByOption(cartDetail.getCartDetailNo(), cartDetail.getPcolor(), cartDetail.getPsize()) != null) {
+				return CartUpdateResult.DUPLICATED;
+			}else {
+				int result = cartDao.updateCartdetailOption(cartDetail);
+				
+				if(result == 1) {
+					return CartUpdateResult.SUCCESS;
+				}else {
+					return CartUpdateResult.FAIL;				
+				}				
 			}
 			
 		}else {
