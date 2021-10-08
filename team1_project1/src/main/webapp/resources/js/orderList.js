@@ -1,7 +1,7 @@
 $(function () {
 	// 처음 로딩 시 주문목록 렌더링
 	// 7일전 기준, 상품명, "" : 전체, 1페이지
-    printOrderList(prevDay(7), today(), "productName", "", 1);
+    printOrderList(prevDay(7), getToday(), "productName", "", 1);
     initDate();
     
     // ***************** 검색 쿼리 버튼 클릭 이벤트 관련 *****************
@@ -18,7 +18,7 @@ $(function () {
 	// 초기 날짜 7일전으로 설정
 	function initDate() {
     	$("input[name=startdate]").val(prevDay(7));
-    	$("input[name=enddate]").val(today());
+    	$("input[name=enddate]").val(getToday());
 	}
 	
 	// 날짜 선택 버튼
@@ -34,11 +34,11 @@ $(function () {
 		else if (e.target.id ==="setdatebtn3") {
 			$("input[name=startdate]").val(prevMonth(3));
 		} 
-		$("input[name=enddate]").val(today());
+		$("input[name=enddate]").val(getToday());
 	})
 	
 	// 오늘 날짜
-	function today() {
+	function getToday() {
 	   var d = new Date();
 	   return getDateStr(d);
 	}
