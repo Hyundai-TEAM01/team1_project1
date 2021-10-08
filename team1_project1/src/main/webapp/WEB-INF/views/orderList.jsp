@@ -58,7 +58,7 @@
 	                        <th>구분</th>
 	                    </tr>
 	                </thead>
-	                <!-- ajax table tr 생성 -->
+	                <!-- Ajax 주문 목록 테이블 tr 생성 -->
 	                <tbody id="otable"></tbody>
 	            </table>
 	            <div class="paging">

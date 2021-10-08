@@ -6,13 +6,14 @@ header {
 	max-width: 1180px;
 	margin: 0 auto;
 	height: 84px;
-	line-height: 84px;
 	position: relative;
 	text-align: center;
 }
 
+/* 가운데 로고 */
 .header-center {
-	
+	height: 84px;
+	line-height: 84px;
 }
 
 .header-logo {
@@ -27,29 +28,51 @@ header {
 		no-repeat;
 }
 
+/* 오른쪽 메뉴 */
 .header-right {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	right: 0;
+    position: absolute;
+    top: 0;
+    right: 15px;
 }
 
 .header-option {
-	font-size: 13px;
-	font-weight: 600;
+    font-size: 13px;
+    font-weight: 600;
+}
+.header-option > li {
+    float: left;
+    text-align: center;
+    padding: 30px 10px;
 }
 
-.header-option li {
-	display: inline-block;
-	padding: 0 4px;
+.header-option > li a {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+}
+.header-option > li a:hover {
+    text-decoration: underline;
 }
 
+.my-page {
+    height: 54px;
+    overflow: hidden;
+}
+
+/* 로그아웃 버튼 */
 .header-logout {
+	cursor: pointer;
+	display: block;
+    height: 24px;
+    line-height: 24px;
 	border: none;
 	background-color: white;
 	color: #000;
 	font-weight: 600;
 	font-size: 13px;
+}
+.header-logout:hover {
+	text-decoration: underline;
 }
 
 .cartcnt {

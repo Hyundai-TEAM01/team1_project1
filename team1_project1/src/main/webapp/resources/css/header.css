@@ -9,6 +9,7 @@ header {
     position: relative;
 }
 
+/* 헤더 로고 */
 .header-left {
     position: absolute;
     top: 50%;
@@ -25,6 +26,7 @@ header {
     background: url(/resources/images/top-header-handsome-logo.png) no-repeat;
 }
 
+/* 가운데 카테고리 메뉴 */
 .header-menu {
     position: absolute;
     width: 100%;
@@ -104,8 +106,7 @@ header {
 /* 오른쪽 메뉴 */
 .header-right {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
     right: 15px;
 }
 
@@ -113,17 +114,40 @@ header {
     font-size: 13px;
     font-weight: 600;
 }
-.header-option li {
-    display: inline-block;
-    padding: 0 4px;
+.header-option > li {
+    float: left;
+    text-align: center;
+    padding: 30px 10px;
 }
 
+.header-option > li a {
+    display: block;
+    height: 24px;
+    line-height: 24px;
+}
+.header-option > li a:hover {
+    text-decoration: underline;
+}
+
+.my-page {
+    height: 54px;
+    overflow: hidden;
+}
+
+/* 로그아웃 버튼 */
 .header-logout {
+	cursor: pointer;
+	display: block;
+    height: 24px;
+    line-height: 24px;
 	border: none;
 	background-color: white;
 	color: #000;
 	font-weight: 600;
 	font-size: 13px;
+}
+.header-logout:hover {
+	text-decoration: underline;
 }
 
 .cartcnt {
