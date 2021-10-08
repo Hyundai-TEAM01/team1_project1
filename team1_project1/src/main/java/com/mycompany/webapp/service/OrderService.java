@@ -1,5 +1,6 @@
 package com.mycompany.webapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,13 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.dao.CartDAO;
+import com.mycompany.webapp.dao.MemberDAO;
 import com.mycompany.webapp.dao.OrderDAO;
+import com.mycompany.webapp.dao.ProductDAO;
 import com.mycompany.webapp.dto.CartProductInfo;
 import com.mycompany.webapp.dto.OrderDetail;
 import com.mycompany.webapp.dto.OrderList;
 import com.mycompany.webapp.dto.OrderListQuery;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.ProductOrder;
+import com.mycompany.webapp.dto.ProductOrderDetail;
 
 @Service
 public class OrderService {
@@ -28,9 +32,15 @@ public class OrderService {
 
 	@Resource
 	private OrderDAO orderDao;
+	
+	@Resource
+	private MemberDAO memberDao;
 
 	@Resource
 	private CartDAO cartDao;
+	
+	@Resource
+	private ProductDAO productDao;
 
 	// 주문 목록 갯수 가져오기(유저번호 + 페이징 + 검색쿼리[상품명, 주문번호])
 	public List<OrderList> getOrderListByPage(int mno, Pager pager, OrderListQuery query) {
@@ -45,20 +55,16 @@ public class OrderService {
 
 	// 유저 넘버와 그에 맞는 주문번호로 상품주문상세정보 가져오기
 	public List<OrderDetail> getOrderDetail(int mno, int porderno) {
-		// int samplemNo = 1;
-		// int samplepOrderNo = 1;
 		return orderDao.getOrderDetail(mno, porderno);
 	}
 
 	@Transactional
-	public OrderResult newOrder(ProductOrder po, String plist, int mpoint) {
-		int mno = po.getMno();
+	public OrderResult newOrder(ProductOrder productOrder, String plist, int mpoint) {
+		int mno = productOrder.getMno();
+		int cartno = cartDao.getCartNoByMno(mno);
 
-		// cartno 가져오기!
-		int cartno = 1;
-
-		// 마일리지 부족 시
-		if (mpoint < po.getPorderdiscount()) {
+		// 마일리지가 부족한 경우
+		if (mpoint < productOrder.getPorderdiscount()) {
 			return OrderResult.ENOUGH_MPOINT;
 		}
 
@@ -75,20 +81,49 @@ public class OrderService {
 			sum += p.getAmount() * p.getPprice();
 		}
 
-		po.setPordertotalorgprice(sum); // 구매 상품들의 가격 합 추가
+		productOrder.setPordertotalorgprice(sum); // 구매 상품들의 가격 합 추가
 
-		po.setPorderpayprice(sum - po.getPorderdiscount());
-		orderDao.createOrder(po);
-		int result = po.getPorderno();
+		productOrder.setPorderpayprice(sum - productOrder.getPorderdiscount());
+		
+		productOrder.setPordertotalpoint((int)Math.ceil(productOrder.getPorderpayprice()*0.05));
+		
+		orderDao.createOrder(productOrder); // productOrder db에 추가
+		
+		int result = productOrder.getPorderno(); // 새롭게 생성된 sequence 값
 		if (result > 0) {
 
 			// 사용자 마일리지 차감
-			logger.info("가져온 key 값 : " + result);
-
-			// cart에서 주문한 값들 다 delete로 변경
-
+			if(productOrder.getPorderdiscount() != 0)
+				memberDao.updateMemberMpoint(mno,mpoint - productOrder.getPorderdiscount());
+			
+			// cart에서 주문한 row isdelete 변경
+			cartDao.purchaseCartDetailList(productlist);
+			
 			// order detail 생성
-
+			List<ProductOrderDetail> porderDetailList = new ArrayList<>();
+			for(CartProductInfo info : pInfoList) {
+				ProductOrderDetail pod = new ProductOrderDetail();
+				pod.setPcode(info.getPcode());
+				pod.setPcolor(info.getPcolor());
+				pod.setPodamount(info.getAmount());
+				pod.setPodprice(info.getPprice() * info.getAmount());
+				pod.setPorderno(result);
+				pod.setPsize(info.getPsize());
+				pod.setPodstatus("결제완료");
+				porderDetailList.add(pod);
+			}
+			
+			logger.info("카트 디테일 생성 전");
+			orderDao.createOrderDetailByList(porderDetailList);
+			
+			// 상품 재고 감소 시키기!
+			
+			for(ProductOrderDetail pod : porderDetailList) {
+				int amount = productDao.getProductAmount(pod.getPcode(), pod.getPsize(), pod.getPcolor());
+				amount -= pod.getPodamount();
+				productDao.updateProductStock(pod.getPcode(), pod.getPsize(), pod.getPcolor(), amount);
+			}
+			
 			return OrderResult.SUCCESS;
 		}
 		return OrderResult.FAIL;

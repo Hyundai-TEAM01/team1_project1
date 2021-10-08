@@ -29,4 +29,8 @@ public interface CartDAO {
 	public int getCartNoByMno(int mno);
 	
 	public int updateCartdetail(CartDetail cartDetail);
+	
+	public int purchaseCartDetail(int cartDetailNo);
+
+	public int purchaseCartDetailList(String[] cartDetailNoList);
 }

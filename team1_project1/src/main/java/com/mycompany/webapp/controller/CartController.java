@@ -51,6 +51,7 @@ public class CartController {
 		model.addAttribute("mphone", minfo.getMphone());
 		model.addAttribute("memail", minfo.getMemail());
 		model.addAttribute("mname", minfo.getMname());
+		model.addAttribute("mpoint", minfo.getMpoint());
 		
 		return "order";
 	}

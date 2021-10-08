@@ -55,7 +55,7 @@
 	<select id="getOrderItem" resultType="orderItem">
 		SELECT pod.podno, pod.porderno, pod.pcode, pod.pcolor, pod.psize, pod.podprice, pod.podamount, pod.podstatus, pimg.imgurl1, p.pbrand, p.pname, p.pprice
 		FROM porderdetail pod, productimg pimg, product p
-		WHERE pod.porderno = #{porderno} AND pod.pcode = pimg.pcode AND pod.pcode = p.pcode
+		WHERE pod.porderno = #{porderno} AND pod.pcode = pimg.pcode AND pod.pcode = p.pcode AND pod.pcolor = pimg.pcolor
 	</select>
 	
 	<!-- 주문상세페이지 불러오기  -->	
@@ -104,4 +104,11 @@
 		,#{pordertotalpoint},SYSDATE,null,#{porderpayment},#{porderpayname},#{porderpayno},#{porderpayinstallment})
 	
 	</insert>
+	
+	<update id="createOrderDetailByList" >
+		<foreach collection="list" item="pod" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+		 	INTO porderdetail VALUES
+				( FN_GET_SEQ('SEQ_PODNO'), #{pod.porderno}, #{pod.pcode}, #{pod.pcolor}, #{pod.psize}, #{pod.podprice},#{pod.podamount},#{pod.podstatus})
+		</foreach>
+	</update>
 </mapper>

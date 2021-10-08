@@ -23,7 +23,7 @@ function printProductList() {
 	$.ajax({
 		url: "getCartProductInfoList"
 	}).done((data) => {
-
+		let solditem = false;
 		for (product of data.infoList[0]) {
 			createProduct(product);
 		};
@@ -33,7 +33,14 @@ function printProductList() {
 		// 재고량 가져오기 
 		for (stock of data.stockList[0]) {
 			let keys = Object.keys(stock);
-			amountDic[keys[0]] = stock[keys[0]];
+			let amount = stock[keys[0]];
+			amountDic[keys[0]] = amount;
+			
+			if(amount =='0'){
+				console.log("품절 상품 포함");
+				solditem = true;
+			}
+			
 		};
 
 
@@ -51,9 +58,9 @@ function printProductList() {
 
 				// 삭제할지 물어보는 팝업 생성
 
-				$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+cdno+")");
+				$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+cdno+",'modal-delete')");
 				modalOn("modal-delete");
-				$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+cdno+")");
+				$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+cdno+",'modal-delete')");
 			})
 		})
 		updateAmoumtEvent();
@@ -72,6 +79,20 @@ function printProductList() {
 			});
 		});
 
+		if(solditem){
+			$(".info-body tr").each((idx,item)=>{
+				let id = $(item).attr("id").replace("num","");
+				if(amountDic[id] == '0'){
+					let info = "";
+					$(item).find(".sold-info").each((idx,item)=>{
+						info += $(item).html();
+					})
+					$(".deleteProductInfo").append("<p>"+info+"</p>");
+					pDelete(id, "modal-info");
+				}
+			});
+			modalOn("modal-info");
+		}
 
 	});
 
@@ -91,8 +112,8 @@ function createProduct(product) {
 	html += "</div>";
 	html += '<div class="middle aligned content">';
 	html += '<div class="description">';
-	html += "<p>" + product.pbrand + "</p>";
-	html += "<p>" + product.pname + "</p>";
+	html += "<p class='sold-info'>" + product.pbrand + "</p>";
+	html += "<p class='sold-info'>" + product.pname + "</p>";
 	html += '<p class="grey small">';
 	html += "color&nbsp:&nbsp";
 	html += '<span class="p_color">' + colorFormatting(product.pcolor) + "</span>";
@@ -121,17 +142,11 @@ function createProduct(product) {
 
 // 색상 용어 변경 함수
 function colorFormatting(color) {
-	let result;
-
-	if (color === 'GY') {
-		result = 'GRAY';
-	}
-
-	return result;
+	return color;
 }
 
 // 상품 삭제(db)
-function pDelete(cdno) {
+function pDelete(cdno, modalname) {
 	cdno = parseInt(cdno);
 	console.log("cdno "+cdno);
 	console.log("삭제 실행");
@@ -144,12 +159,14 @@ function pDelete(cdno) {
 		// 데이터 삭제 성공 여부 확인 후 처리하기!
 		if (data.result == "1") {
 			console.log("정상적으로 삭제");
-			window.location.reload();
 		} else {
 			console.log("삭제 실패");
 		}
 	});
-	modalOff("modal-delete");
+	
+	if(modalname === "modal-delete"){	
+		modalOff("modal-delete");
+	}
 }
 
 //모달 띄우기
@@ -165,6 +182,8 @@ function modalOff(what) {
 			if($(item).val() == '0')
 				window.location.reload();
 		});
+	}else if(what == "modal-info"){
+		window.location.reload();
 	}
 	
 }
@@ -418,7 +437,15 @@ function initSetting() {
 
 	// 선택 삭제 버튼 이벤트 할당
 	$("button.select-delete").click(function(){
-		modalOn("modal-deletelist");
+		//선택 된거 없으면 실행 x
+		let checked = 0;
+		$(".info-body tr").each((idx,item)=>{
+			if(isChecked(item)){
+				checked += 1;
+			}
+		});
+		if(checked != 0)
+			modalOn("modal-deletelist");
 	} );
 
 	// 선택 상품 주문 버튼 이벤트 할당
