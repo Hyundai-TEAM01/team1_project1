@@ -23,4 +23,14 @@ public interface CartDAO {
 	public CartDetail selectByCartDetailNo(int cartDetailNo);
 
 	public List<CartProductInfo> getCartProductListByArray(String[] pList, int cartno);
+	
+	public CartDetail getCartDetailByCartdetailno(int cartdetailno, int cartno);
+	
+	public int getCartNoByMno(int mno);
+	
+	public int updateCartdetail(CartDetail cartDetail);
+	
+	public int purchaseCartDetail(int cartDetailNo);
+
+	public int purchaseCartDetailList(String[] cartDetailNoList);
 }

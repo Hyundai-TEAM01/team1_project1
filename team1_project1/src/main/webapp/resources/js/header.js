@@ -24,4 +24,13 @@ $(function () {
             $subwoman.removeClass("wrap-on");
         },
     });
+    
+    
+    $.ajax({
+		url : "/member/memberdata"
+	}).done((data)=>{
+		console.log(data.cartcnt);
+		$(".cartcnt").html(data.cartcnt);
+	});
+    
 });

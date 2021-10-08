@@ -1,63 +1,73 @@
 $(function () {
-    $.ajax({
-		url: 'getorderlist'
+	// 처음 로딩 시 주문목록 렌더링
+	// 7일전 기준, 상품명, "" : 전체, 1페이지
+    printOrderList(prevDay(7), today(), "productName", "", 1);
+    initDate();
+    
+    // ***************** 검색 쿼리 버튼 클릭 이벤트 관련 *****************
+	$(".order-form").on('submit', function(e){
+     	e.preventDefault(); // form 태그 페이지 이동 막기
+     	const sterm = $("input[name=startdate]").val();
+     	const eterm = $("input[name=enddate]").val();
+     	const searchType = $("select[name=searchtype]").val();
+     	const searchWord = $("input[name=search]").val();
+     	printOrderList(sterm, eterm, searchType, searchWord, 1);
+  	});
+	
+	// ***************** 검색 쿼리 날짜 설정 관련 *****************
+	// 초기 날짜 7일전으로 설정
+	function initDate() {
+    	$("input[name=startdate]").val(prevDay(7));
+    	$("input[name=enddate]").val(today());
+	}
+	
+	// 날짜 선택 버튼
+	$(".date-button").click(function(e) {
+		e.preventDefault();
+		console.log("clicked");
+		if(e.target.id ==="setdatebtn1") {
+			$("input[name=startdate]").val(prevDay(7));
+		} 
+		else if (e.target.id ==="setdatebtn2") {
+			$("input[name=startdate]").val(prevMonth(1));
+		} 
+		else if (e.target.id ==="setdatebtn3") {
+			$("input[name=startdate]").val(prevMonth(3));
+		} 
+		$("input[name=enddate]").val(today());
 	})
-	.done((data) => {
-		if(data && data.result) { // 데이터 잘 불러왔는가
-			console.log(data.result);
-			if(data.result !== 'fail') {
-				let itemStr = "";
-							
-				data.result.forEach((item) => {
-					let porderno = item.porderno;
-					let porderdate = item.porderdate;
-					let itemCnt = item.orderItems.length;
-					itemStr += "<tr>"
-					
-					itemStr += "<td rowspan=" + itemCnt + '" class="order-num">';
-					itemStr += '<p class="o-num">' + porderno + '</p>';
-					itemStr += '<span class="sum-date">(' + printDate(porderdate) + ')</span>';
-					itemStr += '<a href="orderdetail?code=' + porderno + '" class="btn-view">상세보기</a>';
-					itemStr += '</td>';
-					item.orderItems.forEach((orderItem, idx) => {
-						let imgurl1 = orderItem.imgurl1;
-						let pbrand = orderItem.pbrand;
-						let pname = orderItem.pname;
-						let pcolor = orderItem.pcolor;
-						let psize = orderItem.psize;
-						let pprice = orderItem.podprice;
-						let porderamount = orderItem.podamount;
-						let podstatus = orderItem.podstatus;
 	
-						itemStr += '<td>'
-						itemStr += '<div class="pt-list">';
-						itemStr += '<a href="#"><img src="' + imgurl1 + '" alt="상품이미지"/></a>';
-						itemStr += '<div class="pt-info">';
-						itemStr += '<a href="#"><span class="info-brand">[' + pbrand +']</span><span class="info-ptname">' + pname+ '</span></a>';
-						itemStr += '<p class="pt-color">color : ' + pcolor + '<span class="and-line">/</span>size : ' +  psize + '</p></div></div></td>';
-						itemStr += '<td>'+ porderamount +'</td>';
-						itemStr += '<td><i class="won sign icon small"></i>' + wonChange(pprice) + '</td>';
-						itemStr += '<td>'+ podstatus + '<span class="sum-date">(' + printDate(porderdate) + ')</span></td>';
-			            itemStr += '<td></td>';
-			            itemStr += '</tr>';
-						});
-				});	
-				$('#otable').html(itemStr);
-			} else {
-				let itemStr = '<tr></tr>';
-				itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
-				$('#otable').html(itemStr);
-			}
-			
-		}
-		else {
-			let itemStr = '<tr></tr>';
-			itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
-			$('#otable').html(itemStr);
-		}
-		
-	}); // done
+	// 오늘 날짜
+	function today() {
+	   var d = new Date();
+	   return getDateStr(d);
+	}
 	
+	// 오늘로부터 며칠전 날짜
+	function prevDay(days) {
+	   var d = new Date();
+	   var dayOfMonth = d.getDate();
+	   d.setDate(dayOfMonth - days);
+	   return getDateStr(d);
+	}
+	
+	// 오늘로부터 몇개월전 날짜
+	function prevMonth(month) {
+	   var d = new Date();
+	   var monthOfYear = d.getMonth();
+	   d.setMonth(monthOfYear - month);
+	   return getDateStr(d);
+	}
+	
+	// 날짜 월,일 2자리수 리턴
+	function getDateStr(myDate){
+	   var year = myDate.getFullYear();
+	   var month = ("0"+(myDate.getMonth()+1)).slice(-2);
+	   var day = ("0"+myDate.getDate()).slice(-2);
+	   return ( year + '-' + month + '-' + day );
+	}
+	
+	// ***************** 주문목록 렌더링 관련 *****************
 	// 시간 제거
 	function printDate(inputDate) {
 		return inputDate.split(" ")[0];
@@ -67,6 +77,147 @@ $(function () {
     function wonChange(num) {
         return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+    
+    // 주문목록 렌더링
+    function printOrderList(sterm, eterm, searchType, searchWord, pageNo) {
+		$.ajax({
+		url: 'getorderlist',
+		data: {	"sterm" : sterm, // 조회 시작날짜
+				"eterm" : eterm, // 조회 종료날짜
+				"searchType" : searchType, // 검색구분 : 상품명, 주문번호
+				"searchWord" : searchWord, // 검색명
+				"pageNo" : pageNo} // 페이지 번호
+		})
+		.done((data) => {
+			if(data && data.result) { // 데이터 잘 불러왔는가
+				console.log(data.result);
+				if(data.result !== 'fail' && data.result.length > 0) {
+					let itemStr = "";
+					
+					// 1 : M 관계 -- 3개의 주문 각 주문 마다 여러 개의 아이템
+					data.result.forEach((item) => {
+						let porderno = item.porderno;
+						let porderdate = item.porderdate;
+						let itemCnt = item.orderItems.length;
+						itemStr += "<tr>"
+						
+						itemStr += "<td rowspan=" + itemCnt + '" class="order-num">';
+						itemStr += '<p class="o-num">' + porderno + '</p>';
+						itemStr += '<span class="sum-date">(' + printDate(porderdate) + ')</span>';
+						itemStr += '<a href="orderdetail?code=' + porderno + '" class="btn-view">상세보기</a>';
+						itemStr += '</td>';
+						item.orderItems.forEach((orderItem) => {
+							let imgurl1 = orderItem.imgurl1;
+							let pbrand = orderItem.pbrand;
+							let pname = orderItem.pname;
+							let pcolor = orderItem.pcolor;
+							let psize = orderItem.psize;
+							let pprice = orderItem.podprice;
+							let porderamount = orderItem.podamount;
+							let podstatus = orderItem.podstatus;
+		
+							itemStr += '<td>'
+							itemStr += '<div class="pt-list">';
+							itemStr += '<a href="#"><img src="' + imgurl1 + '" alt="상품이미지"/></a>';
+							itemStr += '<div class="pt-info">';
+							itemStr += '<a href="#"><span class="info-brand">[' + pbrand +']</span><span class="info-ptname">' + pname+ '</span></a>';
+							itemStr += '<p class="pt-color">color : ' + pcolor + '<span class="and-line">/</span>size : ' +  psize + '</p></div></div></td>';
+							itemStr += '<td>'+ porderamount +'</td>';
+							itemStr += '<td><i class="won sign icon small"></i>' + wonChange(pprice) + '</td>';
+							itemStr += '<td>'+ podstatus + '<span class="sum-date">(' + printDate(porderdate) + ')</span></td>';
+				            itemStr += '<td></td>';
+				            itemStr += '</tr>';
+							});
+					});	
+					$('#otable').html(itemStr);
+				} else { // 주문목록 불러오기 실패 시
+					let itemStr = '<tr></tr>';
+					itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
+					$('#otable').html(itemStr);
+				}
+
+				// 페이징 버튼 생성
+				if(data.pagination.totalPageNo > 0){
+		            setHtml(data.pagination); // 페이징 버튼 렌더링
+		            setAction(data.pagination); // 페이징 버튼 기능 추가
+		        }else{
+		        	$(".paging").html(''); // 페이징 버튼 없애기
+		        }
+				
+			}
+			else {
+				let itemStr = '<tr></tr>';
+				itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
+				$('#otable').html(itemStr);
+			}
+			
+		}); // done
+		
+	}
+	
+	// pager 생성
+	function setHtml(pagination){
+		$(".paging").html('');
+		
+		let pagingHtml = '';
+		let firstPageBtn = '<a href="javascript:void(0);" class="prev2"><i class="angle double left icon"></i></a>';
+		let prevPageBtn = '<a href="javascript:void(0);" class="prev"><i class="angle left icon"></i></a>';
+		let pageBtn = '<span class="paging-num">';
+		for(let i = pagination.startPageNo; i <= pagination.endPageNo; i++){
+			let pageNum = i;
+			let activeClass = '';
+			if(pageNum == pagination.pageNo) activeClass = ' on ';
+			pageBtn += '<a href="javascript:void(0);" class="pageBtn' + activeClass + '" pageNum="' + pageNum + '">' + pageNum + '</a>';
+		}
+		
+		pageBtn += '</span>';
+		
+		let nextPageBtn = '<a href="javascript:void(0);" class="next"><i class="angle right icon"></i></a>';
+        let endPageBtn = '<a href="javascript:void(0);" class="next2"><i class="angle double right icon"></i></a>';
+        
+        pagingHtml = firstPageBtn + prevPageBtn + pageBtn + nextPageBtn + endPageBtn;
+        
+        $(".paging").html(pagingHtml);
+	}
+	
+	// 페이지 버튼에 기능 추가
+	function setAction(pagination){
+		let thisArea = $(".paging");
+	    
+        thisArea.find(".prev2").click(function(){
+            goPage(1);
+        });
+
+        thisArea.find(".prev").click(function(){
+            let pageNum = pagination.startPageNo - 1;
+            if(pageNum < 1) pageNum = 1;
+            goPage(pageNum);
+        });
+
+        thisArea.find(".pageBtn").click(function(){
+            goPage($(this).attr("pageNum"));
+        });
+
+        thisArea.find(".next").click(function(){
+            let pageNum = pagination.endPageNo + 1;
+            if(pageNum > pagination.totalPageNo) pageNum = pagination.endPageNo;
+            goPage(pageNum);
+        });
+
+        thisArea.find(".next2").click(function(){
+            goPage(pagination.totalPageNo);
+        });
+	}
+	
+	// 페이지 버튼 클릭 시 pageNo 넘김
+	function goPage(pageNo){
+		$("#otable").html(''); // tbody 주문목록 초기화
+		const sterm = $("input[name=startdate]").val();
+     	const eterm = $("input[name=enddate]").val();
+     	const searchType = $("select[name=searchtype]").val();
+     	const searchWord = $("input[name=search]").val();
+     	printOrderList(sterm, eterm, searchType, searchWord, pageNo);
+    };
 });
 /*
 						<tr>
