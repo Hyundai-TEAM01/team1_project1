@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.dto.Pager;
+import com.mycompany.webapp.dto.ProductAmountList;
 import com.mycompany.webapp.dto.ProductDetail;
 import com.mycompany.webapp.dto.ProductImg;
 import com.mycompany.webapp.dto.ProductList;
@@ -21,6 +22,8 @@ public interface ProductDAO {
 	public ProductDetail getProductDetail(String pcode);
 	
 	public int getProductAmount(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor);
+	
+	public ProductAmountList getProductAmountList(@Param("pcode") String pcode, @Param("pcolor") String pcolor);
 
 	public int updateProductStock(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor, @Param("amount") int amount);
 }
