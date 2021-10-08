@@ -10,15 +10,13 @@
         <div class="column">
             <div>
                 <ul class="product-img-view">
-                    <li> 
-                        <c:forEach items="${product.color}" var="color">
-                        	<c:if test="${color.pcolor == nowColor}">
-                        		<li><a><img class="product-img" src="${color.imgurl1}"></a></li>
-                        		<li><a><img class="product-img" src="${color.imgurl2}"></a></li>
-                        		<li><a><img class="product-img" src="${color.imgurl3}"></a></li>
-                        	</c:if>
-						</c:forEach>
-					</li>
+                	<c:forEach items="${product.color}" var="color">
+                       	<c:if test="${color.pcolor == pcolor}">
+                       		<li><a><img class="product-img" src="${color.imgurl1}"></a></li>
+                       		<li><a><img class="product-img" src="${color.imgurl2}"></a></li>
+                       		<li><a><img class="product-img" src="${color.imgurl3}"></a></li>
+                       	</c:if>
+					</c:forEach>
                 </ul>
             </div>
         </div>
@@ -43,7 +41,7 @@
                             <span class="title">색상</span>
                             <ul class="color">
 	                            <c:forEach items="${product.color}" var="color">
-	                            	<li><a><img class="beige" src="${color.colorurl}"></a></li>
+	                            	<li><a href='javascript:setHtmlByColor("${color.pcolor}")'><img class="beige" src="${color.colorurl}"></a></li>
 	                            </c:forEach>
                             </ul>
                         </li>
@@ -108,24 +106,41 @@
 <script>
 	$(function () {
 	    console.log("product page 실행");
+	    console.log("${product}");
 	    $(".product-price").append(wonChange(${product.pprice}));
-	    colorAdd();
+	    $(".product-img-view").html = '';
 	});
 	
-	function colorAdd(){
-		$(".color").html = '';
-		let html = '';
-		let list = '<c:out value="${product.color}"/>';
-		console.log(list);
-		$(".color").append(html);
-		
-		/* let html = <li><a><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_24_24.jpg"></a></li> */
-		
-
-		/* <c:forEach items="${product.color}" var="color">
-			
-		</c:forEach> */
+	function setHtmlByColor(pcolor){
+		/* if(window.location.search != ''){
+			let urlParams = new URLSearchParams(window.location.search);
+			pageNo = urlParams.get('pageNo');
+			ccode = urlParams.get('ccode');
+			console.log("urlParam : " + pageNo + " " +ccode);	
+		} */
+		console.log(pcolor);
+		$.ajax({
+			url: "getSizeAmount" + "?pcode=${product.pcode}" + '&pcolor=' + pcolor,
+		}).done((data) => {
+			console.log(data);
+			setProductImgHtml(pcolor)
+		});
 	}
+	
+	function setProductImgHtml(pcolor){
+		console.log("setProductImgHtml 실행");
+		let html = '<c:forEach items="${product.color}" var="color">';
+       	html += '<c:if test="${color.pcolor == ' + pcolor + '}">';
+       	html += '<li><a><img class="product-img" src="${color.imgurl1}"></a></li>';
+       	html += '<li><a><img class="product-img" src="${color.imgurl2}"></a></li>';
+       	html += '<li><a><img class="product-img" src="${color.imgurl3}"></a></li>';
+       	html += '</c:if>';
+		html += '</c:forEach>';
+		console.log(html);
+		
+		$(".product-img-view").html(html);
+	}
+	
 	function cartAdd() {
 		/* $.ajax({
 			url: '/cartadd',
