@@ -57,6 +57,10 @@
 		UPDATE cartdetail SET amount = #{amount} WHERE cartdetailno = #{cartDetailNo}
 	</update>
 	
+	<update id="updateCartdetailOption" parameterType="cartDetail">
+		UPDATE cartdetail SET amount = #{amount}, psize = #{psize}, pcolor = #{pcolor} WHERE cartdetailno = #{cartDetailNo}
+	</update>
+	
 	<update id="purchaseCartDetail" parameterType="int">
 		UPDATE cartdetail SET isdeleted = 2 WHERE cartdetailno = #{cartdetailno}
 	</update>
@@ -68,4 +72,17 @@
 				${item}
 			</foreach>
 	</update>
+	
+	<select id="getCartProductDetailByPcode" resultType="cartProductDetail">
+		SELECT s.pcode, s.pcolor, s.psize, s.pamount, i.colorurl 
+		FROM productstock s, productimg i 
+		WHERE s.pcode = #{pcode} AND s.pcode = i.pcode AND s.pcolor = i.pcolor
+	</select>
+	
+	<select id="getCartDetailByOption" resultType="cartDetail">
+		SELECT * FROM cartdetail 
+		WHERE pcode = (SELECT pcode FROM cartdetail WHERE cartdetailno = #{param1}) 
+				AND pcolor = #{param2} AND psize = #{param3}
+	</select>
+	
 </mapper>

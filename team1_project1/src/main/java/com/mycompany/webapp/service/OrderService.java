@@ -27,7 +27,7 @@ public class OrderService {
 	private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
 	public enum OrderResult {
-		SUCCESS, ENOUGH_MPOINT, NOT_VALID, FAIL
+		SUCCESS, ENOUGH_MPOINT, NOT_VALID, FAIL, SOLDOUT
 	}
 
 	@Resource
@@ -75,6 +75,11 @@ public class OrderService {
 		if (pInfoList.size() != productlist.length) { // cart에 없는 물건을 구매하고자 하는 경우
 			return OrderResult.NOT_VALID;
 		}
+		
+		if(productDao.getProductAmountList(productlist) != null) {
+			return OrderResult.SOLDOUT;
+		}
+		
 
 		int sum = 0;
 		for (CartProductInfo p : pInfoList) {

@@ -70,4 +70,16 @@
 	<update id="updateProductStock">
 		UPDATE productstock SET pamount = #{amount} WHERE  pcode = #{pcode} AND psize = #{psize} AND pcolor = #{pcolor}
 	</update>
+	
+	<select id="getProductAmountList" resultType="string">
+		SELECT pamount
+		FROM productstock s, (SELECT pcode, pcolor, psize FROM cartdetail WHERE cartdetailno IN 
+			<foreach collection="array" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+			) temp
+		<![CDATA[
+		WHERE s.pcode = temp.pcode AND s.pcolor = temp.pcolor AND s.psize = temp.psize GROUP BY pamount HAVING pamount <= 0
+		]]>
+	</select>
 </mapper>

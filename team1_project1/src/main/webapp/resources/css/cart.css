@@ -168,5 +168,47 @@ form {
 
 .btn:hover {
 	cursor: pointer;
-	border: rgba(0,0,0,.8) 1px solid;
+	border: rgba(0, 0, 0, .8) 1px solid;
+}
+
+.op-add div {
+	vertical-align: middle;
+}
+
+.op-add a {
+	display: inline-block;
+	width: 15px;
+	height: 16px;
+	position: relative;
+}
+
+.op-add a.now-choose::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 0.9px;
+	left: 0;
+	bottom: -3px;
+	background: #333;
+}
+
+.color-url {
+	width: 100%;
+}
+
+.option-span {
+	display: inline-block;
+	width: 45px;
+	font-size: 11px;
+	color: #222;
+}
+
+.mb-3 {
+	margin-bottom: 3px;
+}
+
+.error-red {
+	margin-left : 5px;
+	color: red;
+	font-size : 12px;
 }
