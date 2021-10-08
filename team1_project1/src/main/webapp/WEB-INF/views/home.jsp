@@ -12,6 +12,8 @@
     
 </div>
 <script>
+	let gbl_productList;
+
 	$(function () {
 	    init();
 	    console.log("실행");
@@ -31,6 +33,7 @@
 		}
 		$.ajax({
 			url: 'getProductList' + '?ccode=' + ccode + '&pageNo=' + pageNo,
+			async:false,
 			/* data: {"pageNo" : pageNo, "ccode" : ccode}, */
 		}).done((data) => {
 			console.log(data);
@@ -41,15 +44,37 @@
 	        }else{
 	        	$(".paging").html('');
 	        }
+			gbl_productList = data.productList;
 		});
 	}
 	
 	function createCategoryProduct(productList){
 		let itemlist = $(".itemlist");
+		let index = 0;
 		itemlist.html('');
 		for(product of productList){
+			let html = '<li class="column mg-product" target="' + index +'">';
+	        html += '<a class="productUrl" href="product/' + product.pcode + "?pcolor=" + product.color[0].pcolor + "&ccode=" + product.ccode + '">';
+	       	html += '<span><img class="main-img" src="' + product.color[0].imgurl1 + '"></span></a>';
+	        html += '<a><span class="brand">' + product.pbrand + '</span>';
+	        html += '<span class="title">' + product.pname + '</span>';
+	        html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
+	        html += '<span class="flag"><span class="product">NEW</span></span></a>';
+	        html += '<div class="color-more-wrap">';
+	        for(color of product.color){
+	        	html += '<a href="javascript:chgColorChip('+ index + ", '"  + color.pcolor + "'" +')">';
+	        	html += '<img class="img-color-more" src="' + color.colorurl +'"></a>';
+	        }
+	        index++;
+	    	html += '</div>';
+	    	html += '</li>';
+	    	
+	    	itemlist.append(html);	
+		}
+		
+		/* for(product of productList){
 			let html = '<li class="column mg-product">';
-	        html += '<a href="product/' + product.pcode + "_" + product.color[0].pcolor + "?ccode=" + product.ccode + '">';
+	        html += '<a href="product/' + product.pcode + "?pcolor=" + product.color[0].pcolor + "&ccode=" + product.ccode + '">';
 	       	html += '<span><img class="main-img" src="' + product.color[0].imgurl1 + '"></span></a>';
 	        html += '<a><span class="brand">' + product.pbrand + '</span>';
 	        html += '<span class="title">' + product.pname + '</span>';
@@ -63,7 +88,21 @@
 	    	html += '</li>';
 	    	
 	    	itemlist.append(html);	
+		} */
+	}
+	
+	function chgColorChip(index, colorChip){
+		let thisData = gbl_productList[index];
+		console.log(index + " " + colorChip);
+		console.log(gbl_productList);
+		let li = $(".itemlist li").eq(index);
+		for(color of thisData.color){
+			if(color.pcolor == colorChip){
+				li.find(".main-img").attr("src", color.imgurl1);
+			}
 		}
+		let newUrl = 'product/' + thisData.pcode + "?pcolor=" + colorChip + "&ccode=" + thisData.ccode;
+		li.find(".productUrl").attr("href", newUrl);
 	}
 	
 	// pager 생성
@@ -141,9 +180,9 @@
 			type: "get",
 			success: (result) => {
 				$(".content").html(result); 
-	//alert(JSON.stringify(data)); 
-	//검색 처리 위해서 
-	//$("#type").val(data.type||"t"); //$("#keyword").val(data.keyword); 
+			//alert(JSON.stringify(data)); 
+			//검색 처리 위해서 
+			//$("#type").val(data.type||"t"); //$("#keyword").val(data.keyword); 
 			} 
 		}) 
 	});

@@ -56,9 +56,10 @@ public class HomeController {
 
 	@GetMapping(value = "/getProductList", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
-	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, @RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) {
+	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, 
+			@RequestParam(value = "ccode", defaultValue="MEN_TOP_SHIRTS") String ccode) {
 		logger.info("실행");
-		JSONObject json = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 		int totalRows = productListService.getTotalProducListtNum(ccode);
 		Pager pager = new Pager(12, 10, totalRows, pageNo);
 		
@@ -68,10 +69,10 @@ public class HomeController {
 		
 		List<ProductList> productList = productListService.getProductList(ccode, pager);
 		
-		json.put("pager", pagerObject);
-		json.put("productList", productList);
+		jsonObject.put("pager", pagerObject);
+		jsonObject.put("productList", productList);
 
-		return json.toString();
+		return jsonObject.toString();
 	}
 
 	@RequestMapping("/error/403")
