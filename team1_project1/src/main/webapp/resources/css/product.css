@@ -34,9 +34,6 @@ span.title {
 .info-sect {
     margin-left: 20px;
 }
-input.amount {
-    width: 40px;
-}
 .ui.button {
     width: 120px;
     border-radius: 0px;
@@ -67,6 +64,14 @@ input.amount {
 .beige {
 	width: 24px;
 	height: 24px;
+}
+.ui input.amount {
+	width: 40px;
+	text-align: center;
+}
+.amount-icon i {
+	margin: 0px;
+	color: #727272;
 }
 .info-sect .product-content-box{margin-top:15px; margin-bottom: 20px;}
 .info-sect .product-content-box .number-code{font-size:12px; display:block; margin-bottom:17px;}
