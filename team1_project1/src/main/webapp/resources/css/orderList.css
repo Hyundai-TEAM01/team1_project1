@@ -47,6 +47,7 @@
 }
 
 .date-button {
+	display: inline-block;
     font-size: 11px;
     text-align: center;
     min-width: 58px;
@@ -105,7 +106,7 @@ th {
 }
 
 th:nth-child(1) {
-    width: 5%;
+    width: 7%;
 }
 th:nth-child(2) {
     width: auto;
@@ -117,7 +118,7 @@ th:nth-child(4) {
     width: 15%;
 }
 th:nth-child(5) {
-    width: 5%;
+    width: 7%;
 }
 th:nth-child(6) {
     width: 5%;

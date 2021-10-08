@@ -6,22 +6,33 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css"/>
 
 <div class="product-container">
-    <div class="ui two column vertically padded grid">
+    <div class="ui two column vertically padded grid product-view">
         <div class="column">
             <div>
-                <ul>
-                    <li>
-                        <img class="product-img" src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_684_1032.jpg">
-                    </li>
+                <ul class="product-img-view">
+                    <li> 
+                        <c:forEach items="${product.color}" var="color">
+                        	<c:if test="${color.pcolor == nowColor}">
+                        		<li><a><img class="product-img" src="${color.imgurl1}"></a></li>
+                        		<li><a><img class="product-img" src="${color.imgurl2}"></a></li>
+                        		<li><a><img class="product-img" src="${color.imgurl3}"></a></li>
+                        	</c:if>
+						</c:forEach>
+					</li>
                 </ul>
             </div>
         </div>
         
         <div class="column">
             <div class="info-sect">
-                <div class="brand-name"><a>CLUB MONACO</a></div>
-                <span class="product-name">하운드투스 체크 셔츠</span>
-                <p class="product-price"><i class="won sign icon">168,000</i></p>
+                <div class="product-brand">${product.pbrand}</div>
+                <span class="product-name">${product.pname}</span>
+                <div class="product-content-box">
+                	<div class="round-style">
+                		<p>${product.pcontent}</p>
+                	</div>
+                </div>
+                <p class="product-price"><i class="won sign icon"></i></p>
                 <div class="ui divider"></div>
             </div>
 
@@ -31,8 +42,9 @@
                         <li>
                             <span class="title">색상</span>
                             <ul class="color">
-                                <li><a><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_24_24.jpg"></a></li>
-                                <li><a><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_PR_24_24.jpg"></a></li>
+	                            <c:forEach items="${product.color}" var="color">
+	                            	<li><a><img class="beige" src="${color.colorurl}"></a></li>
+	                            </c:forEach>
                             </ul>
                         </li>
 
@@ -94,6 +106,26 @@
     </div>
 </div>
 <script>
+	$(function () {
+	    console.log("product page 실행");
+	    $(".product-price").append(wonChange(${product.pprice}));
+	    colorAdd();
+	});
+	
+	function colorAdd(){
+		$(".color").html = '';
+		let html = '';
+		let list = '<c:out value="${product.color}"/>';
+		console.log(list);
+		$(".color").append(html);
+		
+		/* let html = <li><a><img src="${pageContext.request.contextPath}/resources/images/product/MM2B7WSH021H9A_BK_T01_KG_24_24.jpg"></a></li> */
+		
+
+		/* <c:forEach items="${product.color}" var="color">
+			
+		</c:forEach> */
+	}
 	function cartAdd() {
 		/* $.ajax({
 			url: '/cartadd',
@@ -108,6 +140,9 @@
 		}); */
 		modalOn();
 	}
+	function wonChange(num) {
+        return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -9,26 +9,46 @@
 	    <collection property="orderItems" column="PORDERNO" javaType="java.util.ArrayList" ofType="orderItem" select="getOrderItem"/>
 	</resultMap>
 
-	<!-- 주문 목록 페이징 처리(진행중) -->
+	<!-- 주문 목록 가져오기(유저번호 + 페이징 + 검색쿼리[상품명, 주문번호]) -->
 	<select id="getOrderListByPage" resultMap="OrderListResult">
 		SELECT rnum, porderno, porderdate
 		FROM (
 		SELECT ROWNUM AS rnum, porderno, porderdate
 			FROM (
-				SELECT porderno, porderdate
-				FROM productorder
-				WHERE mno = #{mno}
-				ORDER BY porderdate DESC
+				SELECT po.porderno, po.porderdate
+				FROM productorder po, porderdetail pod, product prd
+        		WHERE po.porderno = pod.porderno
+        		AND pod.pcode = prd.pcode
+				AND mno = #{mno}
+				AND po.porderdate BETWEEN TO_DATE(#{query.sterm}, 'YYYY-MM-DD') AND TO_DATE(#{query.eterm}, 'YYYY-MM-DD') + 1
+				<if test='query.searchType.equals("pname")'>
+				AND prd.pname LIKE '%' || #{query.searchWord} || '%'
+				</if>
+				<if test='query.searchType.equals("porderno")'>
+				AND po.porderno LIKE '%' || #{query.searchWord}
+				</if>
+				
+				ORDER BY po.porderdate DESC
 			)
 		WHERE ROWNUM &lt;= #{pager.endRowNo}  <!-- endRowNo -->
 		)
 		WHERE rnum &gt;= #{pager.startRowNo} <!-- startRowNo -->
-
 	</select>
 	
-	<!-- 주문 목록 갯수 가져오기(유저번호) -->
-	<select id="getOrderListCount" resultType="int" parameterType="int">
-		SELECT COUNT(*) FROM productorder WHERE mno = #{mno}
+	<!-- 주문 목록 갯수 가져오기(유저번호 + 페이징 + 검색쿼리[상품명, 주문번호]) -->
+	<select id="getOrderListCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM productorder po, porderdetail pod, product prd
+       	WHERE po.porderno = pod.porderno
+       	AND pod.pcode = prd.pcode
+		AND mno = #{mno}
+		AND po.porderdate BETWEEN TO_DATE(#{query.sterm}, 'YYYY-MM-DD') AND TO_DATE(#{query.eterm}, 'YYYY-MM-DD') + 1
+		<if test='query.searchType.equals("pname")'>
+		AND prd.pname LIKE '%' || #{query.searchWord} || '%'
+		</if>
+		<if test='query.searchType.equals("porderno")'>
+		AND po.porderno LIKE '%' || #{query.searchWord}
+		</if>
 	</select>
 	
 	<!-- 주문 목록, 상세 페이지 주문상품아이템 -->

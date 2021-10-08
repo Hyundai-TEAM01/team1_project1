@@ -1,4 +1,5 @@
 $(function () {
+	// 주문번호를 url에서 가져오기
 	const urlParams = new URLSearchParams(window.location.search);
 	const code = urlParams.get('code');
 	console.log(code);
