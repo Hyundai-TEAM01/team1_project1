@@ -55,7 +55,7 @@ public class ProductController {
 		logger.info("실행");
 		logger.info("pcode : " + pcode + " pcolor : " + pcolor);
 		
-		ProductAmountList productAmountList = productListService.getProductAmountList(pcode, pcolor);
+		ProductAmountList productAmountList = productListService.getProductDetailAmountList(pcode, pcolor);
 		String productAmountListInString = new Gson().toJson(productAmountList);
         JSONObject productObject = new JSONObject(productAmountListInString);
 		
