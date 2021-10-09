@@ -73,7 +73,7 @@
 		</collection>
 	</resultMap> 
 	<!-- 상품 코드, 컬러의 모든 사이즈의 수량 조회 -->
-	<select id="getProductAmountList" resultMap="productAmountListResultMap">
+	<select id="getProductDetailAmountList" resultMap="productAmountListResultMap">
 		SELECT pcode, pcolor, psize, pamount
 		FROM productstock
 		WHERE pcode = #{pcode} AND pcolor = #{pcolor}

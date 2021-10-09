@@ -23,7 +23,7 @@ public interface ProductDAO {
 	
 	public int getProductAmount(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor);
 	
-	public ProductAmountList getProductAmountList(@Param("pcode") String pcode, @Param("pcolor") String pcolor);
+	public ProductAmountList getProductDetailAmountList(@Param("pcode") String pcode, @Param("pcolor") String pcolor);
 
 	public int updateProductStock(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor, @Param("amount") int amount);
 

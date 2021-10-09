@@ -31,8 +31,8 @@ public class ProductListService {
 		return productDAO.getProductDetail(pcode);
 	}
 	
-	public ProductAmountList getProductAmountList(String pcode, String pcolor) {
-		return productDAO.getProductAmountList(pcode, pcolor);
+	public ProductAmountList getProductDetailAmountList(String pcode, String pcolor) {
+		return productDAO.getProductDetailAmountList(pcode, pcolor);
 	}
 	
 }
