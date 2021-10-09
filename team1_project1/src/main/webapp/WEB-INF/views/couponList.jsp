@@ -26,14 +26,8 @@
 					<!-- Ajax 쿠폰 목록 테이블 tr 생성 -->
 					<tbody id="ctable"></tbody>
 				</table>
-				<div class="paging">
-					<a href="#" class="prev2"><i class="angle double left icon"></i></a> <a
-						href="#" class="prev"><i class="angle left icon"></i></a> <span
-						class="paging-num"> <a href="#" class="pageBtn on">1</a> <a
-						href="#" class="pageBtn">2</a>
-					</span> <a href="#" class="next"><i class="angle right icon"></i></a> <a
-						href="#" class="next2"><i class="angle double right icon"></i></a>
-				</div>
+				<!-- Ajax 쿠폰 페이징 버튼 생성 -->
+				<div class="paging"></div>
 			</div>
 
 <script	src="${pageContext.request.contextPath}/resources/js/couponList.js"></script>

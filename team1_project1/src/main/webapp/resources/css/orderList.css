@@ -57,6 +57,10 @@
     border: 1px solid #ccc;
     color: #888;
 }
+.date-button-on {
+	font-weight: 600;
+	color: #000000;
+}
 
 select.ui.dropdown {
     height: 28px;
@@ -171,13 +175,13 @@ td {
     width: 100%;
 }
 .info-brand {
+    display: block;
     margin-top: 5px;
     font-size: 11px;
     letter-spacing: 1px;
 }
 .info-ptname {
-    max-width: 207px;
-    display: inline-block;
+	display: block;
     letter-spacing: 1px;
 }
 
