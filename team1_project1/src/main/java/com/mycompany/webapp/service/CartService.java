@@ -110,8 +110,25 @@ public class CartService {
 		return productDao.getProductAmount(pcode, psize, pcolor);
 	}
 	
+	public CartUpdateResult insertCartProduct(int mno, String pcode, String psize, String pcolor, int pamount) {
+		// 카트 번호 조회
+		int cartNo = cartDao.getCartNoByMno(mno);
+		if (cartDao.getCartProductCount(cartNo, pcode, psize, pcolor) > 0) {
+			return CartUpdateResult.DUPLICATED;
+		} else {
+			logger.info("상품 등록 가능 상태");
+			int result = cartDao.insertCartDetail(cartNo, pcode, psize, pcolor, pamount);
+			
+			if(result == 1) {
+				return CartUpdateResult.SUCCESS;
+			}else {
+				return CartUpdateResult.FAIL;				
+			}
+		}
+		// non vaild 추가
+	}
+  
 	public int getMemberMpoint(String mid) {
 		return memberDao.getLoginMember(mid).getMpoint();
 	}
-	
 }

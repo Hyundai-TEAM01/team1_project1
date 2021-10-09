@@ -8,6 +8,10 @@ $(function () {
     $("input.amount").on('input', function(event) {
     	amountCheck($("input.amount").val());
     });
+    $("select.product-size").on('change', function(event){
+		$("input.amount").val(1);
+	});
+    setTotalPrice()
 });
 
 /* 제품 수량 조회 및 HTML 변경 */
@@ -17,8 +21,9 @@ function setHtmlByColor(pcolor){
 		url: 'getSizeAmount' + '?pcode=' + nowPcode + '&pcolor=' + pcolor,
 	}).done((data) => {
 		console.log(data.productAmountList);
-		setProductImgHtml(pcolor)
 		console.log(data.productAmountList.amount);
+		nowPcolor = pcolor;
+		setProductImgHtml(pcolor)
 		setProductSizeHtml(data.productAmountList.amount);
 		setAmountDict(data.productAmountList.amount);
 	});
@@ -44,7 +49,11 @@ function setProductSizeHtml(amountList){
 	sizeView.html('');
 	html += '<option value="">Size</option>';
 	for(amount of amountList){
-		html += '<option value="' + amount.psize + '">' + amount.psize + '</option>';
+		if (amount.pamount > 0){
+			html += '<option value="' + amount.psize + '">' + amount.psize + '</option>';
+		} else {
+			html += '<option disabled value="">' + amount.psize + ' - 품절 </option>';
+		}
 	}
 	sizeView.html(html);
 }
@@ -69,20 +78,21 @@ function amountCheck(nowAmount){
 	let selectedSize = $(".product-size option:selected").val();
 	let amountInput = $("input.amount");
 	if(!selectedSize){
-		console.log('사이즈 선택 필요');
+		setModalOn('noSize');
 		amountInput.val(1);
 	} else if(isNaN(nowAmount)){
 		amountInput.val(1);
 	} else{
 		let maxAmount = amountDict[selectedSize];
 		if(nowAmount > maxAmount){
-			console.log('주문 수량 초과');
+			setModalOn('overAmount')
 			amountInput.val(maxAmount);
 		} else if(nowAmount < 1){
 			console.log('주문 수량 미만');
 			amountInput.val(1);
 		}
 	}
+	setTotalPrice();
 }
 
 /* 수량 변경 버튼 클릭 */
@@ -106,6 +116,50 @@ function setTotalPrice(){
 	let totalPriceArea = $(".totalPrice");
 	let html = '';
 	html += '<i class="won sign icon"></i>';
+	html += wonChange((nowPprice * $("input.amount").val()));
+	totalPriceArea.html('');
+	totalPriceArea.html(html);
+}
+
+/* 모달의 msg에 따른 HTML 변경 및 출력*/
+function setModalOn(msg){
+	let selectedSize = $(".product-size option:selected").val();
+	let modalContentArea = $(".modal-content");
+	let modalBtnArea = $(".modal-btns");
+	let contentHtml = '';
+	let btnHtml = '';
+	// noSize, overAmount, addCart, 
+	switch (msg){
+		case 'noSize':
+			contentHtml = '<p>사이즈를 선택해 주세요.</p>';
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">확인</a>';
+			break;
+		case 'overAmount':
+			contentHtml = '<p>구매 가능한 재고 '+ amountDict[selectedSize] + '개만 선택하실 수 있습니다.</p>';
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">확인</a>';
+			break;
+		case 'addCart':
+			contentHtml = '<p>쇼핑백에 담겼습니다.</p><p>확인하시겠습니까?</p>' ;
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">계속쇼핑하기</a><a href="/cart/content" class="btn-tocart">쇼핑백 바로가기</a>';
+			break;
+		case 'needLogin':
+			contentHtml = '<p>로그인이 필요합니다.</p><p>로그인 하시겠습니까?</p>'; 
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">계속쇼핑하기</a><a href="' + contextPath + '/member/loginForm" class="btn-tocart">로그인 바로가기</a>';
+			break;
+		case 'duplicated':
+			contentHtml = '<p>쇼핑백에 동일 상품이 존재합니다.</p><p>쇼핑백으로 이동하시겠습니까?</p>'; 
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">계속쇼핑하기</a><a href="' + contextPath + '/cart/content" class="btn-tocart">쇼핑백 바로가기</a>';
+			break;
+		case 'fail':
+			contentHtml = '<p>알 수 없는 이유로 실패하였습니다.</p><p>잠시 후 다시 시도해 주십시오.</p>'; 
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">확인</a>';
+			break;
+	}
+	modalContentArea.html('');
+	modalBtnArea.html('');
+	modalContentArea.html(contentHtml);
+	modalBtnArea.html(btnHtml);
+	modalOn();
 }
 
 /* 사이즈 정렬 */
@@ -143,20 +197,48 @@ function sizeSort(arr){
 	});
 }
 
-function cartAdd() {
-	/* $.ajax({
-		url: '/cartadd',
-		method: 'POST'
+/* 카트에 담기 버튼 */
+function addCart() {
+	// 값들의 유효성 검사 ex) size선택되었는지
+	let selectedSize = $(".product-size option:selected").val();
+	if (!selectedSize){
+		setModalOn('noSize');
+	} else {
+		let pcode = nowPcode;
+		let pcolor = nowPcolor;
+		let psize = $(".product-size option:selected").val();
+		let pamount = $("input.amount").val();
+		console.log(typeof pcode);
+		console.log(typeof pcolor);
+		console.log(typeof psize);
+		console.log(typeof pamount);
+		console.log(pcode + " " + pcolor + " " + psize + " " + pamount);
+		let formData = {'pcode':pcode, 'pcolor':pcolor, 'psize':psize, 'pamount':pamount};
+		addCartAjax(formData);
+	}	
+}
+/* 카트에 담기 ajax */
+function addCartAjax(formData) {
+	 $.ajax({
+		url: '/product/addCart',
+		type: 'POST',
+		data: JSON.stringify(formData),
+		contentType : "application/json; chartset=UTF-8"
 	})
 	.done((data) => {
-		if(data.msg)
-			modalOn();
-		else {
-			location.href = '/login';
+		console.log(data);
+		if (data.msg == "needLogin"){
+			setModalOn('needLogin');
+		} else if(data.msg == "duplicated"){
+			setModalOn('duplicated');
+		} else if(data.msg == "addCart"){
+			setModalOn('addCart');
+		} else{
+			setModalOn('fail');
 		}
-	}); */
-	modalOn();
+	});
 }
+
 function wonChange(num) {
     return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
