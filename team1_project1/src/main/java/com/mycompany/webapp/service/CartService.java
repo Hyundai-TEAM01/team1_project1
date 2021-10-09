@@ -110,4 +110,8 @@ public class CartService {
 		return productDao.getProductAmount(pcode, psize, pcolor);
 	}
 	
+	public int getMemberMpoint(String mid) {
+		return memberDao.getLoginMember(mid).getMpoint();
+	}
+	
 }

@@ -122,5 +122,17 @@
 		    </div>
 		</div>
 		
+        <div class="modal-nochoose modal-wrap">
+		    <div class="modal">
+		        <div class="close-row">
+		            <a href="javascript:modalOff('modal-nochoose')"><i class="close icon"></i></a>
+		        </div>
+		        <div class="modal-content">
+		            <p>선택한 상품이 없습니다.</p>
+		        </div>
+		        <div class="modal-btns"><a class="btn-continue" href="javascript:modalOff('modal-nochoose')">확인</a></div>
+		    </div>
+		</div>
+		
         <script src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

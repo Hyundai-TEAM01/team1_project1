@@ -93,7 +93,7 @@ public class OrderController {
 		MemberDetails minfo = (MemberDetails)authentication.getPrincipal();
 
 		order.setMno(minfo.getMno());
-		OrderResult result = orderService.newOrder(order, plist, minfo.getMpoint());
+		OrderResult result = orderService.newOrder(order, plist, minfo.getUsername());
 
 		if (result.equals(OrderResult.SUCCESS)) {
 			return "redirect:/orderdetail?code=" + order.getPorderno();

@@ -6,12 +6,11 @@ function order(){
     $("form").attr("action","/newOrder");
     
     let porderphone = $("select[name='p-start']").val() + $("input[name='phone2']").val() + $("input[name='phone3']").val();
-    console.log("porderphone : " + porderphone);
     let pordertel = $("select[name='t-start']").val() + $("input[name='tel2']").val() + $("input[name='tel3']").val();
-    console.log("pordertel : " + pordertel);
+    pordertel = pordertel.length < 10 ? "":pordertell
+    
     let porderemail = $("input[name='porderemail']").val()+'@'+$("#s_email").val();
     porderemail = porderemail.split("@")[0] === "" ? "" : porderemail;
-    console.log("porderemail : " + porderemail);
     
     
     let payment = $("input:checked[name='porderpayment']").attr("id");
@@ -31,7 +30,6 @@ function order(){
             plist += $(item).attr("id")+",";
         })
         plist = plist.slice(0,-1);
-        console.log(plist);
         
         $("form").append("<input type='text' name='porderphone' value='"+porderphone+"'>");   
         $("form").append("<input type='text' name='pordertel' value='"+pordertel+"'>");   

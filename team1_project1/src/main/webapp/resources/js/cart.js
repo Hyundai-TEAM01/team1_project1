@@ -63,13 +63,12 @@ function printProductList() {
 
 		$(".delete-btn").each((idx, item) => {
 			$(item).click(() => {
-				let cdno = $(item).closest("tr").fattr('id').replace('num', '');
+				let cdno = $(item).closest("tr").attr('id').replace('num', '');
 
 				// 삭제할지 물어보는 팝업 생성
 
 				$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+cdno+",'modal-delete')");
 				modalOn("modal-delete");
-				$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+cdno+",'modal-delete')");
 			})
 		})
 		updateAmoumtEvent();
@@ -175,6 +174,7 @@ function pDelete(cdno, modalname) {
 	
 	if(modalname === "modal-delete"){	
 		modalOff("modal-delete");
+		window.location.reload();
 	}
 }
 
@@ -428,6 +428,7 @@ function amount(num, idx) {
 
 	if (amount === 0) {
 		// 제거 질문 팝업
+		$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+idx+",'modal-delete')");
 		modalOn("modal-delete");
 	} else if(stockAmount < amount){
 		// 재고 초과 팝업
@@ -476,6 +477,7 @@ function updateAmoumtEvent() {
 					pUpdate(item_id,stock);
 				} else if (change_val <= 0) {
 					// 제거 질문 팝업
+					$(".modal-delete .btn-tocart").attr("href", "javascript:pDelete("+item_id+",'modal-delete')");
 					modalOn("modal-delete");
 				} else {
 					amount(0, $(item).attr("id").replace("num",""));
@@ -590,6 +592,7 @@ function pListOrder(){
 	});
 	
 	if(pList.length === 0){
+		modalOn("modal-nochoose");
 		return;
 	}
 
@@ -640,6 +643,8 @@ function initSetting() {
 		});
 		if(checked != 0)
 			modalOn("modal-deletelist");
+		else
+			modalOn("modal-nochoose");
 	} );
 
 	// 선택 상품 주문 버튼 이벤트 할당
