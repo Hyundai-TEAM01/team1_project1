@@ -87,6 +87,7 @@ td {
     width: 100%;
 }
 .cp-name {
+	display: block;
     margin-top: 5px;
     font-size: 11px;
     letter-spacing: 1px;

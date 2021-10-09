@@ -24,7 +24,9 @@ $(function () {
 	// 날짜 선택 버튼
 	$(".date-button").click(function(e) {
 		e.preventDefault();
-		console.log("clicked");
+		// 선택된 버튼만 class 추가
+		$(".date-button").removeClass("date-button-on");
+		e.target.classList.add("date-button-on");
 		if(e.target.id ==="setdatebtn1") {
 			$("input[name=startdate]").val(prevDay(7));
 		} 
@@ -130,20 +132,18 @@ $(function () {
 							});
 					});	
 					$('#otable').html(itemStr);
+					// 페이징 버튼 생성
+					if(data.pagination.totalPageNo > 0){
+			            setHtml(data.pagination); // 페이징 버튼 렌더링
+			            setAction(data.pagination); // 페이징 버튼 기능 추가
+			        }else{
+			        	$(".paging").html(''); // 페이징 버튼 없애기
+			        }
 				} else { // 주문목록 불러오기 실패 시
 					let itemStr = '<tr></tr>';
 					itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
 					$('#otable').html(itemStr);
-				}
-
-				// 페이징 버튼 생성
-				if(data.pagination.totalPageNo > 0){
-		            setHtml(data.pagination); // 페이징 버튼 렌더링
-		            setAction(data.pagination); // 페이징 버튼 기능 추가
-		        }else{
-		        	$(".paging").html(''); // 페이징 버튼 없애기
-		        }
-				
+				}				
 			}
 			else {
 				let itemStr = '<tr></tr>';
@@ -289,4 +289,13 @@ $(function () {
 	                        </td>
 	                        <td></td>
 	                    </tr>
+	                    
+	                    <div class="paging">
+							<a href="#" class="prev2"><i class="angle double left icon"></i></a> <a
+								href="#" class="prev"><i class="angle left icon"></i></a> <span
+								class="paging-num"> <a href="#" class="pageBtn on">1</a> <a
+								href="#" class="pageBtn">2</a>
+							</span> <a href="#" class="next"><i class="angle right icon"></i></a> <a
+								href="#" class="next2"><i class="angle double right icon"></i></a>
+						</div>
 */

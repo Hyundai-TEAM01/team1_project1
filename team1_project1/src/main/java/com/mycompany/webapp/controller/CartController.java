@@ -37,6 +37,7 @@ public class CartController {
 
 	@Resource
 	private CartService cartService;
+	
 
 	@RequestMapping("/content")
 	public String cart() {
@@ -52,8 +53,8 @@ public class CartController {
 		model.addAttribute("mphone", minfo.getMphone());
 		model.addAttribute("memail", minfo.getMemail());
 		model.addAttribute("mname", minfo.getMname());
-		model.addAttribute("mpoint", minfo.getMpoint());
-		
+		int mpoint = cartService.getMemberMpoint(minfo.getUsername());
+		model.addAttribute("mpoint", mpoint);
 		return "order";
 	}
 

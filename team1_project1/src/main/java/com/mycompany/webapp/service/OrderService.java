@@ -15,6 +15,7 @@ import com.mycompany.webapp.dao.MemberDAO;
 import com.mycompany.webapp.dao.OrderDAO;
 import com.mycompany.webapp.dao.ProductDAO;
 import com.mycompany.webapp.dto.CartProductInfo;
+import com.mycompany.webapp.dto.Member;
 import com.mycompany.webapp.dto.OrderDetail;
 import com.mycompany.webapp.dto.OrderList;
 import com.mycompany.webapp.dto.OrderListQuery;
@@ -59,12 +60,13 @@ public class OrderService {
 	}
 
 	@Transactional
-	public OrderResult newOrder(ProductOrder productOrder, String plist, int mpoint) {
+	public OrderResult newOrder(ProductOrder productOrder, String plist, String mid) {
 		int mno = productOrder.getMno();
 		int cartno = cartDao.getCartNoByMno(mno);
+		Member member = memberDao.getLoginMember(mid);
 
 		// 마일리지가 부족한 경우
-		if (mpoint < productOrder.getPorderdiscount()) {
+		if (member.getMpoint() < productOrder.getPorderdiscount()) {
 			return OrderResult.ENOUGH_MPOINT;
 		}
 
@@ -99,7 +101,7 @@ public class OrderService {
 
 			// 사용자 마일리지 차감
 			if(productOrder.getPorderdiscount() != 0)
-				memberDao.updateMemberMpoint(mno,mpoint - productOrder.getPorderdiscount());
+				memberDao.updateMemberMpoint(mno,member.getMpoint() - productOrder.getPorderdiscount());
 			
 			// cart에서 주문한 row isdelete 변경
 			cartDao.purchaseCartDetailList(productlist);

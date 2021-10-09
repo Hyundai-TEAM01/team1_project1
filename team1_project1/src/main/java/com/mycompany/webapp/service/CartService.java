@@ -127,4 +127,8 @@ public class CartService {
 		}
 		// non vaild 추가
 	}
+  
+	public int getMemberMpoint(String mid) {
+		return memberDao.getLoginMember(mid).getMpoint();
+	}
 }
