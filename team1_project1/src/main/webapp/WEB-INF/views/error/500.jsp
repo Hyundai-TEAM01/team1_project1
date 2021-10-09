@@ -1,18 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/error.css">
 
-<div class="card m-2">
-	<div class="card-header">
-		서버 실행 오류
-	</div>
-	<div class="card-body">
-		<p>어떤 이유 때문에 서버에서 처리하지 못했습니다.</p>
-		<p>일시 서버 오류이므로 조금후 다시 시도해 주세요.</p>
-		<div>
-			<a href="${pageContext.request.contextPath}/" class="btn btn-danger btn-sm">홈으로가기</a>
-		</div>
+<div class="error-container">
+	<div class="ui card custom-card">
+	  <div class="content">
+	    <div class="header"><i class="exclamation icon"></i>알 수 없는 오류가 발생하였습니다.</div>
+	  </div>
+	  <div class="extra content">
+	    <h4 class="ui sub header error-content">일시적인 서버 오류입니다. 잠시후 다시 시도해 주세요.<br/>오류가 반복될 경우 관리자에게 연락바랍니다.</h4>
+	    <div class="btn-wrap">
+		    <a href="${pageContext.request.contextPath}/" class="ui red button small home-btn">홈으로가기</a>
+	    </div>
+	  </div>
 	</div>
 </div>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
