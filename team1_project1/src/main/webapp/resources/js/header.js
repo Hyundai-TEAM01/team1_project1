@@ -46,10 +46,14 @@ $(function () {
     
     
     /* 카트 담긴 갯수 호출 */
-    $.ajax({
+    getCartCountHeader()
+    
+});
+
+function getCartCountHeader(){
+	$.ajax({
 		url : "/member/memberdata"
 	}).done((data)=>{
 		$(".cartcnt").html(data.cartcnt);
 	});
-    
-});
+}
