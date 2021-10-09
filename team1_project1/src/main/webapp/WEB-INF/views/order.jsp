@@ -190,7 +190,7 @@
                                       <option value="국민">국민</option>
                                   </select>
                       
-                                  <input class="ui input" type="text" minlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>
+                                  <input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>
                               	
                               	<select required name="porderpayinstallment" class="small-input">
                                       <option value="일시불">일시불</option>
@@ -256,6 +256,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/order.js"></script>
         <script>
         const myMpoint = ${mpoint};
+        const inputs = $("input");
         $(function () {
             // 쇼핑백에서 가져온 상품 목록
             var productList = "";
@@ -294,7 +295,7 @@
                     str += '<option value="국민">국민</option>';
                     str += '</select>';
                     
-                    str += '<input class="ui input" type="text" minlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>';
+                    str += '<input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>';
                     
                     str += '<select required name="porderpayinstallment" class="small-input">';
                     str += '<option value="일시불">일시불</option>';
@@ -334,12 +335,9 @@
             
             // 이메일 입력 시 뒤에 부분 필수 처리
             $("input[name='porderemail']").change(function(){
-                console.log($(this).val());
                 if($(this).val() === ""){
-                    console.log("true");
                     $("[name='s_email']").attr("required",false);
                 }else{
-                    console.log("false	");
                     $("[name='s_email']").attr("required",true);        	   			
                 }
             });
@@ -355,7 +353,7 @@
                 let mpoint = $("input[name='porderdiscount']").val();
                 if(mpoint !== ""){
                     let realm = Math.floor(parseInt(mpoint)/100) * 100;
-
+					realm = realm < 0 ? 0 : realm;
                     realm = realm > parseInt(myMpoint) ? myMpoint : realm;
                     $("input[name='porderdiscount']").val(realm);
 
@@ -372,6 +370,39 @@
                     
                 }
             });
+            
+        	// custom error message
+            const validityMessage = {
+	              badInput: "잘못된 입력입니다.",
+	              patternMismatch: "숫자만 입력해주세요.",
+	              rangeOverflow: "입력 범위를 초과하였습니다.",
+	              rangeUnderflow: "입력 값이 부족합니다.",
+	              stepMismatch: "간격에 맞게 입력하세요.",
+	              tooLong: "입력하신 정보를 다시 확인해주세요.",
+	              tooShort: "입력하신 정보를 다시 확인해주세요.",
+	              typeMismatch: "형식에 맞게 입력하세요.",
+	              valueMissing: "필수입력 사항입니다.",
+            }
+            
+        	function getValidityMessage(vali){
+        		for(let key in validityMessage){
+        			if(vali[key]){
+        				return validityMessage[key];
+        			}
+        		}
+        	}
+        	
+        	inputs.each((idx,item)=>{
+        		item.addEventListener("invalid",()=>{
+        			showError(item);
+                });
+        	});
+        	
+        	function showError(input){
+        		input.setCustomValidity(getValidityMessage(input.validity) || "");
+        	}
+        	
+            
         });
         </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
