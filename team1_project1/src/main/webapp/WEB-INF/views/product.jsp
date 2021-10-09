@@ -77,10 +77,8 @@
             <a href="javascript:modalOff()"><i class="close icon"></i></a>
         </div>
         <div class="modal-content">
-            <p>쇼핑백에 담겼습니다.</p>
-            <p>확인하시겠습니까?</p>
         </div>
-        <div class="modal-btns"><a href="javascript:modalOff()" class="btn-continue">계속쇼핑하기</a><a href="/cart/content" class="btn-tocart">쇼핑백 바로가기</a></div>
+        <div class="modal-btns"></div>
     </div>
 </div>
 <script>

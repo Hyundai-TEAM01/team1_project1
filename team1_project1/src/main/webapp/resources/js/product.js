@@ -69,20 +69,21 @@ function amountCheck(nowAmount){
 	let selectedSize = $(".product-size option:selected").val();
 	let amountInput = $("input.amount");
 	if(!selectedSize){
-		console.log('사이즈 선택 필요');
+		setModalOn('noSize');
 		amountInput.val(1);
 	} else if(isNaN(nowAmount)){
 		amountInput.val(1);
 	} else{
 		let maxAmount = amountDict[selectedSize];
 		if(nowAmount > maxAmount){
-			console.log('주문 수량 초과');
+			setModalOn('overAmount')
 			amountInput.val(maxAmount);
 		} else if(nowAmount < 1){
 			console.log('주문 수량 미만');
 			amountInput.val(1);
 		}
 	}
+	setTotalPrice();
 }
 
 /* 수량 변경 버튼 클릭 */
@@ -106,6 +107,38 @@ function setTotalPrice(){
 	let totalPriceArea = $(".totalPrice");
 	let html = '';
 	html += '<i class="won sign icon"></i>';
+	html += wonChange((nowPprice * $("input.amount").val()));
+	totalPriceArea.html('');
+	totalPriceArea.html(html);
+}
+
+/* 모달의 msg에 따른 HTML 변경 및 출력*/
+function setModalOn(msg){
+	let selectedSize = $(".product-size option:selected").val();
+	let modalContentArea = $(".modal-content");
+	let modalBtnArea = $(".modal-btns");
+	let contentHtml = '';
+	let btnHtml = '';
+	// noSize, overAmount, addCart, 
+	switch (msg){
+		case 'noSize':
+			contentHtml = '<p>사이즈를 선택해 주세요.</p>';
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">확인</a>';
+			break;
+		case 'overAmount':
+			contentHtml = '<p>구매 가능한 재고 '+ amountDict[selectedSize] + '개만 선택하실 수 있습니다.</p>';
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">확인</a>';
+			break;
+		case 'addCart':
+			contentHtml = '<p>쇼핑백에 담겼습니다.</p><p>확인하시겠습니까?</p>' 
+			btnHtml = '<a href="javascript:modalOff()" class="btn-continue">계속쇼핑하기</a><a href="/cart/content" class="btn-tocart">쇼핑백 바로가기</a>'
+			break;
+	}
+	modalContentArea.html('');
+	modalBtnArea.html('');
+	modalContentArea.html(contentHtml);
+	modalBtnArea.html(btnHtml);
+	modalOn();
 }
 
 /* 사이즈 정렬 */
@@ -144,6 +177,7 @@ function sizeSort(arr){
 }
 
 function cartAdd() {
+	
 	/* $.ajax({
 		url: '/cartadd',
 		method: 'POST'
@@ -155,7 +189,7 @@ function cartAdd() {
 			location.href = '/login';
 		}
 	}); */
-	modalOn();
+	setModalOn('addCart');
 }
 function wonChange(num) {
     return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
