@@ -8,6 +8,9 @@ $(function () {
     $("input.amount").on('input', function(event) {
     	amountCheck($("input.amount").val());
     });
+    $("select.product-size").on('change', function(event){
+		$("input.amount").val(1);
+	});
     setTotalPrice()
 });
 
