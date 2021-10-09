@@ -24,8 +24,8 @@
 			</foreach>
 	</update>
 	
-	<insert id="insertCartDetail" parameterType="cartDetail">
-		INSERT INTO cartdetail values (SEQ_CARTDETAILNO.NEXTVAL,#{cartNo}, #{pcode},#{psize},#{pcolor},#{amount},SYSDATE,0)
+	<insert id="insertCartDetail">
+		INSERT INTO cartdetail values (SEQ_CARTDETAILNO.NEXTVAL,#{cartno}, #{pcode},#{psize},#{pcolor},#{pamount},SYSDATE,0)
 	</insert>
 	
 	<select id="selectByCartDetailNo" parameterType="int" resultType="cartDetail">
@@ -83,6 +83,12 @@
 		SELECT * FROM cartdetail 
 		WHERE pcode = (SELECT pcode FROM cartdetail WHERE cartdetailno = #{param1}) 
 				AND pcolor = #{param2} AND psize = #{param3}
+	</select>
+	
+	<select id="getCartProductCount" resultType="int">
+		SELECT count(pcode)
+		FROM (SELECT * FROM cartdetail where cartno = #{cartno})
+		WHERE pcode = #{pcode} AND psize = #{psize} AND pcolor = #{pcolor} AND isdeleted = 0
 	</select>
 	
 </mapper>

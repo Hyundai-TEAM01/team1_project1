@@ -59,8 +59,8 @@
                                 총 합계
                             </div>
                             <div class="right floated column center aligned">
-                                <div class="totalPrice"><i class="won sign icon"></i>${product.pprice}</div>
-                                <a href="javascript:cartAdd()" class="ui button">카트 담기</a>
+                                <div class="totalPrice"></div>
+                                <a href="javascript:addCart()" class="ui button" name="addCartBtn">카트 담기</a>
                             </div>
                         </div>
                     </div>
@@ -87,6 +87,7 @@
 	let nowPcolor = '${pcolor}';
 	let nowPprice = ${product.pprice};
 	let nowPcode = '${product.pcode}';
+	let contextPath = "${pageContext.request.contextPath}";
 </script>
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/product.js"></script>
