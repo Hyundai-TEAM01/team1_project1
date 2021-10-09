@@ -61,10 +61,10 @@
 								</sec:authorize>
 							</li>
 	                        <li class="my-page">
-	                            <a href="${pageContext.request.contextPath}/orderlist">마이페이지</a>
+	                            <a href="${pageContext.request.contextPath}/mypage/orderlist">마이페이지</a>
 	                            <ul class="sub-option">
-	                                <li><a href="${pageContext.request.contextPath}/orderlist">주문조회</a></li>
-	                                <li><a href="${pageContext.request.contextPath}/couponlist">쿠폰조회</a></li>
+	                                <li><a href="${pageContext.request.contextPath}/mypage/orderlist">주문조회</a></li>
+	                                <li><a href="${pageContext.request.contextPath}/mypage/couponlist">쿠폰조회</a></li>
 	                            </ul>
 	                        </li>
 	                        <li><a href="${pageContext.request.contextPath}/cart/content"><i class="shopping bag icon"></i>(<span class="cartcnt">0</span>)</a></li>
