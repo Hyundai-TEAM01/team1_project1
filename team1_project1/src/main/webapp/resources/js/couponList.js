@@ -124,21 +124,19 @@ $(function () {
                         itemStr += '</td>';
                     	itemStr += '</tr>';
 					});	
-					$('#ctable').html(itemStr);
+					$('#ctable').html(itemStr);	
+					// 페이징 버튼 생성
+					if(data.pagination.totalPageNo > 0){
+			            setHtml(data.pagination); // 페이징 버튼 렌더링
+			            setAction(data.pagination); // 페이징 버튼 기능 추가
+			        }else{
+			        	$(".paging").html(''); // 페이징 버튼 없애기
+			        }
 				} else { // 쿠폰목록 불러오기 실패 시
 					let itemStr = '<tr></tr>';
 					itemStr += '<td class="no-data" colspan="4">쿠폰내역이 없습니다.</td>';
 					$('#ctable').html(itemStr);
 				}
-
-				// 페이징 버튼 생성
-				if(data.pagination.totalPageNo > 0){
-		            setHtml(data.pagination); // 페이징 버튼 렌더링
-		            setAction(data.pagination); // 페이징 버튼 기능 추가
-		        }else{
-		        	$(".paging").html(''); // 페이징 버튼 없애기
-		        }
-				
 			}
 			else {
 				let itemStr = '<tr></tr>';
@@ -256,4 +254,15 @@ $(function () {
                             <p class="used-date"><span class="cp-date cp-date-used"></span></p>
                         </td>
                     </tr>
+                    
+                    
+                    
+                    <div class="paging">
+						<a href="#" class="prev2"><i class="angle double left icon"></i></a> <a
+							href="#" class="prev"><i class="angle left icon"></i></a> <span
+							class="paging-num"> <a href="#" class="pageBtn on">1</a> <a
+							href="#" class="pageBtn">2</a>
+						</span> <a href="#" class="next"><i class="angle right icon"></i></a> <a
+							href="#" class="next2"><i class="angle double right icon"></i></a>
+					</div>
 */
