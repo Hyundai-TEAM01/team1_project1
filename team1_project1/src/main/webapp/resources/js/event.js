@@ -2,14 +2,41 @@ $(function () {
     const explainContainer = $(".explain");
     const dDayContainer =  $(".d-day");
     const isproceeding = true; // 진행중인가?
-
+	let eventCtn = 1;
+	getTime();
+    timer = setInterval(getTime, 1000);
+    
       if(isproceeding) {
-        getTime();
-        timer = setInterval(getTime, 1000);
-        $('.imgbtn').click(function(e) {
-          e.preventDefault();
-          alert("서버 리턴 값 출력할 예정입니다.");
-        });
+		if(eventCtn === 1) {
+			$('.imgbtn').click(function(e) {
+	          e.preventDefault();
+	          $.ajax({
+			      url: 'getcouponevent'
+			  })
+			  .done((data) => {
+				console.log(data);
+				if(data.result === 'fail') {
+					alert("이벤트가 종료되었습니다.");
+				} else if(data.result === 'hascoupon') {
+					alert("이미 쿠폰이 발급되었습니다.");
+				} else if(data.result === 'error') {
+					alert("서버에 오류가 발생하였습니다.");
+				} else if(data.result === 'success') {
+					alert("쿠폰 발급에 성공하였습니다.");
+					eventCtn = 0;
+				} else if(data.result === 'notstart') {
+					alert("이벤트 시작시간이 아닙니다.");
+				} else if(data.result === 'login') {
+					alert("로그인이 필요합니다.");
+					location.href = "/member/loginForm";
+				} else {
+					alert("알 수 없는 오류가 발생했습니다.");
+					console.log("에러발생");
+				}
+			  });
+	        });
+		}
+        
       } else {
         explainContainer.html("이벤트가 종료되었습니다.");
         dDayContainer.html("");
