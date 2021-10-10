@@ -26,6 +26,19 @@ $(function () {
         },
     });
     
+    var $menulifestyle = $(".dth-lifestyle");
+    var $sublifestyle = $(".sub-lifestyle");
+
+    // 마우스 hover 드롭다운 메뉴
+    $menulifestyle.on({
+        mouseenter: function () {
+            $sublifestyle.addClass("wrap-on");
+        },
+        mouseleave: function () {
+            $sublifestyle.removeClass("wrap-on");
+        },
+    });
+    
     /* 오른쪽 마이페이지 드롭다운 */
     var mp_default = '54px';  // 1단계 메뉴 높이
     var mp_hover = '132px'; // 2단계 메뉴 높이
