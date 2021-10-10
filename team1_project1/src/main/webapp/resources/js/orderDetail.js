@@ -76,7 +76,7 @@ $(function () {
                     itemStr += '</td>';
                     itemStr += '<td>' + porderamount + '</td>';
                     itemStr += '<td><i class="won sign icon small"></i>' + wonChange(pprice) + '</td>';
-                    itemStr += idx === 0 ? '<td rowspan="' + itemCnt + '">' + pordertotalpoint + '</td>' : '';
+                    itemStr += idx === 0 ? '<td rowspan="' + itemCnt + '">' + wonChange(pordertotalpoint) + '</td>' : '';
                     itemStr += '<td>' + podstatus + '<span class="sum-date">' + printDate(porderdate) + '</span></td></tr>';
 				});
 				$('.podsaleprice').html(wonChange(pordersaleprice));

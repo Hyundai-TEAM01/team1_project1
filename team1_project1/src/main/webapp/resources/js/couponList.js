@@ -136,12 +136,14 @@ $(function () {
 					let itemStr = '<tr></tr>';
 					itemStr += '<td class="no-data" colspan="4">쿠폰내역이 없습니다.</td>';
 					$('#ctable').html(itemStr);
+					$(".paging").html('');
 				}
 			}
 			else {
 				let itemStr = '<tr></tr>';
 				itemStr += '<td class="no-data" colspan="4">쿠폰내역이 없습니다.</td>';
 				$('#ctable').html(itemStr);
+				$(".paging").html('');
 			}
 			
 		}); // done
