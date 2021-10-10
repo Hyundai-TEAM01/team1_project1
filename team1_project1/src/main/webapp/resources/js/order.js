@@ -3,11 +3,11 @@ var submitCnt = 1;
 function order(){
     
     $("form").attr("method","post");
-    $("form").attr("action","/newOrder");
+    $("form").attr("action","/order/newOrder");
     
     let porderphone = $("select[name='p-start']").val() + $("input[name='phone2']").val() + $("input[name='phone3']").val();
     let pordertel = $("select[name='t-start']").val() + $("input[name='tel2']").val() + $("input[name='tel3']").val();
-    pordertel = pordertel.length < 10 ? "":pordertell
+    pordertel = pordertel.length < 10 ? "":pordertel;
     
     let porderemail = $("input[name='porderemail']").val()+'@'+$("#s_email").val();
     porderemail = porderemail.split("@")[0] === "" ? "" : porderemail;

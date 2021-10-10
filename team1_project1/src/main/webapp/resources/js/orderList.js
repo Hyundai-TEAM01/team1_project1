@@ -143,12 +143,14 @@ $(function () {
 					let itemStr = '<tr></tr>';
 					itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
 					$('#otable').html(itemStr);
+					$(".paging").html('');
 				}				
 			}
 			else {
 				let itemStr = '<tr></tr>';
 				itemStr += '<td class="no-data" colspan="6">주문내역이 없습니다.</td>';
 				$('#otable').html(itemStr);
+				$(".paging").html('');
 			}
 			
 		}); // done
