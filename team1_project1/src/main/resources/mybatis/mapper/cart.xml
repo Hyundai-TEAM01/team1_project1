@@ -9,7 +9,7 @@
 	<select id="getCartProductList" resultType="cartProductInfo" parameterType="int">
 		SELECT cartdetailno, cartno, cd.pcode, psize, cd.pcolor, amount, regdate, isdeleted, imgurl1 as imgurl , pbrand, pname, pprice 
 		FROM CARTDETAIL cd, PRODUCTIMG img, PRODUCT p
-		WHERE CARTNO = #{cartNo} and cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode and isdeleted = 0
+		WHERE CARTNO = #{cartNo} and cd.PCODE = img.pcode and img.pcolor = cd.pcolor and p.pcode = cd.pcode and isdeleted = 0 Order by cartdetailno
 	</select>
 	
 	<update id="removeCartDetail" parameterType="int">

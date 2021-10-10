@@ -113,13 +113,13 @@
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" name="tel2" pattern="[0-9]+"/>
+                                                <input type="text" name="tel2" minlength="3" maxlength="4" pattern="[0-9]+"/>
                                             </div>
                                             <div class="field">
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" name="tel3" pattern="[0-9]+"/>
+                                                <input type="text" name="tel3" minlength="4" maxlength="4" pattern="[0-9]+"/>
                                             </div>
                                         </div>
                                     </td>
