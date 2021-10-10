@@ -20,8 +20,11 @@ function setHtmlByColor(pcolor){
 	$.ajax({
 		url: 'getSizeAmount' + '?pcode=' + nowPcode + '&pcolor=' + pcolor,
 	}).done((data) => {
+		console.log("data.productAmountList");
 		console.log(data.productAmountList);
+		console.log("data.productAmountList.amount");
 		console.log(data.productAmountList.amount);
+		
 		nowPcolor = pcolor;
 		setProductImgHtml(pcolor)
 		setProductSizeHtml(data.productAmountList.amount);
@@ -233,6 +236,7 @@ function addCartAjax(formData) {
 			setModalOn('duplicated');
 		} else if(data.msg == "addCart"){
 			setModalOn('addCart');
+			getCartCountHeader();
 		} else{
 			setModalOn('fail');
 		}
