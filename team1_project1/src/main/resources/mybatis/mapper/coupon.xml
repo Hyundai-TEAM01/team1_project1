@@ -37,4 +37,21 @@
 	</select>
 	
 
+	<!-- 이벤트 쿠폰 발급 갯수 -->
+	<select id="getCouponEventAmount" resultType="int">
+		SELECT COUNT(*) FROM membercoupon WHERE couno = #{couno} 
+	</select>
+	
+	<!-- 이벤트 쿠폰 있는 지 확인하기 -->
+	<select id="hasCouponEvent" resultType="int">
+		SELECT COUNT(*) FROM membercoupon 
+		WHERE couno = #{couno} AND member_mno = #{mno}
+	</select>
+
+	<!-- 이벤트 쿠폰 발급하기 -->
+	<insert id="insertCouponEvent">
+		INSERT INTO membercoupon VALUES(SEQ_MCNO.nextval, #{couno}, sysdate, null, 0, #{mno})
+	</insert>
+	
+	
 </mapper>

@@ -30,4 +30,27 @@ public class CouponService {
 	public int getCouponListCount(int mno, CouponListQuery query) {
 		return couponDAO.getCouponListCount(mno, query);
 	}
+
+	public enum CouponEventResult {
+		SUCCESS, FAIL, HASCOUPON, ERROR;
+	};
+
+	/* 이벤트 쿠폰 관련 */
+	public CouponEventResult couponEvent(int mno, int couno) {
+		// 이벤트 쿠폰 발급 갯수
+		if (couponDAO.getCouponEventAmount(couno) < 10) {
+			// 이벤트 쿠폰 있는 지 확인하기
+			if (couponDAO.hasCouponEvent(mno, couno) > 0) {
+				return CouponEventResult.HASCOUPON;
+			} else {
+				// 이벤트 쿠폰 발급하기
+				if (couponDAO.insertCouponEvent(mno, couno) == 1)
+					return CouponEventResult.SUCCESS;
+				else
+					return CouponEventResult.ERROR;
+			}
+		} else {
+			return CouponEventResult.FAIL;
+		}
+	}
 }
