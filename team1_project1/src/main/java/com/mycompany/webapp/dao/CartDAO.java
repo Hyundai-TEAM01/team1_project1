@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.dto.CartDetail;
+import com.mycompany.webapp.dto.CartProductDetail;
 import com.mycompany.webapp.dto.CartProductInfo;
 
 @Mapper
 public interface CartDAO {
+	public CartDetail getCartDetailByOption(int cartDetailNo, String pcolor, String psize);
+	
 	public List<CartDetail> getCartDetailList(int cartNo);
 
 	public List<CartProductInfo> getCartProductList(int cartNo);
@@ -18,7 +22,7 @@ public interface CartDAO {
 
 	public int removeCartDetailList(String[] cartDetailNoList);
 
-	public int insertCartDetail(CartDetail cartDetail);
+	public int insertCartDetail(@Param("cartno")int cartno, @Param("pcode")String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor, @Param("pamount")int pamount);
 
 	public CartDetail selectByCartDetailNo(int cartDetailNo);
 
@@ -30,7 +34,13 @@ public interface CartDAO {
 	
 	public int updateCartdetail(CartDetail cartDetail);
 	
+	public int updateCartdetailOption(CartDetail cartDetail);
+	
 	public int purchaseCartDetail(int cartDetailNo);
 
 	public int purchaseCartDetailList(String[] cartDetailNoList);
+	
+	public List<CartProductDetail> getCartProductDetailByPcode(String pcode);
+	
+	public int getCartProductCount(@Param("cartno")int cartno, @Param("pcode")String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor);
 }

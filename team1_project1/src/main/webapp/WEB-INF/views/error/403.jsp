@@ -1,13 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/error.css">
 
-<div class="card m-2">
-	<div class="card-header">
-		권한 불충분
-	</div>
-	<div class="card-body">
-		현재 로그인한 정보로 해당 페이지를 볼 수 없습니다.
+<div class="error-container">
+	<div class="ui card custom-card">
+	  <div class="content">
+	    <div class="header"><i class="exclamation icon"></i>권한이 부족합니다.</div>
+	  </div>
+	  <div class="extra content">
+	    <h4 class="ui sub header error-content">현재 로그인한 계정으로 접근할 수 없는 페이지입니다.</h4>
+	    <div class="btn-wrap">
+		    <a href="${pageContext.request.contextPath}/" class="ui red button small home-btn">홈으로가기</a>
+	    </div>
+	  </div>
 	</div>
 </div>
 

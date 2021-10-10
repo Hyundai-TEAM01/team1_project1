@@ -190,7 +190,7 @@
                                       <option value="국민">국민</option>
                                   </select>
                       
-                                  <input class="ui input" type="text" minlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>
+                                  <input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>
                               	
                               	<select required name="porderpayinstallment" class="small-input">
                                       <option value="일시불">일시불</option>
@@ -253,291 +253,156 @@
         </div>
 
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/order.js"></script>
         <script>
-	        const myMpoint = ${mpoint};
-	        
-            $(function () {
-            	// 쇼핑백에서 가져온 상품 목록
-            	var productList = "";
-                <c:forEach items="${pList}" var="item">
-               		productList +=(${item})+",";
-            	</c:forEach>
-            	
-            	productList = productList.slice(0,-1);
-   
-            	$.ajax({
-            		url : "getOrderList",
-            		data : {"productList":productList}
-            	}).done((data)=>{
-            		for(item of data.infoList[0]){
-            			createProduct(item);
-            		}
-            	   	setSumPrice();
-            	   	setTotalPrice();
-            		
-            	});
-            	
-            	
-            	
-                $("input:radio[name='porderpayment']").click(function () {
-                    let payment = $("input:checked[name='porderpayment']").attr("id");
-                    let info = $("div.payment-info");
-                    info.html("");
-                    let str = "";
+        const myMpoint = ${mpoint};
+        const inputs = $("input");
+        $(function () {
+            // 쇼핑백에서 가져온 상품 목록
+            var productList = "";
+            <c:forEach items="${pList}" var="item">
+                productList +=(${item})+",";
+            </c:forEach>
+            
+            productList = productList.slice(0,-1);
 
-                    if (payment === "card") {
-						str += '<div class="inline fields">';
-						str += '<select required name="porderpayname" class="small-input">';
-						str +=  '<option value="">카드사</option>';
-						str +=  '<option value="현대">현대</option>';
-						str += '<option value="비씨">비씨</option>';
-						str += '<option value="국민">국민</option>';
-						str += '</select>';
-						
-						str += '<input class="ui input" type="text" minlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>';
-						
-						str += '<select required name="porderpayinstallment" class="small-input">';
-						str += '<option value="일시불">일시불</option>';
-						str += '<option value="3개월">3개월</option>';
-						str += '<option value="6개월">6개월</option>';
-						str += '<option value="12개월">12개월</option>';
-						str += '</select>';
-						str += '</div>';                    
-                  } else if (payment === "cash") {
-                        str += '<div class="inline fields">';
-                        str += '<div class="three wide field">';
-                        str += '<select class="ui selection dropdown bank-seletion" required name="porderpayname">';
-                        str += '<option value="">은행사</option>';
-                        str += '<option value="국민">국민</option>';
-                        str += '<option value="농협">농협</option>';
-                        str += '<option value="하나">하나</option>';
-                        str += "</select>";
-                        str += "</div>";
-                        str += '<div class="ten wide field">';
-                        str += '<input type="text" value="123412341234" name="porderpayno" readonly>';
-                        str += "</div>";
-                        str += "</div>";
-                    }
-
-                    info.html(str);
-                });
+            $.ajax({
+                url : "getOrderList",
+                data : {"productList":productList}
+            }).done((data)=>{
+                for(item of data.infoList[0]){
+                    createProduct(item);
+                }
+                setSumPrice();
+                setTotalPrice();
                 
-                // 이메일 입력 설정
-                let s_email = $("select[name='select-email']");
-        	   	s_email.change(function () {
-                   if(s_email.val() !== ""){
-                       $("#s_email").val(s_email.val()).prop('readonly',true);
-                   }else{
-                    $("#s_email").val(s_email.val()).prop('readonly',false);
-                   }
-        	   });
-        	   	
-        	   	// 이메일 입력 시 뒤에 부분 필수 처리
-        	   	$("input[name='porderemail']").change(function(){
-        	   		console.log($(this).val());
-        	   		if($(this).val() === ""){
-        	   			console.log("true");
-        	   			$("[name='s_email']").attr("required",false);
-        	   		}else{
-        	   			console.log("false	");
-        	   			$("[name='s_email']").attr("required",true);        	   			
-        	   		}
-        	   	});
-        	   	
-        	   	
-        	   	
-        	   	// 결제하기 버튼 이벤트 할당
-               	$(".pay-btn").click(order);
-        	   	
-        	   	// 마일리지 적용 버튼 이벤트 할당
-               	$(".m-apply").click(function(){
-               		event.preventDefault();
-               		let mpoint = $("input[name='porderdiscount']").val();
-               		if(mpoint !== ""){
-               			let realm = Math.floor(parseInt(mpoint)/100) * 100;
-  
-         				realm = realm > parseInt(myMpoint) ? myMpoint : realm;
-               			$("input[name='porderdiscount']").val(realm);
-   
-               			if($(".usedMpoint").length != 0){
-			               $(".m-discount").html(realm);
-			               setTotalPrice();
-               			}else{               				
-	               			let html = '<div class="row usedMpoint">';
-	               			html += '<div class="six wide column left aligned">마일리지</div>';
-	               			html += '<div class="ten wide column right aligned"><i class="minus icon small"></i>&nbsp<i class="won sign icon small"></i><span class="m-discount">'+realm+'</span></div></div>';
-							$(".color-555-small").append(html);    
-							setTotalPrice();
-               			}
-               			
-               		}
-               	});
-   
             });
             
-			
-            function order(){
-            	
-            	$("form").attr("method","post");
-            	$("form").attr("action","/newOrder");
-            	
-            	let porderphone = $("select[name='p-start']").val() + $("input[name='phone2']").val() + $("input[name='phone3']").val();
-            	console.log("porderphone : " + porderphone);
-            	let pordertel = $("select[name='t-start']").val() + $("input[name='tel2']").val() + $("input[name='tel3']").val();
-            	console.log("pordertel : " + pordertel);
-            	let porderemail = $("input[name='porderemail']").val()+'@'+$("#s_email").val();
-            	porderemail = porderemail.split("@")[0] === "" ? "" : porderemail;
-         		console.log("porderemail : " + porderemail);
-            	
-         		
-         		let payment = $("input:checked[name='porderpayment']").attr("id");
-         		
-         		
-            	if(document.getElementById("infoForm").reportValidity()){            			            	
-	            	$("tr").remove('.phone-wrap');
-	            	$("tr").remove('.tel-wrap');
-	            	$("tr").remove('.email-wrap');
-	            	
-	            	let mp = $("[name=porderdiscount]").val();
-	            	mp = mp === "" ? 0 : mp;
-	            	$("[name=porderdiscount]").val(mp);
-	            	
-            		let plist = "";
-            		$(".info-body tr").each((idx,item)=>{
-            			plist += $(item).attr("id")+",";
-            		})
-            		plist = plist.slice(0,-1);
-            		console.log(plist);
-	            	
-					$("form").append("<input type='text' name='porderphone' value='"+porderphone+"'>");   
-					$("form").append("<input type='text' name='pordertel' value='"+pordertel+"'>");   
-					$("form").append("<input type='text' name='porderemail' value='"+porderemail+"'>");  
-					$("form").append("<input type='text' name='pordermphone' value='"+$(".mphone").html().replace("-","")+"'>");  					
-					$("form").append("<input type='text' name='plist' value='"+plist+"'>");  	
-					
-					if(payment === "cash"){
-						$("form").append("<input type='text' name='porderpayinstallment' value='입금 완료'>"); 
-					}
-					
-					
-            		$("form").submit();
-            		
+            
+            
+            $("input:radio[name='porderpayment']").click(function () {
+                let payment = $("input:checked[name='porderpayment']").attr("id");
+                let info = $("div.payment-info");
+                info.html("");
+                let str = "";
 
-            	}
+                if (payment === "card") {
+                    str += '<div class="inline fields">';
+                    str += '<select required name="porderpayname" class="small-input">';
+                    str +=  '<option value="">카드사</option>';
+                    str +=  '<option value="현대">현대</option>';
+                    str += '<option value="비씨">비씨</option>';
+                    str += '<option value="국민">국민</option>';
+                    str += '</select>';
+                    
+                    str += '<input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>';
+                    
+                    str += '<select required name="porderpayinstallment" class="small-input">';
+                    str += '<option value="일시불">일시불</option>';
+                    str += '<option value="3개월">3개월</option>';
+                    str += '<option value="6개월">6개월</option>';
+                    str += '<option value="12개월">12개월</option>';
+                    str += '</select>';
+                    str += '</div>';                    
+                } else if (payment === "cash") {
+                    str += '<div class="inline fields">';
+                    str += '<div class="three wide field">';
+                    str += '<select class="ui selection dropdown bank-seletion" required name="porderpayname">';
+                    str += '<option value="">은행사</option>';
+                    str += '<option value="국민">국민</option>';
+                    str += '<option value="농협">농협</option>';
+                    str += '<option value="하나">하나</option>';
+                    str += "</select>";
+                    str += "</div>";
+                    str += '<div class="ten wide field">';
+                    str += '<input type="text" value="123412341234" name="porderpayno" readonly>';
+                    str += "</div>";
+                    str += "</div>";
+                }
+
+                info.html(str);
+            });
+            
+            // 이메일 입력 설정
+            let s_email = $("select[name='select-email']");
+            s_email.change(function () {
+                if(s_email.val() !== ""){
+                    $("#s_email").val(s_email.val()).prop('readonly',true);
+                }else{
+                $("#s_email").val(s_email.val()).prop('readonly',false);
+                }
+            });
+            
+            // 이메일 입력 시 뒤에 부분 필수 처리
+            $("input[name='porderemail']").change(function(){
+                if($(this).val() === ""){
+                    $("[name='s_email']").attr("required",false);
+                }else{
+                    $("[name='s_email']").attr("required",true);        	   			
+                }
+            });
+            
+            
+            
+            // 결제하기 버튼 이벤트 할당
+            $(".pay-btn").click(order);
+            
+            // 마일리지 적용 버튼 이벤트 할당
+            $(".m-apply").click(function(){
+                event.preventDefault();
+                let mpoint = $("input[name='porderdiscount']").val();
+                if(mpoint !== ""){
+                    let realm = Math.floor(parseInt(mpoint)/100) * 100;
+					realm = realm < 0 ? 0 : realm;
+                    realm = realm > parseInt(myMpoint) ? myMpoint : realm;
+                    $("input[name='porderdiscount']").val(realm);
+
+                    if($(".usedMpoint").length != 0){
+                        $(".m-discount").html(realm);
+                        setTotalPrice();
+                    }else{               				
+                        let html = '<div class="row usedMpoint">';
+                        html += '<div class="six wide column left aligned">마일리지</div>';
+                        html += '<div class="ten wide column right aligned"><i class="minus icon small"></i>&nbsp<i class="won sign icon small"></i><span class="m-discount">'+realm+'</span></div></div>';
+                        $(".color-555-small").append(html);    
+                        setTotalPrice();
+                    }
+                    
+                }
+            });
+            
+        	// custom error message
+            const validityMessage = {
+	              badInput: "잘못된 입력입니다.",
+	              patternMismatch: "숫자만 입력해주세요.",
+	              rangeOverflow: "입력 범위를 초과하였습니다.",
+	              rangeUnderflow: "입력 값이 부족합니다.",
+	              stepMismatch: "간격에 맞게 입력하세요.",
+	              tooLong: "입력하신 정보를 다시 확인해주세요.",
+	              tooShort: "입력하신 정보를 다시 확인해주세요.",
+	              typeMismatch: "형식에 맞게 입력하세요.",
+	              valueMissing: "필수입력 사항입니다.",
             }
             
+        	function getValidityMessage(vali){
+        		for(let key in validityMessage){
+        			if(vali[key]){
+        				return validityMessage[key];
+        			}
+        		}
+        	}
+        	
+        	inputs.each((idx,item)=>{
+        		item.addEventListener("invalid",()=>{
+        			showError(item);
+                });
+        	});
+        	
+        	function showError(input){
+        		input.setCustomValidity(getValidityMessage(input.validity) || "");
+        	}
+        	
             
-            
-            
-            
-            // 우편번호 검색 api , https://postcode.map.daum.net/guide 사용
-            function execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function (data) {
-                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                        var addr = ""; // 주소 변수
-                        var extraAddr = ""; // 참고항목 변수
-
-                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                        if (data.userSelectedType === "R") {
-                            // 사용자가 도로명 주소를 선택했을 경우
-                            addr = data.roadAddress;
-                        } else {
-                            // 사용자가 지번 주소를 선택했을 경우(J)
-                            addr = data.jibunAddress;
-                        }
-
-                        // // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                        // if(data.userSelectedType === 'R'){
-                        //     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                        //     // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                        //     if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        //         extraAddr += data.bname;
-                        //     }
-                        //     // 건물명이 있고, 공동주택일 경우 추가한다.
-                        //     if(data.buildingName !== '' && data.apartment === 'Y'){
-                        //         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                        //     }
-                        //     // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                        //     if(extraAddr !== ''){
-                        //         extraAddr = ' (' + extraAddr + ')';
-                        //     }
-                        //     // 조합된 참고항목을 해당 필드에 넣는다.
-                        //     document.getElementById("sample6_extraAddress").value = extraAddr;
-
-                        // } else {
-                        //     document.getElementById("sample6_extraAddress").value = '';
-                        // }
-
-                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                        $(".addr1").val(data.zonecode);
-                        $(".addr2").val(addr);
-                        // 커서를 상세주소 필드로 이동한다.
-                        $(".addr3").focus();
-                    },
-                }).open();
-            }
-           	
-            function wonChange(num) {
-            	return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-            }
-            
-            // 가져온 상품 html로 변환
-            function createProduct(product){
-                let html = "";
-                html += '<tr id='+product.cartdetailno+'>';
-                html += '<td>';
-                html += '<div class="ui items">';
-                html += '<div class="item">';
-                html += '<div class="ui small image">';
-                html += '<img src="'+ product.imgurl +'" style="width: 80px; height: 120px" />';
-                html += '</div>';
-                html += '<div class="middle aligned content">';
-                html += '<div class="description">';
-                html += '<p>'+ product.pbrand +'</p>';
-                html += '<p>'+ product.pname+'</p>';
-                html += '<p class="grey small">';
-                html += 'color&nbsp:&nbsp';
-                html += '<span class="p_color">'+product.pcolor+'</span>';
-                html += '&nbsp/&nbspsize&nbsp:&nbsp';
-                html += '<span class="p_size">'+ product.psize +'</span>';
-                html += '</p>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-                html += '</td>';
-                html += '<td class="center aligned">';
-                html += '<div>';
-                html += '<div class="ui input input-wrap">';
-                html += '<input type="text" class="center aligned amount" readonly value="'+product.amount+'" />';
-                html += '</div>';
-                html += '</div>';
-                html += '</td>';
-                html += '<td class="center aligned"><i class="won sign icon small"></i><span class="price">'+wonChange(parseInt(product.amount)*parseInt(product.pprice))+'</span></td>';
-                html += '</tr>';
-                $("tbody.info-body").append(html);
-            }
-            
-            function setSumPrice(){
-            	let sum = 0;
-            	$("span.price").each((idx,item)=>{
-            		sum += parseInt($(item).html().replaceAll(",",""));
-            	});
-            	$(".p-price").html(wonChange(sum));
-            }
-            
-            function setTotalPrice(){
-            	let pPrice = parseInt($(".p-price").html().replaceAll(",",""));
-            	let postPrice = parseInt($(".post-price").html().replaceAll(",",""));
-            	let discountPrice = parseInt($(".m-discount").length == 0 ? 0 : $(".m-discount").html());
-				let sum = pPrice+postPrice - discountPrice;
-            	$(".total-price").html(wonChange(sum));
-            	$(".save-m-point").html(wonChange(Math.ceil(sum*0.05)));
-            }
+        });
         </script>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

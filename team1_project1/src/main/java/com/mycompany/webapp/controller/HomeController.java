@@ -45,15 +45,7 @@ public class HomeController {
 		}
 		return "home";
 	}
-
-//	@RequestMapping("/")
-//	public String content(@AuthenticationPrincipal MemberDetails memberDetails) {
-//		logger.info("실행");
-//
-//		logger.info("로그인한 사용자 정보 : " + memberDetails.getMno());
-//		return "home";
-//	}
-
+	
 	@GetMapping(value = "/getProductList", produces = "Application/json; charset=UTF-8;")
 	@ResponseBody
 	public String getProductList(@RequestParam(value = "pageNo", defaultValue="1") int pageNo, 

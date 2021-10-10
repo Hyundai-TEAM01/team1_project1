@@ -110,35 +110,29 @@
 		    </div>
 		</div>
 		
+        <div class="modal-duplicated modal-wrap">
+		    <div class="modal">
+		        <div class="close-row">
+		            <a href="javascript:modalOff('modal-duplicated')"><i class="close icon"></i></a>
+		        </div>
+		        <div class="modal-content">
+		            <p>이미 쇼핑백에 동일한 상품이 있습니다.</p>
+		        </div>
+		        <div class="modal-btns"><a class="btn-continue" href="javascript:modalOff('modal-duplicated')">확인</a></div>
+		    </div>
+		</div>
 		
-        <script>
-
-    	 	// 선택 상품 주문
-	        function pListOrder(){
-	        	let pList = [];
-	        	$("tbody input[name='check_box']").each((idx,item)=>{
-	        		if($(item).prop("checked") === true){
-	        			pList.push($(item).closest("tr").attr("id").replace("num",""));
-	        		}
-	        	});
-	        	
-	        	if(pList.length === 0){
-	        		return;
-	        	}
-	        
-	        	
-	        	let form = $("<form></form>");
-	        	let input = $("<input></input>");
-	        	input.attr("type","hidden");
-	        	input.attr("name","pList");
-	        	input.attr("value", pList);
-	        	form.append(input);
-	        	form.attr("method","post");
-	        	form.attr("action","order");
-	        	$("body").append(form);
-				form.submit();
-	        }
-	            
-        </script>
+        <div class="modal-nochoose modal-wrap">
+		    <div class="modal">
+		        <div class="close-row">
+		            <a href="javascript:modalOff('modal-nochoose')"><i class="close icon"></i></a>
+		        </div>
+		        <div class="modal-content">
+		            <p>선택한 상품이 없습니다.</p>
+		        </div>
+		        <div class="modal-btns"><a class="btn-continue" href="javascript:modalOff('modal-nochoose')">확인</a></div>
+		    </div>
+		</div>
+		
         <script src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

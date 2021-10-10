@@ -1,4 +1,5 @@
 $(function () {
+	/* 카테고리 드롭다운 */
     var $menuman = $(".dth-man");
     var $subman = $(".sub-man");
 
@@ -25,12 +26,34 @@ $(function () {
         },
     });
     
+    /* 오른쪽 마이페이지 드롭다운 */
+    var mp_default = '54px';  // 1단계 메뉴 높이
+    var mp_hover = '132px'; // 2단계 메뉴 높이
+    var $mypage = $('.my-page');
     
-    $.ajax({
-		url : "/member/memberdata"
-	}).done((data)=>{
-		console.log(data.cartcnt);
-		$(".cartcnt").html(data.cartcnt);
-	});
+    // gnb 초기화(2단계 메뉴 숨기기)
+    $mypage.css('height', mp_default);
+    
+    // 마우스 hover 드롭다운 메뉴
+    $mypage.on({
+        mouseenter: function(){
+        $(this).stop().animate({ height: mp_hover }, 200);
+        },
+        mouseleave: function(){
+        $(this).stop().animate({ height: mp_default }, 200);
+        }
+    });
+    
+    
+    /* 카트 담긴 갯수 호출 */
+    getCartCountHeader()
     
 });
+
+function getCartCountHeader(){
+	$.ajax({
+		url : "/member/memberdata"
+	}).done((data)=>{
+		$(".cartcnt").html(data.cartcnt);
+	});
+}
