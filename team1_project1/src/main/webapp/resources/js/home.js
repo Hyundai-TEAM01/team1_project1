@@ -48,7 +48,7 @@ function createCategoryProduct(productList){
         html += '<span class="flag"><span class="product">NEW</span></span></a>';
         html += '<div class="color-more-wrap">';
         for(color of product.color){
-        	html += '<a href="javascript:chgColorChip('+ index + ", '"  + color.pcolor + "'" +')">';
+        	html += '<a class="now-choose" href="javascript:chgColorChip('+ index + ", '"  + color.pcolor + "'" +')">';
         	html += '<img class="img-color-more" src="/resources/images/loading.gif" data-src="' + color.colorurl +'"></a>';
         }
         index++;

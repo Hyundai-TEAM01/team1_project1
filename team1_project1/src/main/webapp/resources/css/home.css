@@ -83,6 +83,20 @@ a span{
 	margin-bottom: 30px;
 }
 
+a.now-choose {
+	position: relative;
+}
+
+a.now-choose:hover::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	left: 0;
+	bottom: -2px;
+	background: #333;
+}
+
 @media screen and (max-width: 1210px) { 
     .itemlist {
         grid-template-columns: 1fr 1fr 1fr;

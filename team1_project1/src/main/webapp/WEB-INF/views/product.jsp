@@ -16,7 +16,7 @@
         <div class="column">
             <div class="info-sect">
                 <div class="product-brand">${product.pbrand}</div>
-                <span class="product-name">${product.pname}</span>
+                <p class="product-name">${product.pname}</p>
                 <div class="product-content-box">
                 	<div class="round-style">
                 		<p>${product.pcontent}</p>
@@ -33,9 +33,11 @@
                             <span class="title">색상</span>
                             <ul class="color">
 	                            <c:forEach items="${product.color}" var="color">
-	                            	<li><a href='javascript:setHtmlByColor("${color.pcolor}")'><img class="beige" src="${color.colorurl}"></a></li>
+	                            	<li><a id="${color.pcolor}" class="color-item" href='javascript:setHtmlByColor("${color.pcolor}")'><img class="beige" src="${color.colorurl}"></a></li>
 	                            </c:forEach>
+	                            <li class="color-text">${color.pcolor}</li>
                             </ul>
+                            
                         </li>
 
                         <li class="li-size">
