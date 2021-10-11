@@ -205,6 +205,12 @@ td {
 	border-left: none;
 }
 
+.highlight { 
+	display: inline-block;
+	padding: 0.05px;
+	background:#ffff008c;
+}
+
 /* 페이징 버튼 */
 .paging {
     margin-top: 40px;
