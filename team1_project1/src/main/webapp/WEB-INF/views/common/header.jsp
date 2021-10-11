@@ -41,7 +41,7 @@
                 <div class="header-menu">
                     <ul class="header-category">
                         <li class="depth1 dth-man">
-                            <a>남성</a>
+                            <a href="${pageContext.request.contextPath}/productList?ccode=MEN&pageNo=1">남성</a>
                             <div class="sub-category-wrap sub-man">
                                 <ul class="sub-category">
                                     <li><a href="${pageContext.request.contextPath}/productList?ccode=MEN&pageNo=1">전체보기</a></li>
@@ -82,24 +82,11 @@
                                             <li><a href="${pageContext.request.contextPath}/productList?ccode=MEN_Suit_SUITPANTS&pageNo=1">수트팬츠</a></li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="#">패션잡화</a>
-                                        <ul class="sub-content">
-                                            <li><a href="#">가방</a></li>
-                                            <li><a href="#">슈즈</a></li>
-                                            <li><a href="#">모자</a></li>
-                                            <li><a href="#">타이</a></li>
-                                            <li><a href="#">양말</a></li>
-                                            <li><a href="#">스카프/머플러</a></li>
-                                            <li><a href="#">비치웨어</a></li>
-                                            <li><a href="#">기타소품</a></li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </div>
                         </li>
                         <li class="depth1 dth-woman">
-                            <a>여성</a>
+                            <a href="${pageContext.request.contextPath}/productList?ccode=WOMEN&pageNo=1">여성</a>
                             <div class="sub-category-wrap sub-woman">
                                 <ul class="sub-category">
                                     <li><a href="${pageContext.request.contextPath}/productList?ccode=WOMEN&pageNo=1">전체보기</a></li>
@@ -150,16 +137,33 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#">패션잡화</a>
+                                        <a href="${pageContext.request.contextPath}/productList?ccode=WOMEN_FASHIONACC.&pageNo=1">패션잡화</a>
                                         <ul class="sub-content">
-                                            <li><a href="#">가방</a></li>
-                                            <li><a href="#">슈즈</a></li>
-                                            <li><a href="#">모자</a></li>
-                                            <li><a href="#">주얼리</a></li>
-                                            <li><a href="#">스카프/머플러</a></li>
-                                            <li><a href="#">양말</a></li>
-                                            <li><a href="#">비치웨어</a></li>
-                                            <li><a href="#">기타소품</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=WOMEN_FASHIONACC._BAGS&pageNo=1">가방</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=WOMEN_FASHIONACC._SCARF/MUFFLER&pageNo=1">스카프/머플러</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=WOMEN_FASHIONACC._ETC&pageNo=1">기타소품</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="depth1 dth-lifestyle">
+                            <a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE&pageNo=1">라이프스타일</a>
+                            <div class="sub-category-wrap sub-lifestyle">
+                                <ul class="sub-category">
+                                    <li><a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE&pageNo=1">전체보기</a></li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE_HOME&pageNo=1">홈</a>
+                                        <ul class="sub-content">
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE_HOME_FABRIC&pageNo=1">패브릭</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE_HOME_FRAGRANCE&pageNo=1">프래그런스</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE_HOME_OTHERACCESSORIES&pageNo=1">기타소품</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE_BATH&pageNo=1">배스</a>
+                                        <ul class="sub-content">
+                                            <li><a href="${pageContext.request.contextPath}/productList?ccode=LIFESTYLE_BATH_OTHERACCESSORIES&pageNo=1">기타소품</a></li>
                                         </ul>
                                     </li>
                                 </ul>

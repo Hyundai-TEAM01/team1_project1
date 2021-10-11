@@ -88,8 +88,10 @@ public class OrderService {
 			sum += p.getAmount() * p.getPprice();
 		}
 
+		sum = sum < 30000 ? sum + 2500 : sum; // 배송비 추가
+		
 		productOrder.setPordertotalorgprice(sum); // 구매 상품들의 가격 합 추가
-
+		
 		productOrder.setPorderpayprice(sum - productOrder.getPorderdiscount());
 		
 		productOrder.setPordertotalpoint((int)Math.ceil(productOrder.getPorderpayprice()*0.05));

@@ -8,7 +8,6 @@ $(function () {
 function init(){
 	// 홈페이지 디폴트 출력
 	printCategoryProductList(1, "WOMEN_Top_Shirts");
-	$(".main-img, .img-color-more").Lazy({threshold : 200});
 }
 
 function printCategoryProductList(pageNo, ccode){
@@ -58,24 +57,7 @@ function createCategoryProduct(productList){
     	
     	itemlist.append(html);	
 	}
-	
-	/* for(product of productList){
-		let html = '<li class="column mg-product">';
-        html += '<a href="product/' + product.pcode + "?pcolor=" + product.color[0].pcolor + "&ccode=" + product.ccode + '">';
-       	html += '<span><img class="main-img" src="' + product.color[0].imgurl1 + '"></span></a>';
-        html += '<a><span class="brand">' + product.pbrand + '</span>';
-        html += '<span class="title">' + product.pname + '</span>';
-        html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
-        html += '<span class="flag"><span class="product">NEW</span></span></a>';
-        html += '<div class="color-more-wrap">';
-        for(color of product.color){
-        	html += '<a><img class="img-color-more" src="' + color.colorurl +'"></a>';
-        }
-    	html += '</div>';
-    	html += '</li>';
-    	
-    	itemlist.append(html);	
-	} */
+	$(".main-img, .img-color-more").Lazy({threshold : 200});
 }
 
 function chgColorChip(index, colorChip){

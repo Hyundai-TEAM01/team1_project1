@@ -22,7 +22,7 @@
 				AND mno = #{mno}
 				AND po.porderdate BETWEEN TO_DATE(#{query.sterm}, 'YYYY-MM-DD') AND TO_DATE(#{query.eterm}, 'YYYY-MM-DD') + 1
 				<if test='query.searchType.equals("pname")'>
-				AND prd.pname LIKE '%' || #{query.searchWord} || '%'
+				AND LOWER(prd.pname) LIKE '%' || LOWER(#{query.searchWord}) || '%'
 				</if>
 				<if test='query.searchType.equals("porderno")'>
 				AND po.porderno LIKE '%' || #{query.searchWord}
@@ -44,7 +44,7 @@
 		AND mno = #{mno}
 		AND po.porderdate BETWEEN TO_DATE(#{query.sterm}, 'YYYY-MM-DD') AND TO_DATE(#{query.eterm}, 'YYYY-MM-DD') + 1
 		<if test='query.searchType.equals("pname")'>
-		AND prd.pname LIKE '%' || #{query.searchWord} || '%'
+		AND LOWER(prd.pname) LIKE '%' || LOWER(#{query.searchWord}) || '%'
 		</if>
 		<if test='query.searchType.equals("porderno")'>
 		AND po.porderno LIKE '%' || #{query.searchWord}

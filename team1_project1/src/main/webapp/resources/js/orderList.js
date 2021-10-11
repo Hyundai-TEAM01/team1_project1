@@ -80,6 +80,20 @@ $(function () {
         return String(num).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
     
+    // 검색결과 하이라이트
+    function hightLight(inputStr, searchType, searchWord) {
+		if(searchWord.length > 0) {
+			if(searchType === 'pname') {
+				const regex = new RegExp(searchWord, "gi");
+				inputStr = String(inputStr).replace(regex, "<span class='highlight'>" + searchWord + "</span>"); // highlight class
+			} else if (searchType === 'porderno') {
+				const regex = new RegExp(searchWord, "g");
+				inputStr = String(inputStr).replace(regex, "<span class='highlight'>" + searchWord + "</span>"); // highlight class
+			}
+		} 
+		return inputStr;
+	}
+    
     // 주문목록 렌더링
     function printOrderList(sterm, eterm, searchType, searchWord, pageNo) {
 		$.ajax({
@@ -92,7 +106,6 @@ $(function () {
 		})
 		.done((data) => {
 			if(data && data.result) { // 데이터 잘 불러왔는가
-				console.log(data.result);
 				if(data.result !== 'fail' && data.result.length > 0) {
 					let itemStr = "";
 					
@@ -104,7 +117,7 @@ $(function () {
 						itemStr += "<tr>"
 						
 						itemStr += "<td rowspan=" + itemCnt + '" class="order-num">';
-						itemStr += '<p class="o-num">' + porderno + '</p>';
+						itemStr += '<p class="o-num">' + hightLight(porderno, searchType, searchWord) + '</p>';
 						itemStr += '<span class="sum-date">(' + printDate(porderdate) + ')</span>';
 						itemStr += '<a href="orderdetail?code=' + porderno + '" class="btn-view">상세보기</a>';
 						itemStr += '</td>';
@@ -122,7 +135,7 @@ $(function () {
 							itemStr += '<div class="pt-list">';
 							itemStr += '<a href="#"><img src="' + imgurl1 + '" alt="상품이미지"/></a>';
 							itemStr += '<div class="pt-info">';
-							itemStr += '<a href="#"><span class="info-brand">[' + pbrand +']</span><span class="info-ptname">' + pname+ '</span></a>';
+							itemStr += '<a href="#"><span class="info-brand">[' + pbrand +']</span><span class="info-ptname">' + hightLight(pname, searchType, searchWord)+ '</span></a>';
 							itemStr += '<p class="pt-color">color : ' + pcolor + '<span class="and-line">/</span>size : ' +  psize + '</p></div></div></td>';
 							itemStr += '<td>'+ porderamount +'</td>';
 							itemStr += '<td><i class="won sign icon small"></i>' + wonChange(pprice) + '</td>';

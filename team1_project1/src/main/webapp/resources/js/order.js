@@ -152,6 +152,11 @@ function setSumPrice(){
     $("span.price").each((idx,item)=>{
         sum += parseInt($(item).html().replaceAll(",",""));
     });
+    
+    if(sum < 30000){
+		$(".post-price").html(2500);
+	}	
+    
     $(".p-price").html(wonChange(sum));
 }
 
