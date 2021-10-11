@@ -26,9 +26,16 @@ a span{
     display: block;
     min-height: 20px;
 }
-.flag>.product {
+.flag>.product-new {
+	display: inline-block;
     margin-top: 5px;
     color: #c69c6d;
+}
+.flag>.product-soldout {
+	display: inline-block;
+	margin-top: 5px;
+	margin-left: 10px;
+    color: red;
 }
 .color-more-wrap {
     margin-top: 10px;

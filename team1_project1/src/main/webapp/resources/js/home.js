@@ -37,15 +37,25 @@ function printCategoryProductList(pageNo, ccode){
 function createCategoryProduct(productList){
 	let itemlist = $(".itemlist");
 	let index = 0;
+	let todayDate = new Date();
+	console.log(todayDate); 
 	itemlist.html('');
 	for(product of productList){
 		let html = '<li class="column mg-product" target="' + index +'">';
         html += '<a class="productUrl" href="product/' + product.pcode + "?pcolor=" + product.color[0].pcolor + "&ccode=" + product.ccode + '">';
        	html += '<span><img class="main-img" src="/resources/images/loading.gif" data-src="' + product.color[0].imgurl1 + '"></span></a>';
-        html += '<a><span class="brand">' + product.pbrand + '</span>';
+       	html += '<a class="productUrl" href="product/' + product.pcode + "?pcolor=" + product.color[0].pcolor + "&ccode=" + product.ccode + '">';
+        html += '<span class="brand">' + product.pbrand + '</span>';
         html += '<span class="title">' + product.pname + '</span>';
         html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
-        html += '<span class="flag"><span class="product">NEW</span></span></a>';
+        html += '<span class="flag">';
+        console.log(new Date());
+        
+        html += '<span class="product-new">NEW</span>';
+        if(product.enabled == '1'){
+			html += '<span class="product-soldout">SOLDOUT</span>';
+		}
+        html += '</span></a>';
         html += '<div class="color-more-wrap">';
         for(color of product.color){
         	html += '<a class="now-choose" href="javascript:chgColorChip('+ index + ", '"  + color.pcolor + "'" +')">';
