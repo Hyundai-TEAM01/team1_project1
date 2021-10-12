@@ -2,7 +2,6 @@ let gbl_productList;
 
 $(function () {
     init();
-    console.log("실행");
 });
 
 function init(){
@@ -15,30 +14,30 @@ function printCategoryProductList(pageNo, ccode){
 		let urlParams = new URLSearchParams(window.location.search);
 		pageNo = urlParams.get('pageNo');
 		ccode = urlParams.get('ccode');
-		console.log("urlParam : " + pageNo + " " +ccode);	
 	}
 	$.ajax({
 		url: 'getProductList' + '?ccode=' + ccode + '&pageNo=' + pageNo,
 		async:false,
 		/* data: {"pageNo" : pageNo, "ccode" : ccode}, */
 	}).done((data) => {
-		console.log(data);
-		createCategoryProduct(data.productList);
-		if(data.pager.totalPageNo>0){
-            setHtml(data.pager);
-            setAction(data.pager);
-        }else{
-        	$(".paging").html('');
-        }
-		gbl_productList = data.productList;
+		if(data.productList.length <= 0){
+			$(".itemlist").html('요청 URL이 잘못되었습니다.');
+		} else{
+			createCategoryProduct(data.productList);
+			if(data.pager.totalPageNo>0){
+	            setHtml(data.pager);
+	            setAction(data.pager);
+	        }else{
+	        	$(".paging").html('');
+	        }
+			gbl_productList = data.productList;	
+		}
 	});
 }
 
 function createCategoryProduct(productList){
 	let itemlist = $(".itemlist");
 	let index = 0;
-	let todayDate = new Date();
-	console.log(todayDate); 
 	itemlist.html('');
 	for(product of productList){
 		let html = '<li class="column mg-product" target="' + index +'">';
@@ -49,9 +48,13 @@ function createCategoryProduct(productList){
         html += '<span class="title">' + product.pname + '</span>';
         html += '<span class="price"><i class="won sign icon"></i>' + wonChange(product.pprice) + '</span>';
         html += '<span class="flag">';
-        console.log(new Date());
         
-        html += '<span class="product-new">NEW</span>';
+        let todayDate = new Date();
+        let pdate = new Date(product.pdate);
+        if(Math.ceil((todayDate.getTime()-pdate.getTime())/(1000*3600*24)) < 15){
+			html += '<span class="product-new">NEW</span>';
+		}
+        
         if(product.enabled == '1'){
 			html += '<span class="product-soldout">SOLDOUT</span>';
 		}
@@ -72,8 +75,6 @@ function createCategoryProduct(productList){
 
 function chgColorChip(index, colorChip){
 	let thisData = gbl_productList[index];
-	console.log(index + " " + colorChip);
-	console.log(gbl_productList);
 	let li = $(".itemlist li").eq(index);
 	for(color of thisData.color){
 		if(color.pcolor == colorChip){
@@ -111,7 +112,6 @@ function setHtml(pager){
 
 function setAction(pager){
 	let thisArea = $(".paging");
-	console.log(pager);
     
     thisArea.find(".prev2").click(function(){
         goPage(1, pager.ccode);
