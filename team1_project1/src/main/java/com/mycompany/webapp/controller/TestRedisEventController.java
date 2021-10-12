@@ -34,13 +34,15 @@ public class TestRedisEventController {
 
 	private static final LocalDateTime EVENT_TIME = LocalDateTime.of(2021, 10, 10, 19, 10, 00);
 
-	// 10명이 넘어가면 true로 바꿈
+	// 쿠폰 수량 여부
 	private static boolean isLeft = true;
+	
+	//
+	private static final int COUPON_AMOUNT = 10000;
+
 	
 	@Resource
 	TestDao dao;
-
-	private static int CNT = 0;
 
 	@RequestMapping(value = "/getcouponevent", produces = "application/json; charset=UTF-8")
 	@ResponseBody
@@ -57,21 +59,10 @@ public class TestRedisEventController {
 			public Integer call() throws Exception {
 
 				logger.info(Thread.currentThread().getName() + " : 이벤트 처리");
-//				if(isLeft) {
-//					template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
-//					template.boundValueOps("success_"+mno).set(String.valueOf(CNT++));
-//					if(!template.boundZSetOps(couponName).range(0, 8).contains(String.valueOf(mno))) {
-//						isLeft = false;
-//						return 0;
-//					}
-//					return 1;
-//				}else {
-//					template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
-//					return 0;
-//				}
+
 				if (isLeft) {
 					template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
-					if (!template.boundZSetOps(couponName).range(0, 9999).contains(String.valueOf(mno))) {
+					if (!template.boundZSetOps(couponName).range(0, COUPON_AMOUNT-1).contains(String.valueOf(mno))) {
 						isLeft = false;
 					}
 					return 1;
@@ -85,18 +76,6 @@ public class TestRedisEventController {
 		Future<Integer> future = executorService.submit(task);
 		logger.info(Thread.currentThread().getName() + ": 큐에 작업을 저장");
 
-//		int result = 0;
-//		if(isLeft) {
-//			template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
-//			CNT++;
-//			logger.info("실행 : " + CNT);
-//			if(!template.boundZSetOps(couponName).range(0, 9).contains(String.valueOf(mno)))
-//				isLeft = false;
-//		}else {
-//			template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
-//			result = 0;
-//		}
-//		
 
 		// 이벤트 처리가 완료될 때까지 대기
 		int result = future.get();

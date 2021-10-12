@@ -56,15 +56,10 @@ public class EventCouponController {
 		MemberDetails minfo = (MemberDetails) authentication.getPrincipal();
 
 		int mno = minfo.getMno();
-		// 큐에 집어넣는 스레드
-		// 시간 측정 여기서(x)
+		
 		Callable<Integer> task = new Callable<Integer>() {
-
 			@Override
 			public Integer call() throws Exception {
-				// 큐에서 하나 뺴서 처리하는 스레드
-				// 시간 측정 여기서(o)
-				// Service 객체 호출 코드
 				logger.info(Thread.currentThread().getName() + " : 이벤트 처리");
 				if (isLeft) {
 					/* 쿠폰 발급 서비스 */
