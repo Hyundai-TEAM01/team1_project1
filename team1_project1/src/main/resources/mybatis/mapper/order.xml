@@ -15,7 +15,7 @@
 		FROM (
 		SELECT ROWNUM AS rnum, porderno, porderdate
 			FROM (
-				SELECT po.porderno, po.porderdate
+				SELECT distinct(po.porderno), po.porderdate
 				FROM productorder po, porderdetail pod, product prd
         		WHERE po.porderno = pod.porderno
         		AND pod.pcode = prd.pcode
@@ -25,7 +25,7 @@
 				AND LOWER(prd.pname) LIKE '%' || LOWER(#{query.searchWord}) || '%'
 				</if>
 				<if test='query.searchType.equals("porderno")'>
-				AND po.porderno LIKE '%' || #{query.searchWord}
+				AND po.porderno LIKE '%' || #{query.searchWord} || '%'
 				</if>
 				
 				ORDER BY po.porderdate DESC
@@ -37,7 +37,7 @@
 	
 	<!-- 주문 목록 갯수 가져오기(유저번호 + 페이징 + 검색쿼리[상품명, 주문번호]) -->
 	<select id="getOrderListCount" resultType="int">
-		SELECT COUNT(*) 
+		SELECT COUNT(DISTINCT(po.porderno)) 
 		FROM productorder po, porderdetail pod, product prd
        	WHERE po.porderno = pod.porderno
        	AND pod.pcode = prd.pcode
@@ -47,7 +47,7 @@
 		AND LOWER(prd.pname) LIKE '%' || LOWER(#{query.searchWord}) || '%'
 		</if>
 		<if test='query.searchType.equals("porderno")'>
-		AND po.porderno LIKE '%' || #{query.searchWord}
+		AND po.porderno LIKE '%' || #{query.searchWord} || '%'
 		</if>
 	</select>
 	

@@ -19,9 +19,9 @@
 		<level value="info" />
 	</logger>
 	
-	<logger name="jdbc.sqltiming">
+ <!-- 	<logger name="jdbc.sqltiming">
 		<level value="info" />
-	</logger>
+	</logger> -->
 
 	<!-- Root Logger -->
 	<root>
