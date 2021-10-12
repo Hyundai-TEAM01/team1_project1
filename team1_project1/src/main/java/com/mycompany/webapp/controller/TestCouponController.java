@@ -56,7 +56,7 @@ public class TestCouponController {
 				if (isLeft) {
 					/* 쿠폰 발급 서비스 */
 					dao.insertCoupon(mno, couponName);
-					if(dao.CouponAmount(couponName) > 9) {
+					if(dao.CouponAmount(couponName) > 10000) {
 						isLeft = false;
 					}
 

@@ -23,9 +23,9 @@ import com.mycompany.webapp.service.CouponService;
 import com.mycompany.webapp.service.CouponService.CouponEventResult;
 
 @Controller
-@RequestMapping("/eventtest2")
+@RequestMapping("/testevent")
 public class TestRedisEventController {
-	private static final Logger logger = LoggerFactory.getLogger(EventCouponController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestRedisEventController.class);
 
 	// ExecutorService 객체 생성
 	private ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -70,16 +70,13 @@ public class TestRedisEventController {
 //					return 0;
 //				}
 				if (isLeft) {
-					int amount = Integer.parseInt(template.boundValueOps(couponName).get());
-					if (amount < 10) {
-						template.boundValueOps(couponName).set(String.valueOf(amount+1));
-						dao.insertCoupon(mno, couponName);
-					}else {
+					template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
+					if (!template.boundZSetOps(couponName).range(0, 9999).contains(String.valueOf(mno))) {
 						isLeft = false;
-						return 0;
 					}
 					return 1;
 				} else {
+					template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
 					return 0;
 				}
 			}
