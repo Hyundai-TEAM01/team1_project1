@@ -1,5 +1,6 @@
 package com.mycompany.webapp.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,4 +21,9 @@ public class ProductList {
 	private Date pdate;
 	private char enabled;
 	private List<ProductImg> color;
+	
+	public String getPdate() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		return dateFormat.format(pdate);
+	}
 }

@@ -59,7 +59,6 @@ $(function () {
 		})
 		.done((data) => {
 			if(data && data.result) { // 데이터 잘 불러왔는가
-				console.log(data.result);
 				if(data.result !== 'fail' && data.result.length > 0) {
 					let itemStr = "";
 					

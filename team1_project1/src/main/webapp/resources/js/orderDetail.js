@@ -2,14 +2,11 @@ $(function () {
 	// 주문번호를 url에서 가져오기
 	const urlParams = new URLSearchParams(window.location.search);
 	const code = urlParams.get('code');
-	console.log(code);
     $.ajax({
 		url: 'getorderdetaillist?code=' + code
 	})
 	.done((data) => {
-		console.log(data);
 		if(data && data.result) { // 데이터 잘 불러왔는가
-			console.log(data.result);
 			let itemStr = "";
 			
 			data.result.forEach((item) => {
@@ -49,7 +46,6 @@ $(function () {
 				const porderrequest = item.porderrequest;
 				$(".podrequest").html(porderrequest);
 				const itemCnt = item.orderItems.length;
-				console.log(itemCnt);
 				let itemStr =  "";
 				item.orderItems.forEach((orderItem, idx) => {
 					let imgurl1 = orderItem.imgurl1;

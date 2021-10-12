@@ -50,11 +50,10 @@ public class HomeController {
 	public String getProductList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
 			@RequestParam(value = "ccode", defaultValue = "WOMEN_Top_Shirts") String ccode) {
 		logger.info("실행");
-		logger.info(ccode + "_" + pageNo);
 		String radisKey = ccode + "_" + pageNo;
 		// Redis에 캐시된 값이 없다면
 		if (template.boundValueOps(radisKey).get() == null) {
-			logger.info("노캐시");
+			logger.info("캐시가 없습니다.");
 			JSONObject jsonObject = new JSONObject();
 			int totalRows = productListService.getTotalProducListtNum(ccode);
 			Pager pager = new Pager(12, 10, totalRows, pageNo);
