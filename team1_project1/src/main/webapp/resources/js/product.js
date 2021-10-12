@@ -19,12 +19,7 @@ function setHtmlByColor(pcolor){
 	
 	$.ajax({
 		url: 'getSizeAmount' + '?pcode=' + nowPcode + '&pcolor=' + pcolor,
-	}).done((data) => {
-		console.log("data.productAmountList");
-		console.log(data.productAmountList);
-		console.log("data.productAmountList.amount");
-		console.log(data.productAmountList.amount);
-		
+	}).done((data) => {		
 		nowPcolor = pcolor;
 		setProductImgHtml(pcolor)
 		setProductSizeHtml(data.productAmountList.amount);
@@ -99,7 +94,6 @@ function amountCheck(nowAmount){
 			setModalOn('overAmount')
 			amountInput.val(maxAmount);
 		} else if(nowAmount < 1){
-			console.log('주문 수량 미만');
 			amountInput.val(1);
 		}
 	}
@@ -219,11 +213,6 @@ function addCart() {
 		let pcolor = nowPcolor;
 		let psize = $(".product-size option:selected").val();
 		let pamount = $("input.amount").val();
-		console.log(typeof pcode);
-		console.log(typeof pcolor);
-		console.log(typeof psize);
-		console.log(typeof pamount);
-		console.log(pcode + " " + pcolor + " " + psize + " " + pamount);
 		let formData = {'pcode':pcode, 'pcolor':pcolor, 'psize':psize, 'pamount':pamount};
 		addCartAjax(formData);
 	}	
@@ -237,7 +226,6 @@ function addCartAjax(formData) {
 		contentType : "application/json; chartset=UTF-8"
 	})
 	.done((data) => {
-		console.log(data);
 		if (data.msg == "needLogin"){
 			setModalOn('needLogin');
 		} else if(data.msg == "duplicated"){

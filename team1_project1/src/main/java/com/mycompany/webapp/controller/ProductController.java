@@ -61,7 +61,6 @@ public class ProductController {
 	@ResponseBody
 	public String getSizeAmount(@RequestParam("pcode") String pcode, @RequestParam("pcolor") String pcolor) {
 		logger.info("실행");
-		logger.info("pcode : " + pcode + " pcolor : " + pcolor);
 
 		ProductAmountList productAmountList = productListService.getProductDetailAmountList(pcode, pcolor);
 		String productAmountListInString = new Gson().toJson(productAmountList);
@@ -77,7 +76,6 @@ public class ProductController {
 	@ResponseBody
 	public String addCart(@RequestBody HashMap<String, String> product, Authentication authentication) {
 		logger.info("실행");
-		logger.info(product.toString());
 		JSONObject jsonObject = new JSONObject();
 
 		if (authentication == null) {
