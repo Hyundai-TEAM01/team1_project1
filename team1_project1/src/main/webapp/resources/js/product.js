@@ -16,7 +16,7 @@ $(function () {
 
 /* 제품 수량 조회 및 HTML 변경 */
 function setHtmlByColor(pcolor){
-	console.log(pcolor);
+	
 	$.ajax({
 		url: 'getSizeAmount' + '?pcode=' + nowPcode + '&pcolor=' + pcolor,
 	}).done((data) => {
@@ -30,6 +30,7 @@ function setHtmlByColor(pcolor){
 		setProductSizeHtml(data.productAmountList.amount);
 		setAmountDict(data.productAmountList.amount);
 	});
+	colorChipEvent(pcolor);
 }
 
 /* 제품 사진 HTML 변경 */
@@ -42,6 +43,13 @@ function setProductImgHtml(pcolor){
 		html += '<li><a><img class="product-img" src="' + colorUrl + '"></a></li>';
 	}
 	imgView.html(html);
+}
+
+/* 컬러칩 변경 이벤트 */
+function colorChipEvent(pcolor){
+	$(".color-item").removeClass("now-choose");
+	$('#' + pcolor).addClass("now-choose");
+	$(".color-text").text(pcolor);
 }
 
 /* 사이즈 옵션 HTML 추가 */
