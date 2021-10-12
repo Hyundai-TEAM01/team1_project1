@@ -47,7 +47,7 @@ public class CartController {
 	@RequestMapping("/order")
 	public String order(@RequestParam String pList, Model model, Authentication authentication) {
 		MemberDetails minfo = (MemberDetails)authentication.getPrincipal();
-		// mno 가져와서 유효성 확인 추가 하기!!
+
 		String[] productList = pList.split(",");
 		model.addAttribute("pList", productList);
 		model.addAttribute("mphone", minfo.getMphone());
