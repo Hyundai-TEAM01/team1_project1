@@ -48,16 +48,17 @@ $(function () {
 
 
       function getTime() {
-        const dDay = new Date("2021-12-25:00:00:00+0900");
+        const dDay = new Date("2021-10-13:09:00:00+0900");
         const now=new Date();
-        const gap=dDay-now;
+        const gap=dDay.getTime()-now.getTime();
+   
 
         if(gap > 0 ) { 
           explainContainer.html("- 이벤트 진행시간까지 -");
-          const day=Math.floor(gap/(1000*60*60*24)); //일
-          const hours=Math.floor((gap/(1000*60*60))%24); //시
-          const minutes=Math.floor(((gap/1000)*60)%60); //분
-          const seconds=Math.floor((gap/1000)%60); //초
+		  const day = Math.floor(gap/(1000*60*60*24));
+		  const hours = Math.floor((gap % (1000*60*60*24))/(1000*60*60));
+		  const minutes = Math.floor((gap % (1000*60*60))/(1000*60));
+		  const seconds = Math.floor((gap % (1000*60))/1000);
 
           let text = day + "Day ";
           text += hours < 10 ? ("0" + hours) : hours;

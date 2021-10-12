@@ -133,6 +133,10 @@ public class OrderService {
 				productDao.updateProductStock(pod.getPcode(), pod.getPsize(), pod.getPcolor(), amount);
 			}
 			
+			for(ProductOrderDetail pod : porderDetailList) {
+				productDao.productEnabledUpdate(pod.getPcode());
+			}
+			
 			return OrderResult.SUCCESS;
 		}
 		return OrderResult.FAIL;
