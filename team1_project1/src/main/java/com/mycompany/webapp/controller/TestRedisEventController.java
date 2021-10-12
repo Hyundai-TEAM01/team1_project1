@@ -67,7 +67,7 @@ public class TestRedisEventController {
 					}
 					return 1;
 				} else {
-					template.boundZSetOps(couponName).add(String.valueOf(mno), System.nanoTime());
+					template.boundZSetOps(couponName).addIfAbsent(String.valueOf(mno), System.nanoTime());
 					return 0;
 				}
 			}

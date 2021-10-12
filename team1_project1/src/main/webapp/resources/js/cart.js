@@ -47,7 +47,6 @@ function printProductList() {
 			amountDic[keys[0]] = amount;
 			
 			if(amount <= 0){
-				console.log("품절 상품 포함");
 				solditem = true;
 			}
 			
@@ -90,7 +89,6 @@ function printProductList() {
 		if(solditem){
 			$(".info-body tr").each((idx,item)=>{
 				let id = $(item).attr("id").replace("num","");
-				console.log(amountDic[id]);
 				if(amountDic[id] <= 0){
 					let info = "";
 					$(item).find(".sold-info").each((idx,item)=>{
@@ -166,9 +164,9 @@ function pDelete(cdno, modalname) {
 	}).done((data) => {
 		// 데이터 삭제 성공 여부 확인 후 처리하기!
 		if (data.result == "1") {
-			console.log("정상적으로 삭제");
+			// 정상적으로 삭제
 		} else {
-			console.log("삭제 실패");
+			// 삭제 실패
 		}
 	});
 	
@@ -208,7 +206,7 @@ function pUpdate(num, amount) {
 		data : JSON.stringify({'cartDetailNo' : num, 'amount':amount}),
 		contentType : "application/json; chartset=UTF-8"
 	}).done((data)=>{
-		console.log(data.result);
+		
 	})
 		
 }
@@ -221,7 +219,6 @@ function pOptionUpdate(num, size, color){
 		data : JSON.stringify({'cartDetailNo' : num, 'psize':size, 'pcolor':color}),
 		contentType : "application/json; chartset=UTF-8"
 	}).done((data)=>{
-		console.log(data.result);
 		if(data.result == "duplicated"){
 			modalOn("modal-duplicated");
 		}else{			
@@ -300,14 +297,12 @@ function changeOption(item) {
 			let option_size = this_row.find(".option-size");
 			let chooseColor = this_row.find(".option-color a.now-choose").attr("class").replace(" now-choose","");
 			let chooseSize = this_row.find(".option-size button.now-choose").html();
-			console.log(chooseSize);
 			if(typeof chooseSize == "undefined"){				
 				if(option_size.find(".error-red").length == 0){					
 					option_size.append("<span class='error-red'>사이즈를 선택하세요</span>")
 				}
 			}else{
 				if(chooseColor == now_color && now_size == chooseSize){
-					console.log("동일 제품");
 					$("#" + this_id + "_op").hide();
 				}else{
 					pOptionUpdate(real_id,chooseSize,chooseColor);
