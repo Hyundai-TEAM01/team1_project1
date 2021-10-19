@@ -70,6 +70,8 @@ public class HomeController {
 			// Redis에 값을 캐시한다.
 			template.boundValueOps(radisKey).set(jsonObject.toString());
 			return jsonObject.toString();
+		}else {
+			logger.info("Cache Hit!!");
 		}
 
 		// Redis에 캐시된 값을 반환함.

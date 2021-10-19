@@ -43,7 +43,7 @@ function order(){
         
         submitCnt = submitCnt -1;
         
-        if(submitCnt == 0){					
+        if(submitCnt >= 0){					
             $("form").submit();
         }
         

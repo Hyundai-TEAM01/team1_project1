@@ -52,15 +52,15 @@
                                     <td>
                                         <div class="inline fields">
                                             <div class="three wide field">
-                                                <input type="text" class="addr1 " placeholder="우편번호" required name="porderaddr1"/>
+                                                <input type="text" class="addr1 " placeholder="우편번호" required name="porderaddr1" autocomplete='off'/>
                                             </div>
                                             <a class="ui button" href="javascript:execDaumPostcode()">우편번호 검색</a>
                                         </div>
                                         <div class="field">
-                                            <input type="text" class="addr2" placeholder="주소" required name="porderaddr2"/>
+                                            <input type="text" class="addr2" placeholder="주소" required name="porderaddr2" autocomplete='off'/>
                                         </div>
                                         <div class="field">
-                                            <input type="text" class="addr3" placeholder="상세주소" required name="porderaddr3"/>
+                                            <input type="text" class="addr3" placeholder="상세주소" required name="porderaddr3" autocomplete='off'/>
                                         </div>
                                     </td>
                                 </tr>
@@ -68,7 +68,7 @@
                                     <td class="center aligned"><span class="star">*</span>수령인</td>
                                     <td>
                                         <div class="four wide field">
-                                            <input type="text" required name="pordername" />
+                                            <input type="text" required name="pordername" autocomplete='off'/>
                                         </div>
                                     </td>
                                 </tr>
@@ -87,13 +87,13 @@
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" minlength="3" maxlength="4"  name="phone2" pattern="[0-9]+" required/>
+                                                <input type="text" minlength="3" maxlength="4"  name="phone2" pattern="[0-9]+" required autocomplete='off'/>
                                             </div>
                                             <div class="field">
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" minlength="4" maxlength="4" name="phone3" pattern="[0-9]+" required/>
+                                                <input type="text" minlength="4" maxlength="4" name="phone3" pattern="[0-9]+" required autocomplete='off'/>
                                             </div>
                                         </div>
                                     </td>
@@ -113,13 +113,13 @@
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" name="tel2" minlength="3" maxlength="4" pattern="[0-9]+"/>
+                                                <input type="text" name="tel2" minlength="3" maxlength="4" pattern="[0-9]+" autocomplete='off'/>
                                             </div>
                                             <div class="field">
                                                 <span>-</span>
                                             </div>
                                             <div class="three wide field">
-                                                <input type="text" name="tel3" minlength="4" maxlength="4" pattern="[0-9]+"/>
+                                                <input type="text" name="tel3" minlength="4" maxlength="4" pattern="[0-9]+" autocomplete='off'/>
                                             </div>
                                         </div>
                                     </td>
@@ -128,7 +128,7 @@
                                     <td class="center aligned">배송 요청 사항</td>
                                     <td>
                                         <div class="ten wide field">
-                                            <input type="text" name="porderrequest" maxlength="49"/>
+                                            <input type="text" name="porderrequest" maxlength="49" autocomplete='off'/>
                                         </div>
                                     </td>
                                 </tr>
@@ -137,7 +137,7 @@
                                     <td>
                                         <div class="inline fields">
                                             <div class="five wide field">
-                                                <input type="text" name="porderemail"/>
+                                                <input type="text" name="porderemail" autocomplete='off'/>
                                             </div>
                                             <div class="field">
                                                 <span>@</span>
@@ -159,7 +159,7 @@
                         </table>
 						<h3>마일리지 적용<span class="explain"><span class="star">*</span>100M 단위로 사용 가능합니다.</span></h3>
 						<div class="m-wrap">
-							<input class="ui input" type="text" placeholder="${mpoint}" name="porderdiscount" pattern="[0-9]+">
+							<input class="ui input" type="text" placeholder="${mpoint}" name="porderdiscount" pattern="[0-9]+" autocomplete='off'>
 							<button class="ui button m-apply">적용</button>
 						</div>
    
@@ -190,7 +190,7 @@
                                       <option value="국민">국민</option>
                                   </select>
                       
-                                  <input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>
+                                  <input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+" autocomplete='off'/>
                               	
                               	<select required name="porderpayinstallment" class="small-input">
                                       <option value="일시불">일시불</option>
@@ -253,7 +253,6 @@
         </div>
 
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/order.js"></script>
         <script>
         const myMpoint = ${mpoint};
         const inputs = $("input");
@@ -295,7 +294,7 @@
                     str += '<option value="국민">국민</option>';
                     str += '</select>';
                     
-                    str += '<input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+"/>';
+                    str += '<input class="ui input" type="text" minlength="16" maxlength="16" placeholder="카드번호" required name="porderpayno" pattern="[0-9]+" autocomplete="off"/>';
                     
                     str += '<select required name="porderpayinstallment" class="small-input">';
                     str += '<option value="일시불">일시불</option>';
@@ -405,4 +404,5 @@
             
         });
         </script>
+        <script src="${pageContext.request.contextPath}/resources/js/order.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

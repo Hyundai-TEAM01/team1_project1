@@ -29,7 +29,7 @@ public class OrderDetail {
 	private int pordertotalpoint;
 	private String porderstatus;
 	private Date porderdate;
-	private Date proderdonedate;
+	private Date porderdonedate;
 	private char porderpayment;
 	private String porderpayname;
 	private String porderpayno;
