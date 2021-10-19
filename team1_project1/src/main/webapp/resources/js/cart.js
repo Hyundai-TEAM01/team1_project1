@@ -337,7 +337,8 @@ function changeColor(color, rowid, pamountDict){
 			$(item).removeClass("sold-out");
 			$(item).removeClass("now-choose");
 			$(item).attr("disabled",false);
-			if(pamountDict.get(color+$(item).html()) == '0'){
+			
+			if(parseInt(pamountDict.get(color+$(item).html())) <= 0){
 				$(item).addClass("sold-out");
 				$(item).attr("disabled",true);
 			}
@@ -351,7 +352,7 @@ function creatSizeButton(sizeSet , pamountDict , now_color){
 	let html = "";
 	sortedSize.forEach((item)=>{
 			html +='&nbsp&nbsp<button class="ui basic button small'
-			if(pamountDict.get(now_color+item) == '0'){
+			if(parseInt(pamountDict.get(now_color+item)) <= 0 ){
 				html += ' sold-out" disabled';
 			}else{
 				html += '"'

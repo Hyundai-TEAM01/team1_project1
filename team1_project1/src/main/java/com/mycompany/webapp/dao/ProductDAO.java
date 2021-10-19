@@ -26,6 +26,8 @@ public interface ProductDAO {
 	public ProductAmountList getProductDetailAmountList(@Param("pcode") String pcode, @Param("pcolor") String pcolor);
 
 	public int updateProductStock(@Param("pcode") String pcode, @Param("psize")String psize, @Param("pcolor")String pcolor, @Param("amount") int amount);
+	
+	public int productEnabledUpdate(String pcode);
 
 	public String getProductAmountList(String[] productlist);
 }

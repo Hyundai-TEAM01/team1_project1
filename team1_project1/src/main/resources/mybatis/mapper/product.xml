@@ -101,4 +101,13 @@
 		WHERE s.pcode = temp.pcode AND s.pcolor = temp.pcolor AND s.psize = temp.psize GROUP BY pamount HAVING pamount <= 0
 		]]>
 	</select>
+	
+	<update id="productEnabledUpdate">
+		UPDATE product set enabled = 1 
+		WHERE pcode in (select p.pcode 
+						from (select pcode, fn_check_amount(pcode) amount 
+								from product where pcode = #{pcode}) fnt , product p 
+					<![CDATA[
+						where p.pcode = fnt.pcode and amount < 1)]]>
+	</update>
 </mapper>
